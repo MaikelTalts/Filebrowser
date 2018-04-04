@@ -880,6 +880,26 @@ $(".user_dropdown").change(function () {
 
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
+$('#searchByName').keyup(function () {
+  //Declare variables
+  var input = document.getElementById('searchByName');
+  var filter = input.value.toUpperCase();
+  var ul = document.getElementById('userList');
+  var li = ul.getElementsByTagName('li');
+  //Run loop as many time as there is rows in table
+  for (i = 0; i < li.length; i++) {
+    var user = li[i].getElementsByClassName("user")[0];
+    //If the input field text exists in table row it will be displayed
+    if (user.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    }
+    //If it does not exist it will get display:none style
+    else {
+        li[i].style.display = "none";
+      }
+  }
+});
+
 function showInputForRename(input, span, oldPath) {
   //Tuodaan input näkyville, tiedoston aikasiemmalla nimellä
   Old_name = oldPath.text(); //Noudetaan vanha nimi

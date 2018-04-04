@@ -8366,6 +8366,18 @@ h5 {
   margin-top: 0px;
 }
 
+#searchByName {
+  width: 25%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+#searchByName:focus {
+  width: 100%;
+}
+
 .select_user {
   padding: 25px;
   border-radius: 5px;

@@ -1,54 +1,49 @@
-<!-- "Noudetaan" Layouts kansion app nimisen tiedoston HTML määrittelyt -->
-@extends('layouts.app')
+@extends('layouts.app')                                                                                                           <!-- Define that this page extend layouts/app.blade.php -->
 
-<!-- Määritellään osio nimeltään [Content], joka lisätään aiemmin noudettuun app tiedostoon. -->
-@section('content')
-
-
+@section('content')                                                                                                               <!-- Define section named [Content] witch is included in app.blade.php page -->
 
   <?php
-  if($directories == null){
-      $directories = Storage::Directories($directory);                                                                              //Tarkistetaan nykyisen kansion sisällä olevat kansiot
+  if($directories == null){                                                                                                       //Check if received $directories variable is null, then check all directories from received path in $directory variable
+      $directories = Storage::Directories($directory);
   }
-    $files = Storage::Files($directory);                                                                                          //Tarkistetaan public kansion sisällä olevat tiedostot
+    $files = Storage::Files($directory);                                                                                          //Check all folders inside current directory
   ?>
 
-  @include('inc.breadcrumbs')
-  @include('layouts.modal')                                                                                                       <!-- Noudetaan modaali -->
-
-<div class="container text-left" id="container">                                                                                  <!-- Luodaan bootstrap elementti "container", sijoitetaan sisälle jäävät tekstit horisontaalisesti keskelle. -->
-    <ul class="list-group directories">                                                                                           <!-- Luodaan visuaalinen taulukko kansioille -->
-        @foreach ($directories as $key => $kansio)                                                                                <!-- Luupataan kansiorakenne läpi, ja tulostetaan sen käyttäjälle listana-->
+  @include('inc.breadcrumbs')                                                                                                     <!-- Receivel a breadcrumbs file that includes filepath -->
+  @include('layouts.modal')                                                                                                       <!-- Receive modal file -->
+<div class="container text-left" id="container">
+    <ul class="list-group directories">                                                                                           <!-- Create visual table for folders -->
+        @foreach ($directories as $key => $kansio)                                                                                <!-- Loop through all folders in current directory -->
           <?php
-            $explFolderPath = explode("/", $kansio);
-            $folderName = end($explFolderPath);
+            $explFolderPath = explode("/", $kansio);                                                                              //Breaks the directory path into separate folders
+            $folderName = end($explFolderPath);                                                                                   //Uses the last value in table
           ?>
           <li class="list-group-item folder">
-            <a href="/{{$kansio}}"><span>{{$folderName}}</span></a>                                                                   <!-- Luodaan linkkipolku, seuraavaan tiedostopolun kansioon -->
-            @if($userPrivileges == 2)
-            <a href="/delete-folder/{{$kansio}}" class="btn btn-danger btn-delete-folder pull-right" role="button"><i class="far fa-trash-alt"></i></a>
+            <a href="/{{$kansio}}"><span>{{$folderName}}</span></a>                                                               <!-- Create link as path to next directory -->
+            @if($userPrivileges == 2)                                                                                             <!-- Check if current user has value 2 in user_privileges table row -->
+            <a href="/delete-folder/{{$kansio}}" class="btn btn-danger btn-delete-folder pull-right" role="button"><i class="far fa-trash-alt"></i></a>     <!-- Delete folder button -->
             @endif
-            <a href="/download-zip/{{$kansio}}" class="btn btn-success pull-right" role="button"><i class="fas fa-download"></i></a>
+            <a href="/download-zip/{{$kansio}}" class="btn btn-success pull-right" role="button"><i class="fas fa-download"></i></a>                        <!-- Download button for entire directory -->
           </li>
         @endforeach
     </ul>
-    <ul class="list-group">                                                                                                       <!-- Luodaan visuaalinen taulukko tiedostoille -->
-        @foreach ($files as $key => $file)                                                                                        <!-- Luupataan nykyisen kansion tiedostot ja tulostetaan ne nkäyttäjälle listana -->
+    <ul class="list-group">                                                                                                       <!-- Create visual table for files -->
+        @foreach ($files as $key => $file)                                                                                        <!-- Loop through all files in current folder location, and print them to user -->
           <?php
-            $fileExpl = explode("/", $file);
-            $fileName = end($fileExpl);
+            $fileExpl = explode("/", $file);                                                                                      //Breaks the file path into separate folders / files
+            $fileName = end($fileExpl);                                                                                           //Uses the last value in table
            ?>
           <li class='list-group-item file'>
-            <span class="file_name">{{ $fileName }}</span>
-            @if($user->user_privileges == 2)
-              <span style="display:none;" class="old_path">{{$file}}</span>
+            <span class="file_name">{{ $fileName }}</span>                                                                        <!-- Creates span with filename in it -->
+            @if($user->user_privileges == 2)                                                                                      <!-- Check if current user has value 2 in user_privileges table row -->
+              <span style="display:none;" class="old_path">{{$file}}</span>                                                       <!-- Check if current user has value 2 in user_privileges table row -->
               <input type="text" class="file_name_input form-control col-xs-4"></input>
-              <a href="/delete/{{$file}}" class="btn btn-danger btn-delete pull-right" role="button"><i class="far fa-trash-alt"></i></a>                     <!-- Tiedostojen [poiston] suorittava painike -->
-              <button type="button" class="btn btn-primary pull-right rename" role="button"><i class="fas fa-font"></i></button>                         <!-- Tiedostojen uudelleennimeämisen aloittava painike, tuo seuraavat kaksi painiketta esille [Cancel] & [Confirm]  ja piilottaa kaikki [Rename] painikkeet-->
-              <button type="button" class="btn btn-warning pull-right cancel" role="button"><i class="fas fa-ban"></i></button>                         <!-- [Cancel] painike joka peruuttaa keskeneräisen nimeämisprosessin -->
-              <button type="button" class="btn btn-success pull-right confirm"  role="button"><i class="far fa-check-circle"></i></button>                      <!-- Hyväksyy nykyisen uudelleennimeämisen, aloittaa Jquery ajax toiminnon -->
+              <a href="/delete/{{$file}}" class="btn btn-danger btn-delete pull-right" role="button"><i class="far fa-trash-alt"></i></a>                <!-- Delete file -->
+              <button type="button" class="btn btn-primary pull-right rename" role="button"><i class="fas fa-font"></i></button>                         <!-- Starts renaming, shows cancel and confirm buttons, after clicking and hides all rename buttons -->
+              <button type="button" class="btn btn-warning pull-right cancel" role="button"><i class="fas fa-ban"></i></button>                          <!-- Cancel renaming-->
+              <button type="button" class="btn btn-success pull-right confirm"  role="button"><i class="far fa-check-circle"></i></button>               <!-- Accept renaming -->
             @endif
-            <a href="/download/{{$file}}" class="btn btn-success pull-right download" role="button"><i class="fas fa-download"></i></a>
+            <a href="/download/{{$file}}" class="btn btn-success pull-right download" role="button"><i class="fas fa-download"></i></a>                  <!-- Download button for current file -->
           </li>
         @endforeach
       </ul>
@@ -57,26 +52,24 @@
     <div class="row">
       <div class="col-md-offset-6 col-md-6">
           <a href="/" class="btn btn-default pull-right btn-home"><i class="fas fa-home glyphicon"></i></a>
-          <button type="button" class="btn btn-default pull-right btn-home" data-toggle="modal" data-target="#infoModal"><i class="far fa-question-circle glyphicon"></i></button>
-          @if($user->user_upload_privilege == 2)
-            <button type="button" class="btn btn-default btn-home pull-right" data-toggle="modal" data-target="#fileModal"><i class="far fa-file-alt newItem"></i></button>
-            <button type="button" class="btn btn-default btn-home pull-right" data-toggle="modal" data-target="#directoryModal"><i class="far fa-folder newItem"></i></button>
+          <button type="button" class="btn btn-default pull-right btn-home" data-toggle="modal" data-target="#infoModal"><i class="far fa-question-circle glyphicon"></i></button>    <!-- Help/ Info modal toggle button -->
+          @if($user->user_upload_privilege == 2)                                                                                                                                      <!-- Check if current user has value 2 in user_privileges table row -->
+            <button type="button" class="btn btn-default btn-home pull-right" data-toggle="modal" data-target="#fileModal"><i class="far fa-file-alt newItem"></i></button>           <!-- Add new file button -->
+            <button type="button" class="btn btn-default btn-home pull-right" data-toggle="modal" data-target="#directoryModal"><i class="far fa-folder newItem"></i></button>        <!-- Add new folder button -->
             @endif
       </div>
     </div>
 </div>
-<!-- ilmoitus tiedoston onnistuneesta nimenmuutoksesta -->
-<div class="alert alert-success alert-dismissable fade in rename-notification text-center" id="rename_notification_success">
-  <span class="close" id="notification_close-success" aria-label="close">&times;</span>                                 <!-- Ilmoituskentän sulkemista varten tarkoitettu rasti -->
-    <center><div class="loader" id="loader1"></div></center>                                                                    <!-- [PRELOADER] elementti, joka tuodaan näkyville app.js sivulla -->
-    <strong id="upload_message">Rename completed</strong>                                                                       <!-- Onnistuneesta nimenmuutoksesta kertova teksti, joka tuodaan esille app.js sivulla -->
-</div>
-<!-- Ilmoitus virheellisestä nimenmuutosta -->
-<div class="alert alert-danger alert-dismissable fade in rename-notification text-center" id="rename_notification_danger">
-    <span class="close" id="notification_close-danger" aria-label="close">&times;</span>
-                                    <!-- Ilmoituskentän sulkemista varten tarkoitettu rasti -->
-    <strong>Filename was not changed</strong>                                                                                   <!-- Virheellisestä nimenmuutoksesta kertova teksti, joka tuodaan esille yhdessä danger ilmoituksen kanssa -->
+
+<div class="alert alert-success alert-dismissable fade in rename-notification text-center" id="rename_notification_success">    <!-- Alert for successful file renaming -->
+  <span class="close" id="notification_close-success" aria-label="close">&times;</span>                                         <!-- Button for closing the alert -->
+    <center><div class="loader" id="loader1"></div></center>                                                                    <!-- Preloader -->
+    <strong id="upload_message">Rename completed</strong>                                                                       <!-- Message -->
 </div>
 
+<div class="alert alert-danger alert-dismissable fade in rename-notification text-center" id="rename_notification_danger">      <!-- Alert for unsuccessful rename event -->
+    <span class="close" id="notification_close-danger" aria-label="close">&times;</span>                                        <!-- Button for closing the alert -->
+    <strong>Filename was not changed</strong>                                                                                   <!-- Message -->
+</div>
 
-@endsection                                                                                                                     <!-- Päätetään osio nimeltään content -->
+@endsection                                                                                                                     <!-- End content -->
