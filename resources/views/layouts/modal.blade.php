@@ -1,8 +1,6 @@
 <!-- INFO Modal -->
   <div class="modal fade" id="infoModal" role="dialog">
     <div class="modal-dialog">
-
-      <!-- Modal content-->
       <div class="modal-content text-center">                                   <!-- Ohjeet sivustolla liikkumiseen ja toimintoihin -->
         <div class="modal-header">
           <h4 class="modal-title">Filebrowser</h4>
@@ -29,8 +27,6 @@
   <!-- FILE UPLOAD -->
     <div class="modal fade" id="fileModal" role="dialog">                       <!-- Tiedostojen lähettäminen palvelimelle -->
       <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content text-center">
           <div class="modal-header">
             <h4 class="modal-title">Upload file</h4>
@@ -55,7 +51,6 @@
   <!-- NEW DIRECTORY -->
     <div class="modal fade" id="directoryModal" role="dialog">                  <!-- Kansioiden luominen palvelimelle -->
       <div class="modal-dialog">
-        <!-- Modal content-->
         <div class="modal-content text-center">
           <div class="modal-header">
             <h4 class="modal-title">Create new directory</h4>
@@ -73,3 +68,23 @@
         </div>
       </div>
     </div>
+
+
+  <!-- USER CONTROL -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#userControlModal">Open Modal</button>
+  <div class="modal fade" id="userControlModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
