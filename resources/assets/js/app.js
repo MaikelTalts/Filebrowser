@@ -123,12 +123,13 @@ $('#notification_close-danger').click(function () {
   $("#rename_notification_danger").fadeOut("slow", function () {});
 });
 
+//Check if user changes dropdown value, pick the selected value and start userDirectoryPrivileges function with it
 $(".user_dropdown").change(function () {
   var userID = $('.user_dropdown').val();
   userDirectoryPrivileges(userID);
-  //$('.directorylist').show();
 });
 
+//Check if user changes users upload privilege, if so check witch user the current user did select and start updateUploadPrivileges function with it.
 $(document).on('change', '.uploadAccess', function(){
   var userID = $('.user_dropdown').val();
   updateUploadPrivileges(userID);
@@ -173,6 +174,8 @@ function returnOldName(span, input, oldPath) {
 }
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
+
+//Function starts ajax call to update selected users upload privileges
 function updateUploadPrivileges(userID){
   $.ajax({
     method: 'POST',
@@ -187,6 +190,7 @@ function updateUploadPrivileges(userID){
   });
 }
 
+//Function starts ajax call to update selected users rights to clicked folder
 function updateFolderPrivileges(folderID, userID){
   $.ajax({
     method: 'POST',

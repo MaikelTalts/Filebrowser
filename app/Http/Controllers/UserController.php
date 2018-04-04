@@ -90,17 +90,23 @@ class UserController extends Controller
     ]);
   }
 
-  function updateUplaodPrivilege(Request $request){
+  function updateUploadPrivilege(Request $request){
+    //Receive user's ID
     $userID = $request['userID'];
+    //Search user from database
     $user = DB::table('users')->where('id', $userID)->first();
+    //Select user_upload_privilege status
     $userUploadStatus= $user->user_upload_privilege;
 
+    //Check if user does not yet have premission to upload files, if not give premission
     if($userUploadStatus == 1){
     DB::table('users')->where('id', $userID)->update(['user_upload_privilege' => 2]);
     }
+    //If it does, remove premission
     else{
     DB::table('users')->where('id', $userID)->update(['user_upload_privilege' => 1]);
     }
+    //Return response messages
     return response()->json([
                 'success' => "Muutettu",
                 'error' => "Ei Toimi"
