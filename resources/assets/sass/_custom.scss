@@ -1,0 +1,166 @@
+
+  .folder{
+    background-color:#F3EECC;
+    border:solid 1px #343d46;
+    height:57px;
+    span{
+      position:relative;
+      top:20%;
+    }
+  }
+
+h5{
+  padding:0px;
+  margin-top:0px;
+}
+
+.select_user{
+  padding:25px;
+  border-radius:5px;
+}
+
+.directorylist{
+  display:none;
+}
+
+.btn-warning{
+  background-color: #F0AD4E;
+  border-color: #EEA236;
+}
+
+.btn-warning:hover{
+  background-color: #EC971F;
+  border-color: #D58512;
+}
+
+.directory_check{
+  margin-top:20px;
+  padding:25px;
+  border-radius:5px;
+}
+
+  .file{
+    background-color:white;
+    border:solid 1px #343d46;
+    height:57px;
+    span{
+      position:relative;
+      top:20%;
+    }
+  }
+
+  .glyphicon {                                                                  // Glyphiconien koko ja alleviivauksen poisto
+    font-size: 30px;
+    text-decoration: none;
+    margin:5px;
+    color:#f37735;
+  }
+
+  .newItem{
+    font-size: 30px;
+    text-decoration: none;
+    margin:5px;
+    color:#449D44;
+  }
+
+  .privileges_success{
+    top:-10%;
+    color:#00C851;
+    margin-right:10px;
+    display:none;
+  }
+
+  .privileges_error{
+    top:-10%;
+    color:#ff4444;
+    margin-right:10px;
+    display:none;
+  }
+
+  .form-control {                                                               //Pienennetään input kentän kokoa
+    width: 50%;
+  }
+
+// Painikkeiden välit
+  .btn {                                                                        //Lisätään painikkeille pienet völit
+    margin-left: 10px;
+    //border-radius: 3px;
+  }
+
+  .filebtn{                                                                     //Poistetaan [Upload file] painikkeen vasemmanpuolimmainen margin
+    margin-left: 0px;
+  }
+
+  .cancel, .confirm {                                                           //Cancel ja Confirm painikkeet oletuksena pois näkyvistä
+    display:none;
+  }
+
+  .modal.custom .modal-dialog {
+      width:20%;
+      position:fixed;
+      bottom:0;
+      right:0;
+      margin:0;
+  }
+
+  .rename-notification{                                                         //Sijoitetaan uudelleennimeämisen ilmoitukset oikeaan alakulmaan
+    bottom:0;
+    right:0;
+    position:fixed;
+    height:auto;
+    display:none;
+  }
+
+  #rename_notification_success{                                                 //Pienennetään onnistuneen nimenmuutoksen ilmoitus 15%
+    width:15%;
+  }
+
+  .file_name_input{                                                             //Oletuksena tiedoston uudelleennimeämiseen tarkoitettu tekstikenttä pidetään piilossa.
+    display:none;
+  }
+
+  .navigation{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left:5px;
+    margin-right:5px;
+  }
+
+  .header-tron{
+    background-color:#343d46;
+    width:auto;
+    h1, h2{
+      color:	#f37735;
+      margin-bottom:30px;
+    }
+    padding-top:10px;
+    padding-bottom: 10px;
+  }
+
+  .loader {                                                                     //Preloaderin tyylittely
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #3498db;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+
+.select{
+  width:20%;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#upload_message{                                                                //Oletuksena tiedoston lähetyksestö ilmoittava upload message elementti pidetään piilossa.
+  display:none;
+}
