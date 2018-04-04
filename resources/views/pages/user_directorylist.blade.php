@@ -2,7 +2,7 @@
 <div class="col-md-6" style="padding:20px;">
     <h5>Upload Access</h5>
     <div class="form-group">
-      <select class="form-control" style="width:100%;" @if($user == 1) disabled @endif>
+      <select class="form-control uploadAccess" style="width:100%;" @if($user == 1) disabled @endif>
         <option @if($selectedUser->user_upload_privilege == 2) selected @endif>Allowed</option>
         <option @if($selectedUser->user_upload_privilege == 1) selected @endif>Not allowed</option>
       </select>

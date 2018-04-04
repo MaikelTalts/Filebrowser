@@ -33,6 +33,12 @@ Old_name = ""; // Globaalit muuttujat [Vanha nimi], sekä tiedoston polku, joka 
 adress = "";
 
 // == == == == == == == == == == BUTTON CLICK == == == == == == == == == == == //
+$(document).on('change', '.folder_check', function() {
+  var folderID = $(this).val();
+  var userID = $('.user_dropdown').val();
+  updateFolderPrivileges(folderID, userID);
+});
+
 $('.privileges-1').on('click', function () {
   //Käyttäjän klikatessa update painiketta, saman rivin valinta, muutettavan ID sekä success ja error kuvakkeet lähetetään funktiolle sitä kutsuttaessa.
   user_privilege($(this).siblings('.select'), $(this).siblings('.userId'), $(this).siblings('.privileges_success'), $(this).siblings('.privileges_error'));
@@ -123,6 +129,11 @@ $(".user_dropdown").change(function () {
   //$('.directorylist').show();
 });
 
+$(document).on('change', '.uploadAccess', function(){
+  var userID = $('.user_dropdown').val();
+  updateUploadPrivileges(userID);
+});
+
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
 $('#searchByName').keyup(function(){
@@ -162,6 +173,35 @@ function returnOldName(span, input, oldPath) {
 }
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
+function updateUploadPrivileges(userID){
+  $.ajax({
+    method: 'POST',
+    url: '/update-upload-privileges',
+    data: { userID: userID, _token: token },
+    success: function success(response) {
+      console.log(response.success);
+    },
+    error: function error(response) {
+      console.log(response.error);
+    }
+  });
+}
+
+function updateFolderPrivileges(folderID, userID){
+  $.ajax({
+    method: 'POST',
+    url: '/update-user-folder-privileges',
+    data: { userID: userID, folderID: folderID, _token: token },
+    success: function success(response) {
+      console.log(response.success);
+    },
+    error: function error(response) {
+      console.log(response.error);
+    }
+  });
+}
+
+
 function switchBackToSpan(span, $input, oldPath) {
 
   //Suoritetaan nimenmuutos palvelimella. Onnistuessaan muuttaa nimen palvelimella ja sivulla. Epäonnistuessa palauttaa sivulle aikaisemman nimen, palvelimella ei muutosta.

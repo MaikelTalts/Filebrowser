@@ -90,4 +90,20 @@ class UserController extends Controller
     ]);
   }
 
+  function updateUplaodPrivilege(Request $request){
+    $userID = $request['userID'];
+    $user = DB::table('users')->where('id', $userID)->first();
+    $userUploadStatus= $user->user_upload_privilege;
+
+    if($userUploadStatus == 1){
+    DB::table('users')->where('id', $userID)->update(['user_upload_privilege' => 2]);
+    }
+    else{
+    DB::table('users')->where('id', $userID)->update(['user_upload_privilege' => 1]);
+    }
+    return response()->json([
+                'success' => "Muutettu",
+                'error' => "Ei Toimi"
+    ]);
+  }
 }
