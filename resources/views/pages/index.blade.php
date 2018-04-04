@@ -1,5 +1,5 @@
 @extends('layouts.app')                                                                                                           <!-- Define that this page extend layouts/app.blade.php -->
-
+<!-- Minor change -->
 @section('content')                                                                                                               <!-- Define section named [Content] witch is included in app.blade.php page -->
 
   <?php
