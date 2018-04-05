@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <center>  <h4 class="modal-title">{{$user->name}}</h4> </center>
+        <center>  <h4 class="modal-title" id="userNameTitle" value="{{$user->id}}">{{$user->name}}</h4> </center>
     </div>
     <div class="modal-body">
 
@@ -10,13 +10,13 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="usr">Name:</label>
-            <input type="text" class="form-control" id="userName" style="width:100%;" value="{{$user->name}}">
+            <input type="text" class="form-control" id="userName" style="width:100%;" value="{{$user->name}}" @if($user->id == 1) disabled @endif>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label for="userEmail">Email:</label>
-            <input type="text" class="form-control" id="userEmail" style="width:100%;" value="{{$user->email}}">
+            <input type="email" class="form-control" id="userEmail" style="width:100%;" value="{{$user->email}}" @if($user->id == 1) disabled @endif>
           </div>
         </div>
       </div>
@@ -25,13 +25,13 @@
         <div class="col-md-6">
           <div class="form-group">
            <label for="sel1">User status</label>
-           <select class="form-control" id="sel1" style="width:100%;">
+           <select class="form-control userStatusSelection" id="sel1" style="width:100%;" @if($user->id == 1) disabled @endif>
              @if ($user->user_privileges == 1)
-              <option>Admin</option>
-              <option selected>User</option>
+              <option value="2">Admin</option>
+              <option selected value="1">User</option>
              @else
-             <option>User</option>
-             <option selected>Admin</option>
+             <option value="1">User</option>
+             <option selected value="2">Admin</option>
              @endif
            </select>
           </div>
@@ -40,13 +40,13 @@
           <div class="col-md-6">
             <div class="form-group">
              <label for="sel1">Upload rights</label>
-             <select class="form-control" id="sel1" style="width:100%;">
-               @if ($user->user_upload_privileges == 1)
-                 <option selected>Denied</option>
-                 <option>Allowed</option>
+             <select class="form-control userUploadSelection" id="sel1" style="width:100%;" @if($user->id == 1) disabled @endif>
+               @if ($user->user_upload_privilege == 1)
+                 <option selected value="1">Denied</option>
+                 <option value="2">Allowed</option>
                @else
-                 <option>Denied</option>
-                 <option selected>Allowed</option>
+                 <option value="1">Denied</option>
+                 <option selected value="2">Allowed</option>
                @endif
              </select>
             </div>
@@ -96,10 +96,12 @@
               </div>
             </div>
           </div>
-
-          <button type="button" class="btn btn-danger delete-user" role="button">Delete</button>
-          <button type="button" class="btn btn-primary privileges-1" role="button">Update</button>
-
+            @if($user->id != 1)
+              <center>
+                <button type="button" class="btn btn-primary updateUserInfo" role="button">Update</button>
+                <button type="button" class="btn btn-danger deleteUser" role="button">Delete</button>
+              </center>
+            @endif
       </div>
     </div>
   </div>

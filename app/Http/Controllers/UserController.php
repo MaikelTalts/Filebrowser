@@ -11,15 +11,23 @@ use Filebrowser\User;
 
 class UserController extends Controller
 {
-  public function privilege(Request $request){
+  public function updateStatus(Request $request){
     //Check witch status was selected
-    $selection = $request['selected'];
+    $user = $request['userID'];
     //Check witch user was selected
-    $user = $request['userId'];
+    $selection = $request['statusSelection'];
     //Update selected users privilege status.
     DB::table('users')->where('id',$user)->update(array('user_privileges'=>$selection));
     //Return response
+    if($selection == 1){
+      $newUserStatus = "User";
+    }
+    else{
+      $newUserStatus = "<strong>Admin</strong>";
+    }
     return response()->json([
+
+      'newUserStatus' => $newUserStatus,
       'success' => 'Onnistui',
       'error'   => 'Epäonnistui'
     ]);
@@ -35,31 +43,6 @@ class UserController extends Controller
       'success' => 'User was deleted',
       'error'   => 'Error'
     ]);
-  }
-
-  function directory_user(Request $request) {
-    //Check witch user was selected
-    $user = $request['userId'];
-    //Select all folders where selected user had access to
-    $userFolders = DB::select('select * from folder_user where user_id = ?', [$user]);
-    //Select database row of selected user
-    $selectedUser = DB::table('users')->where('id', $user)->first();
-    //Create array variable
-    $data = array();
-    //If $userFolders array contains info, push the folder id to array
-    if($userFolders){
-      foreach($userFolders as $folder){
-        array_push($data, $folder->folder_id);
-      }
-    }
-    //Select all folders in folders table
-    $directories = DB::select('select * from folders');
-    //Create page with variable contents and pass it to Jquery
-    $createContent = View::make('pages.user_directorylist', ['data' => $data, 'directories' => $directories, 'user' => $user, 'selectedUser' => $selectedUser])->render();
-    return response()->json([
-                'success'  => $createContent,
-                'error'    => "Virhe kansiota luodessa"
-            ]);
   }
 
   function updateFolderPrivileges(Request $request) {
@@ -91,23 +74,14 @@ class UserController extends Controller
     ]);
   }
 
-  function updateUploadPrivilege(Request $request){
-    //Receive user's ID
+  function updateUplaodPrivilege(Request $request){
+    //Request user's ID
     $userID = $request['userID'];
-    //Search user from database
-    $user = DB::table('users')->where('id', $userID)->first();
-    //Select user_upload_privilege status
-    $userUploadStatus= $user->user_upload_privilege;
-
-    //Check if user does not yet have premission to upload files, if not give premission
-    if($userUploadStatus == 1){
-    DB::table('users')->where('id', $userID)->update(['user_upload_privilege' => 2]);
-    }
-    //If it does, remove premission
-    else{
-    DB::table('users')->where('id', $userID)->update(['user_upload_privilege' => 1]);
-    }
-    //Return response messages
+    //Request upload status selection
+    $uploadSelection = $request['uploadSelection'];
+    //Update users upload privileges
+    User::where('id', $userID)->update(['user_upload_privilege' => $uploadSelection]);
+    //Return response to ajax
     return response()->json([
                 'success' => "Muutettu",
                 'error' => "Ei Toimi"
@@ -115,9 +89,13 @@ class UserController extends Controller
   }
 
   function printUserPage(Request $request){
+    //Request user's ID
     $userID = $request['userID'];
+    //Select user that has the same id as requested
     $user = User::find($userID);
+    //Select all folders that user has access to
     $userFolders = DB::select('select * from folder_user where user_id = ?', [$userID]);
+    //Create array to add folder ID's
     $dirArray = array();
     //If $userFolders array contains info, push the folder id to array
     if($userFolders){
@@ -125,11 +103,29 @@ class UserController extends Controller
         array_push($dirArray, $folder->folder_id);
       }
     }
+    //Select all folders that has been listed in folders database table
     $directories = DB::select('select * from folders');
+    //Create view to return for ajax
     $userPageContent = View::make('pages.userControlModal', ['user' => $user, 'dirArray' => $dirArray, 'directories' => $directories])->render();
+
     return response()->json([
       'success' => $userPageContent,
       'error' => "Ei toimi"
     ]);
   }
+
+  function updateUserInfo(Request $request){
+    $userID = $request['userID'];
+    $userName = $request['userName'];
+    $userEmail = $request['userEmail'];
+
+    User::where('id', $userID)->update(['name' => $userName, 'email' => $userEmail]);
+
+    return response()->json([
+      'newName' => $userName,
+      'success' => "Changed",
+      'error' => "Failed"
+    ]);
+  }
+
 }

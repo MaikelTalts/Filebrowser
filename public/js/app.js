@@ -790,13 +790,19 @@ adress = "";
 // == == == == == == == == == == BUTTON CLICK == == == == == == == == == == == //
 $(document).on('change', '.folder_check', function () {
   var folderID = $(this).val();
-  var userID = $('.user_dropdown').val();
+  var userID = $('#userNameTitle').attr('value');
   updateFolderPrivileges(folderID, userID);
+});
+
+$(document).on('change', '.userStatusSelection', function () {
+  var userID = $('#userNameTitle').attr('value');
+  var statusSelection = $(this).val();
+  updateUserStatus(userID, statusSelection);
 });
 
 $('.privileges-1').on('click', function () {
   //Käyttäjän klikatessa update painiketta, saman rivin valinta, muutettavan ID sekä success ja error kuvakkeet lähetetään funktiolle sitä kutsuttaessa.
-  user_privilege($(this).siblings('.select'), $(this).siblings('.userId'), $(this).siblings('.privileges_success'), $(this).siblings('.privileges_error'));
+  //updateUserStatus($(this).siblings('.select'), $(this).siblings('.userId'), $(this).siblings('.privileges_success'), $(this).siblings('.privileges_error'));
 });
 
 $('.select').on('click', function () {
@@ -885,9 +891,10 @@ $(".user_dropdown").change(function () {
 });
 
 //Check if user changes users upload privilege, if so check witch user the current user did select and start updateUploadPrivileges function with it.
-$(document).on('change', '.uploadAccess', function () {
-  var userID = $('.user_dropdown').val();
-  updateUploadPrivileges(userID);
+$(document).on('change', '.userUploadSelection', function () {
+  var userID = $('#userNameTitle').attr('value');
+  var uploadSelection = $('.userUploadSelection').val();
+  updateUploadPrivileges(userID, uploadSelection);
 });
 
 //When current system user clicks any other user name in settings page, pick up that specific users ID and start printUserPage function with that ID
@@ -898,7 +905,22 @@ $(document).on('click', '.userLink', function () {
   printUserPage(userID);
 });
 
+$(document).on('click', '.updateUserInfo', function () {
+  var userID = $('#userNameTitle').attr('value');
+  var userName = $('#userName').val();
+  var userEmail = $('#userEmail').val();
+  var correctEmail = isEmail(userEmail);
+  if (correctEmail == true) {
+    updateUserInfo(userID, userName, userEmail);
+  } else {}
+});
+
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
+
+function isEmail(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}
 
 $('#searchByName').keyup(function () {
   //Declare variables
@@ -938,6 +960,22 @@ function returnOldName(span, input, oldPath) {
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
 
+function updateUserInfo(userID, userName, userEmail) {
+  $.ajax({
+    method: 'POST',
+    url: '/update-user-info',
+    data: { userID: userID, userName: userName, userEmail: userEmail, _token: token },
+    success: function succes(response) {
+      var userNameLink = "#userNameLink_" + userID;
+      $(userNameLink).html(response.newName);
+      console.log(response.success);
+    },
+    error: function error(response) {
+      console.log(response.error);
+    }
+  });
+}
+
 function printUserPage(userID) {
   $.ajax({
     method: 'POST',
@@ -946,7 +984,6 @@ function printUserPage(userID) {
     success: function success(response) {
       $('#userControlModal').html(response.success);
       $('#userControlModal').modal('toggle');
-      console.log(response.success);
     },
     error: function error() {
       console.log("Ei toimi");
@@ -955,11 +992,11 @@ function printUserPage(userID) {
 }
 
 //Function starts ajax call to update selected users upload privileges
-function updateUploadPrivileges(userID) {
+function updateUploadPrivileges(userID, uploadSelection) {
   $.ajax({
     method: 'POST',
     url: '/update-upload-privileges',
-    data: { userID: userID, _token: token },
+    data: { userID: userID, uploadSelection: uploadSelection, _token: token },
     success: function success(response) {
       console.log(response.success);
     },
@@ -1011,26 +1048,17 @@ function switchBackToSpan(span, $input, oldPath) {
   });
 }
 
-function user_privilege(selection, user, _success, _error) {
-  //Vastaanotetaan tarkistetaan valinta, käyttäjä, sekä onnistumisesta ja epäonnistumisesta kertovat elementit.
-  var user_selection = $(selection).val();
-  var user_Id = $(user).html();
+function updateUserStatus(userID, statusSelection) {
   $.ajax({ //Suoritetaan käyttöoikeuksien muutos ajax kutsuna
     method: 'POST',
     url: urlPrivilege,
-    data: { selected: user_selection, userId: user_Id, _token: token },
+    data: { statusSelection: statusSelection, userID: userID, _token: token },
     success: function success(response) {
-      //Jos muutos onnistuu tuodaan onnistumisesta kertova elementti näkyville.
-      $(_success).fadeIn(700, function () {
-        // Animation complete
-      });
+      var userStatusSpan = '#userStatus_' + userID;
+      $(userStatusSpan).html(response.newUserStatus);
       console.log(response.success);
     },
     error: function error(response) {
-      //Jos muutos epäonnistuu todaan epäonnistumisesta kertova elementti näkyville.
-      $(_error).fadeIn(700, function () {
-        // Animation complete
-      });
       console.log(response.error);
     }
   });

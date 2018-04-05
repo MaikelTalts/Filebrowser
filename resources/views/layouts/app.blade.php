@@ -12,10 +12,9 @@
 </head>
 <body>                                                                          <!-- Aloitetaan body osio -->
     <div id="app">
-      @include('layouts.modal')
+        @include('layouts.modal')
         @include('inc.nav')
         @include('inc.messages')                                                <!-- Noudetaan ilmoitukset -->
-
         @yield('content')
 
     </div>
@@ -24,7 +23,7 @@
     <script>
       var token = "{{Session::token()}}";                                       //Muuttujaan sijoitettu istunnon CSRF token.
       var urlRename = '{{route('rename')}}';                                    //Muuttujaan sijoitettu url, jonka ajax toiminto noutaa.
-      var urlPrivilege = '{{route('updatePrivilege')}}';
+      var urlPrivilege = '{{route('updateUserStatus')}}';
       var urlDeleteUser = '{{route('DeleteUser')}}';
       var urlcreateDirectory = '{{route('createDirectory')}}';
     </script>

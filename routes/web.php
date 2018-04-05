@@ -24,15 +24,15 @@ Route::get('/', [
 
 Route::get('/settings', 'PagesController@settings');
 
-Route::post('/update-privilege', ['uses'=>'UserController@privilege','as'=>'updatePrivilege']);   //Käyttäjien oikeuksien muuttaminen
+Route::post('/update-status', ['uses'=>'UserController@updateStatus','as'=>'updateUserStatus']);   //Käyttäjien oikeuksien muuttaminen
 
 Route::post('/delete-user', ['uses'=>'UserController@deleteUser','as'=>'DeleteUser']);           // Käyttäjän poisto
-
-Route::post('/user-directory-privileges', 'UserController@directory_user');
 
 Route::post('/update-user-folder-privileges', 'UserController@updateFolderPrivileges');
 
 Route::post('/pring-user-page', 'UserController@printUserPage');
+
+Route::post('update-user-info', 'UserController@updateUserInfo');
 
 Route::post('/update-upload-privileges', 'UserController@updateUplaodPrivilege');
 
