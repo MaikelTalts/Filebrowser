@@ -32,6 +32,8 @@ Route::post('/user-directory-privileges', 'UserController@directory_user');
 
 Route::post('/update-user-folder-privileges', 'UserController@updateFolderPrivileges');
 
+Route::post('/pring-user-page', 'UserController@printUserPage');
+
 Route::post('/update-upload-privileges', 'UserController@updateUplaodPrivilege');
 
 Route::get('download/{file}', 'FileController@download')                  //Osoitepyyntö, "/download" aloittaa funkton "download" --> FileController

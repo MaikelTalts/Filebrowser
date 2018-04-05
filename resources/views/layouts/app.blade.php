@@ -12,9 +12,12 @@
 </head>
 <body>                                                                          <!-- Aloitetaan body osio -->
     <div id="app">
+      @include('layouts.modal')
         @include('inc.nav')
         @include('inc.messages')                                                <!-- Noudetaan ilmoitukset -->
+
         @yield('content')
+
     </div>
 
     <script src="{{asset('js/app.js')}}"></script>                              <!-- Noudetaan oma custom javascript tiedosto -->

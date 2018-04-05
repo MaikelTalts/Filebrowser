@@ -8517,6 +8517,35 @@ h5 {
   width: 20%;
 }
 
+.userControlTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.pseudolink {
+  color: #3097D1;
+}
+
+.pseudolink:hover {
+  color: #216A8C;
+  cursor: pointer;
+}
+
+.userControlTable th,
+.userControlTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+.userControlTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.userControlTable tr.header,
+.userControlTable tr:hover {
+  background-color: #f1f1f1;
+}
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);

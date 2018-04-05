@@ -135,6 +135,14 @@ $(document).on('change', '.uploadAccess', function(){
   updateUploadPrivileges(userID);
 });
 
+//When current system user clicks any other user name in settings page, pick up that specific users ID and start printUserPage function with that ID
+$(document).on('click', '.userLink', function(){
+  //Pick users ID
+  var userID = $(this).attr('value');
+  //Start function with picked ID
+  printUserPage(userID);
+});
+
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
 $('#searchByName').keyup(function(){
@@ -174,6 +182,24 @@ function returnOldName(span, input, oldPath) {
 }
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
+
+function printUserPage(userID){
+  $.ajax({
+    method:'POST',
+    url: '/pring-user-page',
+    data: {userID:userID, _token:token},
+    success: function success(response){
+      $('#userControlModal').html(response.success);
+      $('#userControlModal').modal('toggle');
+      console.log(response.success);
+    },
+    error: function error(){
+      console.log("Ei toimi");
+    }
+  })
+
+
+}
 
 //Function starts ajax call to update selected users upload privileges
 function updateUploadPrivileges(userID){

@@ -18,18 +18,12 @@
         <ul class="list-group" id="userList">
             @foreach ($user as $key => $users)                                                                      <!-- List all users in database and their current privileges -->
               <li class='list-group-item file'>
-                <span class="pull-left user">{{$users->name}}</span>
-                <span style="display:none;" class="userId">{{$users->id}}</span>
-                @if($users->name == "admin")                                                                        <!-- If current logged in user is admin disable inputs -->
-                  <button type="button" class="btn btn-danger pull-right disabled" role="button">Delete</button>
-                  <button type="button" class="btn btn-primary pull-right disabled" role="button">Update</button>
-                @else                                                                                               <!-- else create inputs that can be modified -->
-                  <button type="button" class="btn btn-danger pull-right delete-user" role="button">Delete</button>
-                  <button type="button" class="btn btn-primary pull-right privileges-1" role="button">Update</button>
-                @endif
-                <select class="form-control pull-right select" <?php if($users->name == "admin"){echo 'disabled';}?>>
-                    <option <?php if($users->user_privileges == 1){echo 'selected';}?> value="1">User</option>      <!-- If current logged in user is admin, set default settings and disable the inputs -->
-                    <option <?php if($users->user_privileges == 2){echo 'selected';}?> value="2">Admin</option>
+                <span class="pull-left user userLink pseudolink" value="{{$users->id}}">{{$users->name}}</span>
+                  @if ($users->user_privileges == 1)
+                    <span class="pull-right">User</span>
+                  @else
+                    <span class="pull-right"><strong>Admin</strong></span>
+                  @endif
                 </select>
                 <p class="glyphicon glyphicon-ok pull-right privileges_success" aria-hidden="true"></p>
                 <p class="glyphicon glyphicon-remove pull-right privileges_error" aria-hidden="true"></p>

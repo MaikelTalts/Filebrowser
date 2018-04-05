@@ -9,7 +9,6 @@
   ?>
 
   @include('inc.breadcrumbs')                                                                                                     <!-- Receivel a breadcrumbs file that includes filepath -->
-  @include('layouts.modal')                                                                                                       <!-- Receive modal file -->
 <div class="container text-left" id="container">
     <ul class="list-group directories">                                                                                           <!-- Create visual table for folders -->
         @foreach ($directories as $key => $dir)                                                                                   <!-- Loop through all folders in current directory -->

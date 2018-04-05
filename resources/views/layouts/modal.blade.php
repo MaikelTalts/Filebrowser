@@ -35,7 +35,7 @@
             <div class="container-fluid" style="text-align:left;">
                 {!! Form::open(['url' => '/upload', 'method' => 'POST', 'files' => true, 'enctype' => 'multipart/form-data']) !!}       <!-- Luodaan lomake, jonka metodi on (POST) ja action (/uplaod), joka reitittää toiminnon web.php kautta -->
                   {{Form::file('file')}}<br>                                                                                            <!-- Tiedostonvalinta -->
-                  {{Form::hidden('invisible', $directory) }}                                                                            <!-- Piilotettu lomakekenttä, uplaodControlleria varten (voidaan noutaa nykyinen sijainti) -->
+                  {{Form::hidden('invisible', @$directory) }}                                                                            <!-- Piilotettu lomakekenttä, uplaodControlleria varten (voidaan noutaa nykyinen sijainti) -->
                   {{Form::submit('Upload file', ['class' => 'btn btn-info filebtn'])}}                                                  <!-- Luodaan lomakkeen hyväksyvä painike -->
                 {!! Form::close() !!}                                                                                                   <!-- Suljetaan lomake -->
             </div>
@@ -71,20 +71,7 @@
 
 
   <!-- USER CONTROL -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#userControlModal">Open Modal</button>
   <div class="modal fade" id="userControlModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
+
+
     </div>
-  </div>

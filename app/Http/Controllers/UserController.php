@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\View;
+use Filebrowser\User;
 
 class UserController extends Controller
 {
@@ -110,6 +111,25 @@ class UserController extends Controller
     return response()->json([
                 'success' => "Muutettu",
                 'error' => "Ei Toimi"
+    ]);
+  }
+
+  function printUserPage(Request $request){
+    $userID = $request['userID'];
+    $user = User::find($userID);
+    $userFolders = DB::select('select * from folder_user where user_id = ?', [$userID]);
+    $dirArray = array();
+    //If $userFolders array contains info, push the folder id to array
+    if($userFolders){
+      foreach($userFolders as $folder){
+        array_push($dirArray, $folder->folder_id);
+      }
+    }
+    $directories = DB::select('select * from folders');
+    $userPageContent = View::make('pages.userControlModal', ['user' => $user, 'dirArray' => $dirArray, 'directories' => $directories])->render();
+    return response()->json([
+      'success' => $userPageContent,
+      'error' => "Ei toimi"
     ]);
   }
 }
