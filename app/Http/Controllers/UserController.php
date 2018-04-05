@@ -35,9 +35,9 @@ class UserController extends Controller
 
   public function deleteUser(Request $request){
     //Check witch user was selected
-    $user = $request['userId'];
+    $userID = $request['userID'];
     //Delete selected user from database
-    DB::delete('delete from users where id = ?', [$user]);
+    User::where('id', $userID)->delete();
     //Return response
     return response()->json([
       'success' => 'User was deleted',

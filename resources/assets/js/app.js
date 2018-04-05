@@ -60,12 +60,13 @@ $('.select').on('click', function () {
   });
 });
 
-$('.delete-user').on('click', function () {
+$(document).on('click', '.deleteUser', function(){
+  var userID = $('#userNameTitle').attr('value');
   //Varmistetaan käyttäjän poisto
   if (!confirm("Are you sure you wanna delete this user?") == true) {
     console.log("Painoit ei");
   } else {
-    delete_user($(this).siblings('.userId'));
+    deleteUser(userID);
     console.log("Painoit kyllä");
   }
 });
@@ -316,16 +317,14 @@ function updateUserStatus(userID, statusSelection) {
   });
 }
 
-function delete_user(userId) {
-  //Käyttäjän poisto funktio ottaa vastaan käyttäjän elementin.
-  var user_id = $(userId).html(); //Tarkistetaan mikä on elementin teksti = kyäyttäjän nimi.
-  console.log(user_id); //Suoritetaan käyttäjän poisto tietokannasta ajax kutsulla.
+function deleteUser(userID) {
   $.ajax({
     method: 'POST',
     url: urlDeleteUser,
-    data: { userId: user_id, _token: token },
+    data: { userID: userID, _token: token },
     success: function success(response) {
-      $(userId).parent().fadeOut(700, function () {//Poistetaan käyttäjän rivi näkyvistä, jos poisto onnistui.
+      var userLi = "#userLi_"+userID;
+      $(userLi).fadeOut(700, function () {//Poistetaan käyttäjän rivi näkyvistä, jos poisto onnistui.
         // Animation complete.
       });
       console.log(response.success);
