@@ -969,7 +969,7 @@ function updateUserInfo(userID, userName, userEmail) {
     success: function succes(response) {
       var userNameLink = "#userNameLink_" + userID;
       $(userNameLink).html(response.newName);
-      console.log(response.success);
+      console.log(response.newName);
     },
     error: function error(response) {
       console.log(response.error);

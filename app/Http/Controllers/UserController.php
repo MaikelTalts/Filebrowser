@@ -115,12 +115,23 @@ class UserController extends Controller
   }
 
   function updateUserInfo(Request $request){
+    //Request user's ID
     $userID = $request['userID'];
-    $userName = $request['userName'];
+    //Request user's name
+    $name = $request['userName'];
+    //Request user's email
     $userEmail = $request['userEmail'];
+    //Trim spaces from beginning and end of string
+    $userName = trim($name);
+    if($userName != null && $userName != ""){
+      //Update selected user with requested data
+      User::where('id', $userID)->update(['name' => $userName, 'email' => $userEmail]);
+    }
+    else{
+      $userName = "Eitoiminut";
+    }
 
-    User::where('id', $userID)->update(['name' => $userName, 'email' => $userEmail]);
-
+    //Return response
     return response()->json([
       'newName' => $userName,
       'success' => "Changed",
