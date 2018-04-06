@@ -42,10 +42,19 @@ class UserController extends Controller
   public function deleteUser(Request $request){
     //Check witch user was selected
     $userID = $request['userID'];
+    //Search user from database
+    $user = User::find($userID);
+    //Get the users name
+    $userName = $user->name;
+    //Poistetaan folder_user tietokantataulusta kaikki en tietueet, joissa poistettava käyttäjä esiintyy
+    DB::table('folder_user')->where('user_id', '=', $userID)->delete();
     //Delete selected user from database
     User::where('id', $userID)->delete();
+    //Create response message to show in the notification bar
+    $notificationText = $userName . " has been deleted succesfully";
     //Return response
     return response()->json([
+      'notificationMessage' => $notificationText,
       'success' => 'User was deleted',
       'error'   => 'Error'
     ]);

@@ -22,9 +22,12 @@ class DirectoryController extends Controller
     $user = Auth::user()->name;
     //Delete fysical directory that has same path and name witch was received.
     Storage::deleteDirectory($directory);
-
-    if($directory == "public"){
-      $explodeDirectory = explode("/", $directory);
+    //Split the directorypath into separate directories
+    $explodeDirectory = explode("/", $directory);
+    //Check how long is the directory path
+    $pathLenght = count($explodeDirectory);
+    //If the directory path is same as 2, witch means that the directory that we are deleting is located inside public, then remove the folder from database as well.
+    if($pathLenght == 2){
       $directory = end($explodeDirectory);
       //Get folders id, so that it can also be removed from folder_user table
       $directory_id = Folder::where('folder_name', '=' , $directory)->first()->id;
@@ -61,24 +64,23 @@ class DirectoryController extends Controller
     Folder::create([
       'folder_name' => $name
     ]);
+        //Fetch the ID of previously created folder.
+        $folder_id = Folder::orderBy('id', 'DESC')->first();
+        $cur_ID = $folder_id->id;
 
-    //Fetch the ID of previously created folder.
-    $folder_id = Folder::orderBy('id', 'DESC')->first();
-    $cur_ID = $folder_id->id;
-
-    /*Create new row on [folder_user] table, that automatically gives Admin
-      privileges on every created folder*/
-      $user_name = Auth::user()->name;
-      $user_id = Auth::user()->id;
-    DB::table('folder_user')->insert([
-      ['user_id' => 1, 'folder_id' => $cur_ID],
-    ]);
-    //Check if the user is NOT admin, then give permission to that folder for him as well.
-    if($user_name != "admin"){
-      DB::table('folder_user')->insert([
-        ['user_id' => $user_id, 'folder_id' => $cur_ID],
-      ]);
-    }
+        /*Create new row on [folder_user] table, that automatically gives Admin
+          privileges on every created folder*/
+          $user_name = Auth::user()->name;
+          $user_id = Auth::user()->id;
+        DB::table('folder_user')->insert([
+          ['user_id' => 1, 'folder_id' => $cur_ID],
+        ]);
+        //Check if the user is NOT admin, then give permission to that folder for him as well.
+        if($user_name != "admin"){
+          DB::table('folder_user')->insert([
+            ['user_id' => $user_id, 'folder_id' => $cur_ID],
+          ]);
+        }
   }
     //Send response if the function was successful or not.
     return response()->json([

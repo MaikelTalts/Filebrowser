@@ -167,9 +167,10 @@ $(document).on('click', '.updateUserInfo', function(){
 
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
-function showNotificationBar(message){
+function showNotification(message, background){
   var x = document.getElementById("notificationBar");
   x.innerHTML = message;
+  $(x).css("background-color", background);
   x.className = "show";
   setTimeout(function(){x.className = x.className.replace("show", "");}, 3000);
 }
@@ -227,7 +228,7 @@ function updateUserInfo(userID, userName, userEmail){
         var userNameLink = "#userNameLink_" + userID;
         $(userNameLink).html(response.newName);
         var notificationMsg = "User information updated";
-        showNotificationBar(notificationMsg);
+        showNotification(notificationMsg, "#2BBBAD");
       }
     },
     error: function error(response){
@@ -260,7 +261,7 @@ function updateUploadPrivileges(userID, uploadSelection){
     url: '/update-upload-privileges',
     data: { userID: userID, uploadSelection: uploadSelection, _token: token },
     success: function success(response) {
-      showNotificationBar(response.notificationMsg);
+      showNotification(response.notificationMsg, "#2BBBAD");
     },
     error: function error(response) {
       console.log(response.error);
@@ -275,7 +276,7 @@ function updateFolderPrivileges(folderID, userID){
     url: '/update-user-folder-privileges',
     data: { userID: userID, folderID: folderID, _token: token },
     success: function success(response) {
-      showNotificationBar(response.notificationMsg);
+      showNotification(response.notificationMsg, "#2BBBAD");
     },
     error: function error(response) {
       console.log(response.error);
@@ -319,7 +320,7 @@ function updateUserStatus(userID, statusSelection) {
     success: function success(response) {
       var userStatusSpan = '#userStatus_' + userID;
       $(userStatusSpan).html(response.newUserStatus);
-      showNotificationBar(response.notificationMessage);
+      showNotification(response.notificationMessage, "#2BBBAD");
     },
     error: function error(response) {
       console.log(response.error);
@@ -334,13 +335,15 @@ function deleteUser(userID) {
     data: { userID: userID, _token: token },
     success: function success(response) {
       var userLi = "#userLi_"+userID;
+      $('#userControlModal').modal('toggle');
       $(userLi).fadeOut(700, function () {//Poistetaan käyttäjän rivi näkyvistä, jos poisto onnistui.
-        // Animation complete.
+        showNotification(response.notificationMessage, "#2BBBAD");
       });
-      console.log(response.success);
+
     },
     error: function error(response) {
-      console.log(response.error);
+      var notificationError = "Cannot delete this user";
+      showNotification(response.notificationMessage, "#2BBBAD");
     }
   });
 }
