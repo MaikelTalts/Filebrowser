@@ -8,28 +8,34 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\View;
 use Filebrowser\User;
+use Filebrowser\Folder;
 
 class UserController extends Controller
 {
   public function updateStatus(Request $request){
     //Check witch status was selected
-    $user = $request['userID'];
+    $userID = $request['userID'];
     //Check witch user was selected
     $selection = $request['statusSelection'];
     //Update selected users privilege status.
-    DB::table('users')->where('id',$user)->update(array('user_privileges'=>$selection));
+    DB::table('users')->where('id',$userID)->update(array('user_privileges'=>$selection));
+
+    $user = User::find($userID);
+    $userName = $user->name;
     //Return response
     if($selection == 1){
       $newUserStatus = "User";
+      $notificationText = $userName . " " . "is now a user";
     }
     else{
       $newUserStatus = "<strong>Admin</strong>";
+      $notificationText = $userName . " " . "is now an admin";
     }
     return response()->json([
-
+      'notificationMessage' => $notificationText,
       'newUserStatus' => $newUserStatus,
-      'success' => 'Onnistui',
-      'error'   => 'Epäonnistui'
+      'success' => 'Succeed',
+      'error'   => "Didn't work"
     ]);
   }
 
@@ -46,45 +52,66 @@ class UserController extends Controller
   }
 
   function updateFolderPrivileges(Request $request) {
-    //Check witch user was selected
-    $user = $request['userID'];
-    //Check witch folder was clicked
-    $folder = $request['folderID'];
+    //Request the base variables
+    $userID = $request['userID'];
+    $folderID = $request['folderID'];
+    //Search the user from database
+    $user = User::find($userID);
+    //Get the users name
+    $userName = $user->name;
+    //Search the folder from database
+    $folder = Folder::find($folderID);
+    //Get the folders named
+    $folderName = $folder->folder_name;
     //Search if there already is a row in folder_user table with selected user and selected folder
     $user_folder_status = DB::table('folder_user')->where(
-                            'user_id', '=', $user)->where(
-                            'folder_id', '=', $folder)->first();
+                            'user_id', '=', $userID)->where(
+                            'folder_id', '=', $folderID)->first();
     //If user does not yet have access in selected folder remove the access.
     if($user_folder_status == null){
         DB::table('folder_user')->insert(
-          ['user_id' => $user, 'folder_id' => $folder]);
-          $returnMsg = "Lisätty";
+          ['user_id' => $userID, 'folder_id' => $folderID]);
+          //Write a notification message
+          $notificationMsg = $userName. " now has access to " . $folderName;
     }
     //If user already has access to selected folder, remove it
     else{
       DB::table('folder_user')->where(
-        'user_id', '=', $user)->where(
-        'folder_id', '=', $folder)->delete();
-        $returnMsg = "Poistettu";
+        'user_id', '=', $userID)->where(
+        'folder_id', '=', $folderID)->delete();
+        //Write a notification message
+        $notificationMsg = $userName . " has no longer access to " . $folderName;
     }
     //Return response
     return response()->json([
-                'success' => $returnMsg,
-                'error' => "Ei toimi"
+                'notificationMsg' => $notificationMsg,
+                'error' => "Didn't work"
     ]);
   }
 
   function updateUplaodPrivilege(Request $request){
-    //Request user's ID
+    //Request the base variables
     $userID = $request['userID'];
-    //Request upload status selection
     $uploadSelection = $request['uploadSelection'];
+    //Search the user from database
+    $user = User::find($userID);
+    //Get the users name
+    $userName = $user->name;
     //Update users upload privileges
     User::where('id', $userID)->update(['user_upload_privilege' => $uploadSelection]);
     //Return response to ajax
+    if($uploadSelection == 1){
+      //Write a notification message
+      $notificationMsg = $userName . " can no longer upload files";
+    }
+    else{
+      //Write a notification message
+      $notificationMsg = $userName . " can now upload files";
+    }
     return response()->json([
-                'success' => "Muutettu",
-                'error' => "Ei Toimi"
+                'notificationMsg' => $notificationMsg,
+                'success' => "Changed",
+                'error' => "Didn't work"
     ]);
   }
 
@@ -110,7 +137,7 @@ class UserController extends Controller
 
     return response()->json([
       'success' => $userPageContent,
-      'error' => "Ei toimi"
+      'error' => "Didn't work"
     ]);
   }
 
@@ -128,7 +155,9 @@ class UserController extends Controller
       User::where('id', $userID)->update(['name' => $userName, 'email' => $userEmail]);
     }
     else{
-      $userName = "Eitoiminut";
+      return response()->json([
+        'changeFailed' => 'ChangeFailed',
+        ]);
     }
 
     //Return response

@@ -918,6 +918,15 @@ $(document).on('click', '.updateUserInfo', function () {
 
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
+function showNotificationBar(message) {
+  var x = document.getElementById("notificationBar");
+  x.innerHTML = message;
+  x.className = "show";
+  setTimeout(function () {
+    x.className = x.className.replace("show", "");
+  }, 3000);
+}
+
 function isEmail(email) {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email);
@@ -967,9 +976,12 @@ function updateUserInfo(userID, userName, userEmail) {
     url: '/update-user-info',
     data: { userID: userID, userName: userName, userEmail: userEmail, _token: token },
     success: function succes(response) {
-      var userNameLink = "#userNameLink_" + userID;
-      $(userNameLink).html(response.newName);
-      console.log(response.newName);
+      if (!response.changeFailed) {
+        var userNameLink = "#userNameLink_" + userID;
+        $(userNameLink).html(response.newName);
+        var notificationMsg = "User information updated";
+        showNotificationBar(notificationMsg);
+      }
     },
     error: function error(response) {
       console.log(response.error);
@@ -999,7 +1011,7 @@ function updateUploadPrivileges(userID, uploadSelection) {
     url: '/update-upload-privileges',
     data: { userID: userID, uploadSelection: uploadSelection, _token: token },
     success: function success(response) {
-      console.log(response.success);
+      showNotificationBar(response.notificationMsg);
     },
     error: function error(response) {
       console.log(response.error);
@@ -1014,7 +1026,7 @@ function updateFolderPrivileges(folderID, userID) {
     url: '/update-user-folder-privileges',
     data: { userID: userID, folderID: folderID, _token: token },
     success: function success(response) {
-      console.log(response.success);
+      showNotificationBar(response.notificationMsg);
     },
     error: function error(response) {
       console.log(response.error);
@@ -1057,7 +1069,7 @@ function updateUserStatus(userID, statusSelection) {
     success: function success(response) {
       var userStatusSpan = '#userStatus_' + userID;
       $(userStatusSpan).html(response.newUserStatus);
-      console.log(response.success);
+      showNotificationBar(response.notificationMessage);
     },
     error: function error(response) {
       console.log(response.error);

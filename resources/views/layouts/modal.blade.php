@@ -73,5 +73,7 @@
   <!-- USER CONTROL -->
   <div class="modal fade" id="userControlModal" role="dialog">
 
-
     </div>
+
+  <!-- Notification bar -->
+  <div id="notificationBar">Notification text...</div>
