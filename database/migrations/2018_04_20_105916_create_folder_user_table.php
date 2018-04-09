@@ -19,7 +19,6 @@ class CreateFolderUserTable extends Migration
           $table->foreign('user_id')->references('id')->on('users');
           $table->integer('folder_id')->unsigned();
           $table->foreign('folder_id')->references('id')->on('folders');
-
       });
     }
 

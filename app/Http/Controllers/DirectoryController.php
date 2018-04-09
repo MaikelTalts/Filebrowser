@@ -31,10 +31,10 @@ class DirectoryController extends Controller
       $directory = end($explodeDirectory);
       //Get folders id, so that it can also be removed from folder_user table
       $directory_id = Folder::where('folder_name', '=' , $directory)->first()->id;
-      //Delete folder from folders table
-      $db_dir = Folder::where('folder_name', '=' , $directory)->delete();
       //Delete folder from folder_user table
       DB::table('folder_user')->where('folder_id', '=', $directory_id)->delete();
+      //Delete folder from folders table
+      Folder::where('folder_name', '=' , $directory)->delete();
       //Needs to be changed to ajax call!! (Works, but ugly AF)
   }
     return back();
