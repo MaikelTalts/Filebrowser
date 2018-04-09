@@ -105,8 +105,15 @@ class DirectoryController extends Controller
     $files = storage_path('app/' . $directory);
     //Create new zip with the directory name and add all files that were doind into it.
     $zipper = Zipper::make($name . ".zip")->folder($name)->add($files)->close();
-    //Return the zip file download as resut, and delete it from system folder after that.
-    return response()->download(public_path("/") . $name . ".zip")->deleteFileAfterSend(true);
+    //Check if the zip file exists, (if selected directory is empty, it wont create zip)
+    if(file_exists($name . ".zip")){
+      //Return the zip file download as resut, and delete it from system folder after that.
+      return response()->download(public_path("/") . $name . ".zip")->deleteFileAfterSend(true);
+    }
+    else{
+      return back()->with('error', 'Kansio on tyhjä, eikä zip tiedostoa luotu');;
+    }
+
   }
 
 }
