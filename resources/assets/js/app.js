@@ -28,8 +28,9 @@ $.ajaxSetup({
   }
 });
 
-// == == == == == == == == == GLOBAALIT MUUTTUJAT == == == == == == == ==  //
-Old_name = ""; // Globaalit muuttujat [Vanha nimi], sekä tiedoston polku, joka poistetaan tiedostoa uudelleen nimettäessä.
+// == == == == == == == == == GLOBAL VARIABLES == == == == == == == ==  //
+// Global variables [Important!]
+Old_name = "";
 adress = "";
 
 // == == == == == == == == == == BUTTON CLICK == == == == == == == == == == == //
@@ -45,41 +46,25 @@ $(document).on('change', '.userStatusSelection', function(){
   updateUserStatus(userID, statusSelection);
 });
 
-$('.privileges-1').on('click', function () {
-  //Käyttäjän klikatessa update painiketta, saman rivin valinta, muutettavan ID sekä success ja error kuvakkeet lähetetään funktiolle sitä kutsuttaessa.
-  //updateUserStatus($(this).siblings('.select'), $(this).siblings('.userId'), $(this).siblings('.privileges_success'), $(this).siblings('.privileges_error'));
-});
-
-$('.select').on('click', function () {
-  //Käyttäjän klikatessa mitä tahansa select dropdownia kaikki tähänastiset success ja error kuvakkeet poistetaan näkyvistä
-  $('.privileges_success').fadeOut(700, function () {
-    // Animation complete.
-  });
-  $('.privileges_error').fadeOut(700, function () {
-    // Animation complete.
-  });
-});
-
 $(document).on('click', '.deleteUser', function(){
   var userID = $('#userNameTitle').attr('value');
-  //Varmistetaan käyttäjän poisto
+  //Confirm user deletion
   if (!confirm("Are you sure you wanna delete this user?") == true) {
-    console.log("Painoit ei");
-  } else {
+  }
+  else {
     deleteUser(userID);
-    console.log("Painoit kyllä");
   }
 });
 
 $('.btn-delete').on('click', function (e) {
-  //Haetaan käyttäjältä varmistus tiedoston poistoon.
+  //Get user confirmation for file deletion
   if (!confirm("haluatko varmasti poistaa tämän tiedoston?")) {
     e.preventDefault();
   }
 });
 
 $('.btn-delete-folder').on('click', function (e) {
-  //Haetaan käyttäjältä varmistus tiedostojen poistoon.
+  //Get user confirmation for folder deletion
   if (!confirm("Haluatko varmasti poistaa tämän kansion?")) {
     e.preventDefault();
   }
@@ -88,19 +73,20 @@ $('.btn-delete-folder').on('click', function (e) {
 $('.btn-create-directory').on('click', function () {
   createDirectory($("#directoryName").val());
 });
-/* Käyttäjän klikatessa mitä tahansa rename classin painiketta, kaikki saman sivun rename painikkeet poistetaan näkyvistä,
-confirm & cancel painikkeet tuodaan näkyville ja käynnistetään createInputForRename funktio.*/
+
+// When user clicks any rename class button, hide all rename buttons and bring the confirm and cancel buttons on the same row visible. Start createInputForRename function.
 $('body').on('click', '.rename', function () {
   $(this).siblings('.confirm').show(250);
   $(this).siblings('.cancel').show(250);
   $('.rename').hide(250);
   $('.download').hide(250);
-  $("#notification_close-success").trigger("click"); // Käytetään notificationin-success piilottamiseen samaa toimintoa kuin myöhemmin luodun painikkeen funktiossa.
-  $("#notification_close-danger").trigger("click"); // Käytetään notification-danger piilottamiseen samaa toimintoa kuin myöhemmin luodun painikkeen funktiossa.
+  //Hide all the current notifications
+  $("#notification_close-success").trigger("click");
+  $("#notification_close-danger").trigger("click");
   showInputForRename($(this).siblings('.file_name_input'), $(this).siblings('.file_name'), $(this).siblings('.old_path'));
 });
-/* Käyttäjän klikatessa confirm painiketta cancel ja confirm painikkeet piilotetaan näkyvistä,
-rename painikkeet tuodaan näkyville, ja käynnistetään switchBackToSpan funktio.*/
+
+//After clicking confirm, hide both confirm and cancel buttons and bring rename buttons back to visible
 $('body').on('click', '.confirm', function () {
   $('.cancel').hide(250);
   $('.confirm').hide(250);
@@ -108,8 +94,8 @@ $('body').on('click', '.confirm', function () {
   $('.download').show(250);
   switchBackToSpan($(this).siblings('.file_name'), $(this).siblings('.file_name_input'), $(this).siblings('.old_path'));
 });
-/* Käyttäjän klikatessa cancel painiketta, cancel ja confirm painikkeet piilotetaan näkyvistä,
-rename painikkeet tuodaan näkyville, ja käynnistetään returnOldName funktio.*/
+
+//After clicking cancel, hide both confirm and cancel buttons and bring rename buttons back to visible
 $('.cancel').on('click', function () {
   $('.cancel').hide(250);
   $('.confirm').hide(250);
@@ -117,9 +103,7 @@ $('.cancel').on('click', function () {
   $('.download').show(250);
   returnOldName($(this).siblings('.file_name'), $(this).siblings('.file_name_input'), $(this).siblings('.old_path'));
 });
-
-/*Käyttäjän klikatessa notification_success tai notification_dangerissa sijaitsevaa raksia painiketta. Ilmoitus piilotetaan hitaasti himmentämällä,
-nämä molemmat triggeröidään myös käyttäjän klikatessa mitä tahansa rename luokan painiketta. */
+//After clicking the x in both success and error notifications it closes the notification with slow fadeout.
 $('#notification_close-success').click(function () {
   $("#rename_notification_success").fadeOut("slow", function () {
     $('#upload_message').hide();
@@ -151,22 +135,27 @@ $(document).on('click', '.userLink', function(){
   printUserPage(userID);
 });
 
+/*This jquery line watches if current user is making changes in settings page on users. If the user clicks the updateUserInfo button, it starts
+  updateUserInfo function */
 $(document).on('click', '.updateUserInfo', function(){
   var userID = $('#userNameTitle').attr('value');
   var userName = $('#userName').val();
   var userEmail = $('#userEmail').val();
+  //Checks if the received email is in correct form.
   var correctEmail = isEmail(userEmail);
   if(correctEmail == true){
     updateUserInfo(userID, userName, userEmail);
   }
   else{
-
+    var notificationMsg = "Check the email"
+    showNotification(notificationMsg, "#CC0000");
   }
-
 });
 
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
+/*This function shows up the notificationBar from layouts/modal.blade.php. It requires message and background color that depends on if the user action
+  is successful or not. */
 function showNotification(message, background){
   var x = document.getElementById("notificationBar");
   x.innerHTML = message;
@@ -175,6 +164,7 @@ function showNotification(message, background){
   setTimeout(function(){x.className = x.className.replace("show", "");}, 3000);
 }
 
+//This function is called when user clicks on .updateUserInfo class button, it checks if received email is in correct form
 function isEmail(email){
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email);
@@ -218,6 +208,7 @@ function returnOldName(span, input, oldPath) {
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
 
+//This function updates the current user in open modal.
 function updateUserInfo(userID, userName, userEmail){
   $.ajax({
     method:'POST',
@@ -226,9 +217,13 @@ function updateUserInfo(userID, userName, userEmail){
     success: function succes(response){
       if(!response.changeFailed){
         var userNameLink = "#userNameLink_" + userID;
-        $(userNameLink).html(response.newName);
         var notificationMsg = "User information updated";
+        $(userNameLink).html(response.newName);
         showNotification(notificationMsg, "#2BBBAD");
+      }
+      else{
+        var notificationMsg = "Check the name";
+        showNotification(notificationMsg, "#CC0000");
       }
     },
     error: function error(response){
@@ -237,6 +232,7 @@ function updateUserInfo(userID, userName, userEmail){
   });
 }
 
+//This function is used to get user information from database and to print it inside userControlModal element inside layouts/modal.blade.php
 function printUserPage(userID){
   $.ajax({
     method:'POST',
@@ -286,34 +282,34 @@ function updateFolderPrivileges(folderID, userID){
 
 
 function switchBackToSpan(span, $input, oldPath) {
-
-  //Suoritetaan nimenmuutos palvelimella. Onnistuessaan muuttaa nimen palvelimella ja sivulla. Epäonnistuessa palauttaa sivulle aikaisemman nimen, palvelimella ei muutosta.
-  $.ajax({ //Ajax pyyntö joka lähettää mukanaan tiedoston vanhan nimen, uuden nimen, sekä istunnon CSRF tokenin
+// Run namechange in server, if it success it also changes the name in front page as well. If namechange fails it returns the original name.
+  $.ajax({
     method: 'POST',
     url: urlRename,
     data: { OldName: oldPath.text(), NewName: adress + "/" + $input.val(), _token: token },
     success: function success(response) {
-      // Jos [FileController@rename palauttaa success]:in suoritetaan, nimen visuaalisella puolella nimenvaihto uuteen, ja näytetään preloade ennen nimen vaihtoa.
-      $("#rename_notification_success").fadeIn("fast"); //Tuodaan preloader alert elementti nopeasti näkyville.
+      // Show preloader before changing the name on page
+      $("#rename_notification_success").fadeIn("fast");
       $('#loader1').show("fast").delay(2000).hide("fast", function () {
-        //Tuodaan preloader näkyville, joka pyörii 2sec, jonka jälkeen katoaa.
-        $('#upload_message').show().delay(1000); //Nöytetän ilmoitus onnistuneesta nimenmuutoksesta.
-        $($input).hide(); //Piilotetaan input kenttä
-        $(span).text(response['new_name']); //Muutetaan span elementin teksti uudeksi vastaanotetuksi tekstiksi
+        //Show preloader before change
+        $('#upload_message').show().delay(1000);
+        $($input).hide();
+        $(span).text(response['new_name']);
         $(oldPath).text(response['new_path']);
-        $(span).show(); //Tuodaan span elementti näkyville
+        $(span).show();
       });
     },
     error: function error(response) {
-      //Jos [FileController@rename palauttaa error] koodin, suoritetaan nimen palautus ennalleen
-      returnOldName(span, $input, oldPath); //Kutsutaan returnOldName funktiota, lähetetään span ja input elementit mukana.
-      $("#rename_notification_danger").fadeIn("slow"); //Jos nimenmuutos ei onnistunut tulostetaan virheilmoitus
+      //If namechange does not success then return the old name back
+      returnOldName(span, $input, oldPath);
+      $("#rename_notification_danger").fadeIn("slow");
     }
   });
 }
 
 function updateUserStatus(userID, statusSelection) {
-  $.ajax({ //Suoritetaan käyttöoikeuksien muutos ajax kutsuna
+  //This function runs ajax to change selected users status.
+  $.ajax({
     method: 'POST',
     url: urlPrivilege,
     data: { statusSelection: statusSelection, userID: userID, _token: token },
@@ -328,6 +324,7 @@ function updateUserStatus(userID, statusSelection) {
   });
 }
 
+//This function runs ajax to delete selected user. It also requires confirmation.
 function deleteUser(userID) {
   $.ajax({
     method: 'POST',
@@ -348,6 +345,7 @@ function deleteUser(userID) {
   });
 }
 
+//This function creates directory with ajax call.
 function createDirectory(value) {
   //Luodaan kansio ajax kutsulla.
   var path = $('#adress').html();
@@ -358,11 +356,8 @@ function createDirectory(value) {
     success: function success(response) {
 
       console.log(response.success); //Jos kansion luonti onnistuu, luodaan kansiorivi, johon sijoitetaan käyttäjän kirjoittama kansion nimi, sekä poisto painike.
-      console.log(path);
-      $('.directories').append($('<li></li>').attr('class', 'list-group-item folder').append($('<a></a>').attr('href', "/" + path + "/" + value).append($('<span>').attr('class', 'tab').append(path + "/" + value))).append($('<a>Delete</a>').attr({
-        "class": "btn btn-danger btn-delete-folder pull-right",
-        "href": "/delete-folder/" + path + "/" + value,
-        "role": "button" })));
+      console.log(response.append);
+      $('.directories').append(response.append);
     },
     error: function error(response) {
       console.log(response.error);
@@ -370,18 +365,16 @@ function createDirectory(value) {
   });
 }
 
+//This function updates selected users (in settings modal), privilege to selected folder
 function userDirectoryPrivileges(userID) {
   $.ajax({
     method: 'POST',
     url: '/user-directory-privileges',
     data: { userId: userID, _token: token },
     success: function success(response) {
-      //$(response.success).appendTo(".directorylist");
       $('.directorylist').show(100, function () {
         $('.directorylist').html(response.success);
       });
-
-      //$('.directory-list').html(ajaxresponse);
     },
     error: function error(response) {
       console.log(response.error);

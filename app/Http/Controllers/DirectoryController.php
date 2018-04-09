@@ -82,8 +82,14 @@ class DirectoryController extends Controller
           ]);
         }
   }
+
+    $dirElement = "<li class='list-group-item folder'>
+                  <a href='/$creation_directory/$directory_name'><span>$directory_name</span></a>
+                  <a href='/delete-folder/$creation_directory/$directory_name' class='btn btn-danger btn-delete-folder pull-right 'role='button'><i class='far fa-trash-alt'></i></a>
+                  <a href='/download-zip/$creation_directory/$directory_name' class='btn btn-success pull-right' role='button'><i class='fas fa-download'></i></a></li>";
     //Send response if the function was successful or not.
     return response()->json([
+                'append' => $dirElement,
                 'success'  => "Kansio luotu onnistuneesti",
                 'error'    => "Virhe kansiota luodessa"
             ]);
@@ -98,9 +104,9 @@ class DirectoryController extends Controller
     //Check all files and folders in received directory
     $files = storage_path('app/' . $directory);
     //Create new zip with the directory name and add all files that were doind into it.
-    $zipper = Zipper::make('public/' . $name . ".zip")->folder($name)->add($files)->close();
+    $zipper = Zipper::make($name . ".zip")->folder($name)->add($files)->close();
     //Return the zip file download as resut, and delete it from system folder after that.
-    return response()->download(public_path('public/') . $name . ".zip")->deleteFileAfterSend(true);
+    return response()->download(public_path("/") . $name . ".zip")->deleteFileAfterSend(true);
   }
 
 }
