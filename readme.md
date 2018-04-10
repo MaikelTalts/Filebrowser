@@ -1,20 +1,19 @@
-# Online File Manager
-Online file manager is basically an open source cloud storage created with Laravel, PHP, jQuery and JS. File management system allows you to share your files with co-workers and customers if you wish so.
+# Online Filebrowser
+Online Filebrowser is basically an open source cloud storage created with Laravel, PHP, jQuery and JS. File management system allows you to share your files with co-workers and customers if you wish so.
 
 ## About
-The file manager's usage is quite easy and straight forward.
+The filebrowser's usage is quite easy and straight forward.
 
 - Create directories and fill them with files.
 - Control user privileges to access directories and upload files.
 - Download directories as zip files.
 
 ## Installation guide
-
-To get file manager to work, you need to run following installation steps.
-If you already have Xampp, composer, git and laravel on your PC then head straight to **4.0**
+Run the following installation steps
+If you already have Xampp, composer and git on your computer then head straight to **4.0**
 
 ### 1.0 [Xampp](https://www.apachefriends.org/index.html)
-You need MySQL-database to use file manager, you can get one from [here](https://www.apachefriends.org/index.html).
+You need MySQL-database to use filebrowser, you can get one from [here](https://www.apachefriends.org/index.html).
 Run the default installation.
 
 ### 2.0 [Composer](https://getcomposer.org/download/)
@@ -27,7 +26,7 @@ php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece38
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 ```
-Run command: ```php composer.phar```to see if your installation was successful.
+Run command: ```php composer.phar``` to see if your installation was successful.
 
 **2.2 Global installation [Recommended]**
 Run the same commands as in Local installation and after that run following command
@@ -42,18 +41,18 @@ If you see composer text with list of all usable commands, then the installation
 
 ### 4.0 [Laravel](https://laravel.com/docs/5.6/installation)
 
-**4.1 Download file manager**
-- Open terminal and change your current working directory to XAMPP/htdocs
+**4.1 Download filebrowser**
+- Open terminal and change your current directory to where you want to download the filebrowser
 - Run following command ```git clone git@github.com:MaikelTalts/Laravel_project_2017.git```
 
 **4.2 Install composer**
-- In terminal open recently downloaded Laravel_project_2017
+- In terminal open recently downloaded Laravel_project_2017 directory
 - Run command ```composer install``` or ```php composer.phar install```.
 
 **4.3 Database**
 - Open Xampp and start MySQL Database and apache server.
-- Head to http://localhost/phpmyadmin/ and create new database for file manager.
-- **Recommended** Create new user for your database instead of using ```root``` and ``` ```, you can use this created user at next step.
+- Head to http://localhost/phpmyadmin/ and create new database for filebrowser.
+- **Recommended** Create new user for your database instead of using ```root``` and ``` ```, you can use created user at next step.
 
 **4.4 .env file**
 - Rename ```.env.example``` file as ```.env``` and fill it with your database information.
@@ -61,9 +60,9 @@ If you see composer text with list of all usable commands, then the installation
 - Add ```ROOTFOLDER=public/``` at the end of .env file and save your changes.
 
 **4.5 Migrations**
-- Open terminal and head inside downloaded Laravel_project_2017 directory and run command: ``` php artisan migrate ```
+- Run command: ``` php artisan migrate ```
 
-**4.6 start the file manager**
+**4.6 start the filebrowser**
 - After migration run command ```php artisan serve ```
 - Head to ```localhost:8000``` in your browser.
 
