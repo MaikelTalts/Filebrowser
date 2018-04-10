@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('user_upload_privilege')->length(1)->default(1);
         });
 
-        // Insert some stuff
+        // Insert admin account right away, as the admin is hard coded to be account ID -> 1
     DB::table('users')->insert(
         array(
             'name' => 'admin',
