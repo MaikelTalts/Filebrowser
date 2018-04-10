@@ -17,7 +17,7 @@ You need MySQL-database to use file manager, you can get one from [here](https:/
 Run the default installation.
 
 ### 2.0 [Composer](https://getcomposer.org/download/)
-Install composer using following commands in your Mac terminal or PC Command Prompt
+Install composer using following commands in your terminal.
 
 **2.1 Local installation**
 Move to the location where you want to install composer, and run following commands one line at a time.
@@ -35,21 +35,31 @@ mv composer.phar /usr/local/bin/composer
 Run command: ```composer``` to see if composer is globally installed.
 If you see composer text with list of all usable commands, then the installation is successful.
 
-### 3.0 [Laravel](https://laravel.com/docs/5.6/installation)
+### 3.0 [Git](https://git-scm.com/)
+- Download and run default installation
+
+### 4.0 [Laravel](https://laravel.com/docs/5.6/installation)
 After installing composer successfully run: ```composer global require "laravel/installer"```
 
-**3.1 Download file manager**
-- Download and extract the the Laravel_project_2017.zip to XAMPP/htdocs folder.
+**4.1 Download file manager**
+- Open terminal and change your current working directory to the location where you want to download the file manager.
+- Run following command ```git clone git@github.com:MaikelTalts/Laravel_project_2017.git```
 
-**3.2 .env file**
+**4.2 Install composer**
+- In terminal change your current directory inside recently downloaded Laravel_project_2017
+- Run command ```composer install``` or ```php composer.phar install```.
+
+**4.3 .env file**
 - Rename ```.env.example``` file as ```.env``` and fill it with your database information, if you don't know it open xampp and start MySQL database and apache server and head to ```http://localhost/phpmyadmin/```.
 - Add ```ROOTFOLDER=public/``` at the end of .env file.
 - Run command: ```php artisan key:generate```.
 
-**3.3 start the file manager**
+**4.4 Migrations**
 - Open XAMPP and start the MySQL Database.
-- Open terminal or command prompt and head to the extraction point. For example: ```cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser``` and run command: ``` php artisan migrate ```
+- Open terminal and head to the extraction point. For example: ```cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser``` and run command: ``` php artisan migrate ```
+
+**4.5 start the file manager**
 - After migration run command ```php artisan serve ```
-- Now head to ```localhost:8000``` in your browser.
+- Head to ```localhost:8000``` in your browser.
 
 Login with E-mail:```admin@email.com``` and Password:```1q2w3e4r```
