@@ -49,4 +49,5 @@ composer global require "laravel/installer"
 - Open terminal or command prompt and head to the place where you extracted the project zip file. For example: cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser and run command:
 - ``` php artisan migrate ``` This will create all the needed tables into the database and also one user account for signing in right away.
 - After migration run command ```php artisan serve ```
-- Now head to localhost:8000 and start using your file manager
+- Now head to ```localhost:8000``` with your browser.
+- Login with ```admin@email.com``` and ```1q2w3e4r```
