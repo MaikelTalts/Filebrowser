@@ -127,6 +127,14 @@ class UserController extends Controller
   function printUserPage(Request $request){
     //Request user's ID
     $userID = $request['userID'];
+
+    $currentUserID = Auth::user()->id;
+    if($userID == 1 && $currentUserID != 1 ){
+        return response()->json([
+          'denied' => true,
+          'error' => "You do not have permission to admin settings!"
+        ]);
+    }
     //Select user that has the same id as requested
     $user = User::find($userID);
     //Select all folders that user has access to

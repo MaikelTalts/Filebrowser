@@ -992,8 +992,12 @@ function printUserPage(userID) {
     url: '/pring-user-page',
     data: { userID: userID, _token: token },
     success: function success(response) {
-      $('#userControlModal').html(response.success);
-      $('#userControlModal').modal('toggle');
+      if (response.denied) {
+        showNotification(response.error, "#CC0000");
+      } else {
+        $('#userControlModal').html(response.success);
+        $('#userControlModal').modal('toggle');
+      }
     },
     error: function error() {
       console.log("Ei toimi");
