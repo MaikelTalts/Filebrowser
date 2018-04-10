@@ -36,11 +36,20 @@ Run command: ```composer``` to see if composer is globally installed.
 If you see composer text with list of all usable commands, then the installation is successful.
 
 ### 3.0 [Laravel](https://laravel.com/docs/5.6/installation)
-After installing composer successfully run:```composer global require "laravel/installer"```
+After installing composer successfully run: ```composer global require "laravel/installer"```
 
+**3.1 Download file manager**
 - Download and extract the the Laravel_project_2017.zip to XAMPP/htdocs folder.
+
+**3.2 .env file**
+- Rename ```.env.example``` file as ```.env``` and fill it with your database information, if you don't know it open xampp and start MySQL database and apache server and head to ```http://localhost/phpmyadmin/```.
+- Add ```ROOTFOLDER=public/``` at the end of .env file.
+- Run command: ```php artisan key:generate```.
+
+**3.3 start the file manager**
 - Open XAMPP and start the MySQL Database.
 - Open terminal or command prompt and head to the extraction point. For example: ```cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser``` and run command: ``` php artisan migrate ```
 - After migration run command ```php artisan serve ```
 - Now head to ```localhost:8000``` in your browser.
-- Login with E-mail:```admin@email.com``` and Password:```1q2w3e4r```
+
+Login with E-mail:```admin@email.com``` and Password:```1q2w3e4r```
