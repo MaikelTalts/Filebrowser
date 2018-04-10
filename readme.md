@@ -13,7 +13,7 @@ Online file manager is basically an open source cloud storage created with Larav
 To get file manager to work, you need to run following installation steps.
 
 ### 1.0 Xampp
-You need a database to use file manager, you can download one from [here](https://www.apachefriends.org/index.html).
+You need a MySQL-database to use file manager, you can get one from [here](https://www.apachefriends.org/index.html).
 Run the default installation.
 
 ### 2.0 Composer
@@ -32,6 +32,11 @@ Run the same commands as in Local installation and after that run following comm
 ```
 mv composer.phar /usr/local/bin/composer
 ```
+Now test ifthe composer is globally installed and run command:
+```
+composer
+```
+If you see composer text with list of all usable commands, then the global installation is successful.
 
 ### 3.0 Laravel
 After installing installing composer successfully run following command.
