@@ -20,7 +20,7 @@ Run the default installation.
 Install composer using following commands in your Mac terminal or PC Command Prompt
 
 **2.1 Local installation**
-Move to the location where you want to install composer.
+Move to the location where you want to install composer. And run following commands one line at a time.
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -43,3 +43,8 @@ After installing installing composer successfully run following command.
 ```
 composer global require "laravel/installer"
 ```
+
+- Download the the Laravel_project_2017 as zip file, and extract it to XAMPP/htdocs folder.
+- Start XAMPP and start the MySQL Database.
+- Open terminal or command prompt and head to the place where you extracted the projext zip file. For example: cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser and run command:
+- ``` php artisan migrate ``` 
