@@ -12,11 +12,11 @@ Online file manager is basically an open source cloud storage created with Larav
 
 To get file manager to work, you need to run following installation steps.
 
-### 1.0 Xampp
+### 1.0 [Xampp](https://www.apachefriends.org/index.html)
 You need a MySQL-database to use file manager, you can get one from [here](https://www.apachefriends.org/index.html).
 Run the default installation.
 
-### 2.0 Composer
+### 2.0 [Composer](https://getcomposer.org/download/)
 Install composer using following commands in your Mac terminal or PC Command Prompt
 
 **2.1 Local installation**
@@ -38,13 +38,15 @@ composer
 ```
 If you see composer text with list of all usable commands, then the global installation is successful.
 
-### 3.0 Laravel
+### 3.0 [Laravel](https://laravel.com/docs/5.6/installation)
 After installing installing composer successfully run following command.
 ```
 composer global require "laravel/installer"
 ```
 
 - Download the the Laravel_project_2017 as zip file, and extract it to XAMPP/htdocs folder.
-- Start XAMPP and start the MySQL Database.
-- Open terminal or command prompt and head to the place where you extracted the projext zip file. For example: cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser and run command:
-- ``` php artisan migrate ``` 
+- Open XAMPP and start the MySQL Database.
+- Open terminal or command prompt and head to the place where you extracted the project zip file. For example: cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser and run command:
+- ``` php artisan migrate ``` This will create all the needed tables into the database and also one user account for signing in right away.
+- After migration run command ```php artisan serve ```
+- Now head to localhost:8000 and start using your file manager
