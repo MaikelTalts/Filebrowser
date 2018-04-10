@@ -1,19 +1,19 @@
-# Online File Management System
-Online file manager is basically an open source cloud storage created with Laravel. File management system allows you to share your files with co-workers or customers.
+# Online File Manager
+Online file manager is basically an open source cloud storage created with Laravel, PHP, jQuery and JS. File management system allows you to share your files with co-workers and customers if you wish so.
 
 ## About
- Create directories where to upload your files, then give privileges for users to access that folder or to upload files in it.
+The file manager's usage is quite straight forward and easy.
 
 - Create directories and then fill them with files.
 - Manage user privileges to access directories and upload files.
-- Download directory structures as zip files.
+- Download directories as zip files
 
 ## Install guide
 
 To get file manager to work, you need to run following installation steps.
 
 ### 1.0 [Xampp](https://www.apachefriends.org/index.html)
-You need a MySQL-database to use file manager, you can get one from [here](https://www.apachefriends.org/index.html).
+You need MySQL-database to use file manager, you can get one from [here](https://www.apachefriends.org/index.html).
 Run the default installation.
 
 ### 2.0 [Composer](https://getcomposer.org/download/)
@@ -32,22 +32,19 @@ Run the same commands as in Local installation and after that run following comm
 ```
 mv composer.phar /usr/local/bin/composer
 ```
-Now test ifthe composer is globally installed and run command:
-```
-composer
-```
+Now test if the composer is globally installed and run command: ```composer```
 If you see composer text with list of all usable commands, then the global installation is successful.
 
 ### 3.0 [Laravel](https://laravel.com/docs/5.6/installation)
-After installing installing composer successfully run following command.
+After installing composer successfully run following command.
 ```
 composer global require "laravel/installer"
 ```
 
 - Download the the Laravel_project_2017 as zip file, and extract it to XAMPP/htdocs folder.
 - Open XAMPP and start the MySQL Database.
-- Open terminal or command prompt and head to the place where you extracted the project zip file. For example: cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser and run command:
-- ``` php artisan migrate ``` This will create all the needed tables into the database and also one user account for signing in right away.
+- Open terminal or command prompt and head to the place where you extracted the project zip file. For example: cd /Applications/XAMPP/xamppfiles/htdocs/filebrowser and run command: ``` php artisan migrate ```
+This will create all the needed tables into the database and also one user account for signing in right away.
 - After migration run command ```php artisan serve ```
 - Now head to ```localhost:8000``` with your browser.
-- Login with ```admin@email.com``` and ```1q2w3e4r```
+- Login with E-mail:```admin@email.com``` and Password:```1q2w3e4r```
