@@ -904,6 +904,10 @@ $(document).on('click', '.updateUserInfo', function () {
   }
 });
 
+$(document).on('click', '#userSettings', function () {
+  showUserSettings();
+});
+
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
 /*This function shows up the notificationBar from layouts/modal.blade.php. It requires message and background color that depends on if the user action
@@ -945,8 +949,8 @@ $('#searchByName').keyup(function () {
 });
 
 function showInputForRename(input, span, oldPath) {
-  //Tuodaan input näkyville, tiedoston aikasiemmalla nimellä
-  Old_name = oldPath.text(); //Noudetaan vanha nimi
+  //Bring input back to visible with old filename
+  Old_name = oldPath.text(); //Receive the old filename
   adress = document.getElementById('adress').innerHTML;
   $(input).show();
   $(input).val(span.text());
@@ -954,13 +958,26 @@ function showInputForRename(input, span, oldPath) {
 }
 
 function returnOldName(span, input, oldPath) {
-  //Jos käyttäjä valitsee [Cancel], tuodaan vanha <span> teksti takaisin. (Vastaanotetaan span ja input elementit)
-  $(input).hide(); //Piilotetaan input kenttä näkyvistä
-  $(span).text(span.text()); //Muutetaan span elementin tekstiksi tiedoston vanha nimi
-  $(span).show(); //Tuodaan span elementti näkyville
+  //If user selects [Cancel], bring back the old <span> text back.
+  $(input).hide();
+  $(span).text(span.text());
+  $(span).show();
 }
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
+
+function showUserSettings() {
+  $.ajax({
+    method: 'POST',
+    url: 'show-user-settings',
+    data: { _token: token },
+    success: function success(response) {
+      $('#userControlModal').html(response.success);
+      $('#userControlModal').modal('toggle');
+    },
+    error: function error(response) {}
+  });
+}
 
 //This function updates the current user in open modal.
 function updateUserInfo(userID, userName, userEmail) {
@@ -974,6 +991,11 @@ function updateUserInfo(userID, userName, userEmail) {
         var notificationMsg = "User information updated";
         $(userNameLink).html(response.newName);
         showNotification(notificationMsg, "#2BBBAD");
+        //If the currently edited user is same user that has logged in, update the name in navigation and modal as well.
+        if (response.sameUser == true) {
+          $('#userNavigation').text(response.newName);
+          $('#userNameTitle').text(response.newName);
+        }
       } else {
         var notificationMsg = "Check the name";
         showNotification(notificationMsg, "#CC0000");
