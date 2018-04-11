@@ -1,5 +1,5 @@
 # Online Filebrowser
-Online Filebrowser is basically an open source cloud storage created with Laravel, PHP, jQuery and JS. File management system allows you to share your files with co-workers and customers if you wish so.
+Online Filebrowser is basically an open source cloud storage created with Laravel, PHP, jQuery and JS. Filebrowser allows you to share your files with co-workers and customers if you wish so.
 
 ## About
 The filebrowser's usage is quite easy and straight forward.
@@ -10,7 +10,7 @@ The filebrowser's usage is quite easy and straight forward.
 
 ## Installation guide
 Run the following installation steps
-If you already have Xampp, composer and git on your computer then head straight to step **4.0**
+If you already have XAMPP, composer and git on your computer then head straight to step **4.0**
 
 ### 1.0 [Xampp](https://www.apachefriends.org/index.html)
 You need MySQL-database to use filebrowser, you can get one from [here](https://www.apachefriends.org/index.html).
