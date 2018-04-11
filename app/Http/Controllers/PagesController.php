@@ -62,9 +62,11 @@ class PagesController extends Controller
     /*check if folders table contains name of old folders, that does not exist
       anymore, remove them from database.*/
     foreach($folders as $folder){
+      $folderID = $folder->id;
       $name = $folder->folder_name;
       $directories = str_replace(env('ROOTFOLDER'), '', $directories );
       if(!in_array($name, $directories)) {
+        DB::table('folder_user')->where('folder_id', '=', $folderID)->delete();
         $folder->delete();
       }
     }
