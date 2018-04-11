@@ -21,44 +21,59 @@ class FileController extends Controller
 
 //Upload function
 public function upload(Request $request){
-
-  if($request->hasFile('file')){                                            //Tarkistetaan onko käyttäjä valinnut lähetettävää tiedostoa.
-    $this->validate($request, [                                             //Tarksitetaan onko lähetettävä tiedosto jokin seuraavista tiedostomuodoista.
+  //Checks if user has selected a file to send.
+  if($request->hasFile('file')){
+    //Check if file is any of following file types
+    $this->validate($request, [
       'file'  => 'required|mimetypes:image/jpeg,image/png,
       image/jpg,image/gif,image/svg+xml,text/plain|max:2048',
     ]);
-    $polku = $request->invisible;                                           //Noudetaan piilotetun lomakekentän sisältö (polku)
-    $file = $request->file('file');                                         //Tallennetaan lähetettävä tiedosto muuttujaan
-    $filename = $file->getClientOriginalName();                             //Noudetaan tiedoston alkuperäinen nimi
-    $request->file('file')->storeAs($polku, $filename);                     //Tallennetaan tiedosto luotuun $polku muuttujan sijaintiin, sekä tiedoston alkuperäisellä nimellä
-    return back()->with('success', 'Tiedoston lähetys onnistui');           //Palautetaan käyttäjä sivulle, jossa hän oli.
+    //Get the content of hidden form input (path).
+    $polku = $request->invisible;
+    //Save the file to variable
+    $file = $request->file('file');
+    //Get the files original name
+    $filename = $file->getClientOriginalName();
+    //Save the file into the received path variable with the files original name
+    $request->file('file')->storeAs($polku, $filename);
+    //Return the user back to where he was (Refresh page)
+    return back()->with('success', 'Tiedoston lähetys onnistui');
   }
-  else {                                                                    //Jos käyttäjä ei ole valinnut lähetettävää tiedostoa, palautetaan takaisin sivulle virheilmoituksen kanssa
+  //If user did not select file to upload, refresh page and send error notification
+  else {
     return back()->with('error', 'Valitse lähetettävä tiedosto');
   }
 }
 
-//Delete function
 public function delete($file){
-  Storage::delete($file);                                                   //Poistaa vastaanotetun tiedoston nimisen tiedoston.
-  return back()->with('delete', 'Tiedoston poisto onnistui');               //Päivittää sivun ja lähetää mukana ilmoituksen onnistuneesta tiedoston poistosta
+  //Deletes the file that it received.
+  Storage::delete($file);
+  //Updates page and shows notification about the successful deleton.
+  return back()->with('delete', 'Tiedoston poisto onnistui');
 }
 
-//Rename function
 public function rename(Request $request){
-$search = array("Å","å","Ä","ä","Ö","ö", " ");                                   //Muuttuja johon on sijoitettu lista kirjaimista, jotka korvataan.
-$replace = array("A","a","A","a","O","o", "_");                                  //Muuttuja johon on sijoitettu lista korvaavista kirjaimista.
+  //Array that contains letters that will be replaced
+$search = array("Å","å","Ä","ä","Ö","ö", " ");
+  //Variable that contains letters that will replace the previous arrays letters
+$replace = array("A","a","A","a","O","o", "_");
 
-$old_name = $request['OldName'];                                            //Muuttuja johon noudetaan tiedoston vanha nimi
-$new_name = $request['NewName'];                                            //Muuttuja johon noudetaan tiedoston uusi nimi
+  //Variable that receives old file name
+$old_name = $request['OldName'];
+  //Variable that receives new file name
+$new_name = $request['NewName'];
 
-$new_name = str_replace($search, $replace, $new_name);                      //Tarkistetaan ja poistetaan tiedoston uudesta nimestä aikaisemmin määritellyt ääkköset
-$result = preg_replace('/[^a-zA-Z0-9-_\/.]/','', $new_name);                //Tarkistaa ja poistaa tiedoston uudesta nimestä kaikki erikoismerkit
+//Check and remove letters from new file name
+$new_name = str_replace($search, $replace, $new_name);
+//Checks and removes all special characters from the new file name
+$result = preg_replace('/[^a-zA-Z0-9-_\/.]/','', $new_name);
 
-Storage::move($old_name,$result);                                           //Siirtää tiedoston nykyiseen sijaintiin uudella nimellä
+//Moves the file back to its current location with new name
+Storage::move($old_name,$result);
 $newFileNameExpl = explode("/", $result);
 $newFileName = end($newFileNameExpl);
-return response()->json([                                                   //Palauttaa ajaxille tiedon nimenmuutoksen onnistumisesta/epäonnistumisesta, uuden nimen ja vanhan nimen.
+//Returns ajax response if the rename was successful or not, new name and old name
+return response()->json([
             'old_name' => $old_name,
             'new_path' => $result,
             'new_name' => $newFileName,
@@ -68,6 +83,7 @@ return response()->json([                                                   //Pa
 }
 
 public function download($file) {
+  //Starts download with the received file
 return response()->download(storage_path('app/').$file);
 }
 

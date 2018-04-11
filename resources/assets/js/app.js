@@ -191,8 +191,8 @@ $('#searchByName').keyup(function(){
 });
 
 function showInputForRename(input, span, oldPath) {
-  //Tuodaan input näkyville, tiedoston aikasiemmalla nimellä
-  Old_name = oldPath.text(); //Noudetaan vanha nimi
+  //Bring input back to visible with old filename
+  Old_name = oldPath.text(); //Receive the old filename
   adress = document.getElementById('adress').innerHTML;
   $(input).show();
   $(input).val(span.text());
@@ -200,10 +200,10 @@ function showInputForRename(input, span, oldPath) {
 }
 
 function returnOldName(span, input, oldPath) {
-  //Jos käyttäjä valitsee [Cancel], tuodaan vanha <span> teksti takaisin. (Vastaanotetaan span ja input elementit)
-  $(input).hide(); //Piilotetaan input kenttä näkyvistä
-  $(span).text(span.text()); //Muutetaan span elementin tekstiksi tiedoston vanha nimi
-  $(span).show(); //Tuodaan span elementti näkyville
+  //If user selects [Cancel], bring back the old <span> text back.
+  $(input).hide();
+  $(span).text(span.text());
+  $(span).show();
 }
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //

@@ -59,10 +59,10 @@
               <div class="panel panel-primary" >
                 <div class="panel-heading text-center" >
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" style="text-decoration:none;">Directory privileges</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#folderCollapse" style="text-decoration:none;">Directory privileges</a>
                   </h4>
                 </div>
-                  <div id="collapse1" class="panel-collapse collapse">
+                  <div id="folderCollapse" class="panel-collapse collapse">
                     <div class="panel-body" style="padding:0px;">
                       <table class="userControlTable">
                         <tr class="header">
