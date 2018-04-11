@@ -42,7 +42,7 @@ Run command: ```composer``` to see if composer is globally installed.
 
 **4.1 Download filebrowser**
 - Open terminal and change your current directory to where you want to download the filebrowser
-- Run following command ```git clone git@github.com:MaikelTalts/Laravel_project_2017.git```
+- Run following command ```git clone git@github.com:MaikelTalts/Filebrowser.git```
 
 **4.2 Install composer**
 - In terminal open recently downloaded Laravel_project_2017 directory
