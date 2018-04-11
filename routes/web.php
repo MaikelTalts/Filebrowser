@@ -19,42 +19,44 @@ Auth::routes();
 
 Route::get('/', [
   'middleware' => 'auth',
-  'uses' => 'PagesController@index'
-]);                                                                       //Osoitepyyntö "/" , aloittaa funktion "index" --> PagesController
+  'uses' => 'PagesController@index'       //Head to root = /public directory
+]);
 
-Route::get('/settings', 'PagesController@settings');
+Route::get('/settings', 'PagesController@settings');          //Head to view pages/settings.blade.php
 
-Route::post('/update-status', ['uses'=>'UserController@updateStatus','as'=>'updateUserStatus']);   //Käyttäjien oikeuksien muuttaminen
+Route::post('/update-status', ['uses'=>'UserController@updateStatus','as'=>'updateUserStatus']);   //Update selected user's status (Admin or User)
 
-Route::post('/delete-user', ['uses'=>'UserController@deleteUser','as'=>'DeleteUser']);           // Käyttäjän poisto
+Route::post('/delete-user', ['uses'=>'UserController@deleteUser','as'=>'DeleteUser']);           //Delete selected user
 
-Route::post('/update-user-folder-privileges', 'UserController@updateFolderPrivileges');
+Route::post('/update-user-folder-privileges', 'UserController@updateFolderPrivileges');     //update selected users folder privileges (checkbox)
 
-Route::post('/pring-user-page', 'UserController@printUserPage');
+Route::post('/pring-user-page', 'UserController@printUserPage');            //Print selected users setting page
 
-Route::post('update-user-info', 'UserController@updateUserInfo');
+Route::post('/show-user-settings', 'UserController@showUserSettings');      //If the logged in user is someone else than admin, then show current user's settings modal
 
-Route::post('/update-upload-privileges', 'UserController@updateUplaodPrivilege');
+Route::post('update-user-info', 'UserController@updateUserInfo');           //Update current user name & email
 
-Route::get('download/{file}', 'FileController@download')                  //Osoitepyyntö, "/download" aloittaa funkton "download" --> FileController
+Route::post('/update-upload-privileges', 'UserController@updateUplaodPrivilege');     //Update current user's upload privileges
+
+Route::get('download/{file}', 'FileController@download')                  //Download selected file
   ->where(['file' => '.*']);
 
-Route::post('/rename', ['uses'=>'FileController@rename','as'=>'rename']);
+Route::post('/rename', ['uses'=>'FileController@rename','as'=>'rename']);     //Renames current file with the inserted name
 
-Route::post('upload', 'FileController@upload');                           //Osoitepyyntö "/upload", aloittaa funktion "upload" --> FileController
+Route::post('upload', 'FileController@upload');                           //Uploads selected file to filebrowser
 
-Route::post('/create-directory', ['uses'=>'DirectoryController@createDirectory','as'=>'createDirectory']);
+Route::post('/create-directory', ['uses'=>'DirectoryController@createDirectory','as'=>'createDirectory']);      //Creates directory with inserted name
 
-Route::get('delete/{file}', ['uses' => 'FileController@delete'])          //Osoitepyyntö "Mikä tahansa tiedostopolku", aloittaa funktion show --> FileController ja lähettää mukaan kyseisen tiedostopolun.
+Route::get('delete/{file}', ['uses' => 'FileController@delete'])        //Deletes selected file
   ->where(['file' => '.*']);
 
-  Route::get('download-zip/{directory}', ['uses' => 'DirectoryController@downloadDirectory'])    //Osoitepyyntö "download-zip/{directory}" pakkaa valitun valitun kansion sisällön zip tiedostoon ja  aloittaa lähetyksen järjestelmän käyttäjälle.
+  Route::get('download-zip/{directory}', ['uses' => 'DirectoryController@downloadDirectory'])    //Downloads selected directory and all it's content as zip file.
     ->where(['directory' => '.*']);
 
-Route::get('delete-folder/{directory}', 'DirectoryController@deleteDirectory')      //Osoitepyyntö "delete-folder/{directory}" poistaa vastaanotetun tiedostopolun mukaisen kansion järjestelmästä.
+Route::get('delete-folder/{directory}', 'DirectoryController@deleteDirectory')      //Deletes selected directory from filebrowser
   ->where(['directory' => '.*']);
 
-Route::get('{directory}', ['uses' => 'PagesController@show'])             //Osoitepyyntö "Mikä tahansa tiedostopolku", aloittaa funktion show --> PagesController ja lähettää mukaan kyseisen tiedostopolun.
+Route::get('{directory}', ['uses' => 'PagesController@show'])             //Clicked directory will print pages/show.blade.php page with selected directory path
   ->where(['directory' => '.*']);
 
-Route::get('/home', 'PagesController@index');
+Route::get('/home', 'PagesController@index');       //Heads back to root = /public directory

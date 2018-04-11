@@ -159,8 +159,17 @@ class UserController extends Controller
   }
 
   function updateUserInfo(Request $request){
+    //Check the current user's id
+    $currentUser = Auth::user()->id;
     //Request user's ID
     $userID = $request['userID'];
+    if($currentUser == $userID){
+      $sameUser = true;
+    }
+    else{
+      $sameUser = false;
+    }
+
     //Request user's name
     $name = $request['userName'];
     //Request user's email
@@ -180,8 +189,20 @@ class UserController extends Controller
     //Return response
     return response()->json([
       'newName' => $userName,
+      'sameUser' => $sameUser,
       'success' => "Changed",
       'error' => "Failed"
+    ]);
+  }
+
+  function showUserSettings(){
+    $user = Auth::user();
+    $userID = $user->id;
+
+    $userSettingsContent = View::make('pages.userSettings', ['user' => $user])->render();
+    return response()->json([
+      'success' => $userSettingsContent,
+      'error' => "Didn't work"
     ]);
   }
 
