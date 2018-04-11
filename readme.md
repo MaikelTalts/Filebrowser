@@ -10,7 +10,7 @@ The filebrowser's usage is quite easy and straight forward.
 
 ## Installation guide
 Run the following installation steps
-If you already have Xampp, composer and git on your computer then head straight to **4.0**
+If you already have Xampp, composer and git on your computer then head straight to step **4.0**
 
 ### 1.0 [Xampp](https://www.apachefriends.org/index.html)
 You need MySQL-database to use filebrowser, you can get one from [here](https://www.apachefriends.org/index.html).
@@ -19,7 +19,7 @@ Run the default installation.
 ### 2.0 [Composer](https://getcomposer.org/download/)
 
 **2.1 Local installation**
-In your terminal move into the location where you want to install composer, and run following commands one line at a time.
+Open your terminal and change your current directory to where you want to install composer and run following commands one line at a time.
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -29,12 +29,11 @@ php -r "unlink('composer-setup.php');"
 Run command: ```php composer.phar``` to see if your installation was successful.
 
 **2.2 Global installation [Recommended]**
-Run the same commands as in Local installation and after that run following command
+Run the same commands as in local installation and after that run following command
 ```
 mv composer.phar /usr/local/bin/composer
 ```
 Run command: ```composer``` to see if composer is globally installed.
-If you see composer text with list of all usable commands, then the installation is successful.
 
 ### 3.0 [Git](https://git-scm.com/)
 - Download and run default [git](https://git-scm.com/) installation
@@ -52,7 +51,7 @@ If you see composer text with list of all usable commands, then the installation
 **4.3 Database**
 - Open Xampp and start MySQL Database and apache server.
 - Head to http://localhost/phpmyadmin/ and create new database for filebrowser.
-- **Recommended** Create new user for your database instead of using ```root``` and ``` ```, you can use created user at next step.
+- **Recommended** Create new user for your database instead of using ```root``` and ``` ```, you need that created user at the next step.
 
 **4.4 .env file**
 - Rename ```.env.example``` file as ```.env``` and fill it with your database information.
