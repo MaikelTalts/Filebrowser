@@ -139,14 +139,15 @@ $(document).on('click', '.userLink', function(){
   updateUserInfo function */
 $(document).on('click', '.updateUserInfo', function(){
   var userID = $('#userNameTitle').attr('value');
-  var userName = $('#userName').val();
+  var oldUserName = $('#userName').attr("value");
+  var userNameInput = $('#userName').val();
   var userEmail = $('#userEmail').val();
   //Checks if the received email is in correct form.
   var correctEmail = isEmail(userEmail);
   //Check if both password inputs contains the same value
   var correctPassword = checkIfSamePassword();
   if(correctEmail == true){
-    updateUserInfo(userID, userName, userEmail);
+    updateUserInfo(userID, oldUserName, userNameInput, userEmail);
   }
   else{
     var notificationMsg = "Check the email"
@@ -286,11 +287,11 @@ function showUserSettings(){
 }
 
 //This function updates the current user in open modal.
-function updateUserInfo(userID, userName, userEmail){
+function updateUserInfo(userID, oldUserName, userNameInput, userEmail){
   $.ajax({
     method:'POST',
     url: '/update-user-info',
-    data: {userID:userID, userName:userName, userEmail:userEmail, _token:token},
+    data: {userID:userID, oldUserName:oldUserName, userNameInput:userNameInput ,userEmail:userEmail, _token:token},
     success: function succes(response){
       if(!response.changeFailed){
         var userNameLink = "#userNameLink_" + userID;

@@ -24,6 +24,8 @@ Route::get('/', [
 
 Route::get('/settings', 'PagesController@settings');          //Head to view pages/settings.blade.php
 
+Route::get('/activity', 'PagesController@activity');      //Shows filebrowser's activity feed.
+
 Route::post('/update-status', ['uses'=>'UserController@updateStatus','as'=>'updateUserStatus']);   //Update selected user's status (Admin or User)
 
 Route::post('/delete-user', ['uses'=>'UserController@deleteUser','as'=>'DeleteUser']);           //Delete selected user

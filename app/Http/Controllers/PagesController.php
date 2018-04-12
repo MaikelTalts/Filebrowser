@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use Filebrowser\Folder;
+use Filebrowser\Activity;
 use Filebrowser\User;
 //use Illuminate\Foundation\Auth\User;
 use Filebrowser\folder_user;
@@ -75,6 +76,10 @@ class PagesController extends Controller
       return view('pages.index')->with(['user' => $user, 'directories' => $user_folders]);
     }
 
+    public function activity(){
+      $activities = Activity::orderby('created_at', 'desc')->limit(10)->get();
+      return view('pages.activity')->with(['activities' => $activities]);
+    }
 
   public function show($directory){
     $directoryArray = array();
@@ -128,5 +133,7 @@ class PagesController extends Controller
         return view('pages.index');
       }
     }
+
+
 
 }

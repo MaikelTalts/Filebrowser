@@ -47,6 +47,9 @@
                             <li>
                                 <a href="/settings">Settings</a>
                             </li>
+                            <li>
+                                <a href="/activity">Activity</a>
+                            </li>
                             @else
                               <li id="userSettings">
                                 <a href="#">Settings</a>

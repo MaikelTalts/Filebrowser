@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Filebrowser\Http\Controllers\Controller;
 use Filebrowser\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Auth;
+use Filebrowser\Activity;
 use Illuminate\Support\Facades\DB;
 use Storage;
 use Filebrowser\Folder;
@@ -20,8 +21,12 @@ class DirectoryController extends Controller
 
   public function deleteDirectory($directory){
     $user = Auth::user()->name;
+    $directoryExpl = explode("/", $directory);
+    $directoryName = end($directoryExpl);
+    $directoryPath = str_replace($directoryName, "", $directory);
     //Delete fysical directory that has same path and name witch was received.
     Storage::deleteDirectory($directory);
+    app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($user, "deleted", "directory", $directoryName, "in", $directoryPath);
     //Split the directorypath into separate directories
     $explodeDirectory = explode("/", $directory);
     //Check how long is the directory path
@@ -42,6 +47,7 @@ class DirectoryController extends Controller
 
 
   function createDirectory(Request $request){
+    $user = Auth::user()->name;
     //Receive given filename and selected location.
     $directory_name = $request['dir_name'];
     $creation_directory = $request['creation_dir'];
@@ -58,6 +64,7 @@ class DirectoryController extends Controller
     //Create fysical directory in selected place.
     Storage::makeDirectory($creation_directory."/".$name);
     //Create the folder also in database [Folders] table.
+    app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($user, "created", "directory", $directory_name, "in", $creation_directory);
 
     //If creation directory is public, add the directoryname into database, and give access for that specific directory for logged in user and admin.
     if($creation_directory == "public"){
