@@ -896,11 +896,16 @@ $(document).on('click', '.updateUserInfo', function () {
   var userEmail = $('#userEmail').val();
   //Checks if the received email is in correct form.
   var correctEmail = isEmail(userEmail);
+  //Check if both password inputs contains the same value
+  var correctPassword = checkIfSamePassword();
   if (correctEmail == true) {
     updateUserInfo(userID, userName, userEmail);
   } else {
     var notificationMsg = "Check the email";
     showNotification(notificationMsg, "#CC0000");
+  }
+  if (correctPassword[0] == true) {
+    updateUserPassword(userID, correctPassword[1]);
   }
 });
 
@@ -908,7 +913,42 @@ $(document).on('click', '#userSettings', function () {
   showUserSettings();
 });
 
+$(document).on('keyup', '#newPassword1', function () {
+  checkIfSamePassword();
+});
+
+$(document).on('keyup', '#newPassword2', function () {
+  checkIfSamePassword();
+});
+
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
+
+function checkIfSamePassword() {
+  //Get both password input values and compare them.
+  var input1Value = $('#newPassword1').val();
+  var input2Value = $('#newPassword2').val();
+  var correctPassword = [];
+  //If both are empty display both input headliners as black
+  if (input1Value == "" || input2Value == "") {
+    $('#passwordConfirmation1').css('color', 'black');
+    $('#passwordConfirmation2').css('color', 'black');
+    correctPassword[0] = false;
+  }
+  //If both have the same exact same text display both input headliners as green
+  else if (input1Value == input2Value) {
+      $('#passwordConfirmation1').css('color', '#2BBBAD');
+      $('#passwordConfirmation2').css('color', '#2BBBAD');
+      correctPassword[0] = true;
+      correctPassword[1] = input1Value;
+    }
+    //If both inputs contain text, but not the same text display both input headliners as black
+    else {
+        $('#passwordConfirmation1').css('color', 'black');
+        $('#passwordConfirmation2').css('color', 'black');
+        correctPassword[0] = false;
+      }
+  return correctPassword;
+}
 
 /*This function shows up the notificationBar from layouts/modal.blade.php. It requires message and background color that depends on if the user action
   is successful or not. */
@@ -966,6 +1006,22 @@ function returnOldName(span, input, oldPath) {
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
 
+//updateUserPassword will be ran when user or admin changes users password.
+function updateUserPassword(userID, correctPassword) {
+  $.ajax({
+    method: 'POST',
+    url: '/update-user-password',
+    data: { userID: userID, password: correctPassword, _token: token },
+    success: function success(response) {
+      console.log(response.success);
+    },
+    error: function error(response) {
+      console.log(response.error);
+    }
+  });
+}
+
+//ShowUserSettings is used when user with user_privileges as 1 opens settings page. Page will be generated and printed into userControlModal.
 function showUserSettings() {
   $.ajax({
     method: 'POST',
