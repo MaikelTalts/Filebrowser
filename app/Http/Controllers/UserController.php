@@ -195,14 +195,34 @@ class UserController extends Controller
     ]);
   }
 
+  //Prints user settings page if user is not admin
   function showUserSettings(){
+    //Check current user
     $user = Auth::user();
+    //Get current user id
     $userID = $user->id;
-
+    //Render user settings modal
     $userSettingsContent = View::make('pages.userSettings', ['user' => $user])->render();
+    //Return modal content as response
     return response()->json([
       'success' => $userSettingsContent,
       'error' => "Didn't work"
+    ]);
+  }
+
+  function updateUserPassword(Request $request){
+    //Get the user id
+    $userID = $request['userID'];
+    //Get the password
+    $password = $request['password'];
+    //Crypt the password
+    $passwordHash = bcrypt($password);
+    //Replace the password where userID is the same as received one
+    User::where('id', $userID)->update(['password' => $passwordHash]);
+    //Return response to ajax
+    return response()->json([
+      'success' => 'Password changed',
+      'error' => 'Password change failed'
     ]);
   }
 
