@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\View;
+use Filebrowser\Activity;
 use Filebrowser\User;
 use Filebrowser\Folder;
 
@@ -40,12 +41,17 @@ class UserController extends Controller
   }
 
   public function deleteUser(Request $request){
+    //Get the current logged in user's name for activity insert
+    $currentUserName = Auth::user()->name;
     //Check witch user was selected
     $userID = $request['userID'];
     //Search user from database
     $user = User::find($userID);
     //Get the users name
     $userName = $user->name;
+    //Insert new activity
+    self::updateActivityLog($currentUserName, "deleted", "user", $userName, "", "");
+
     //Poistetaan folder_user tietokantataulusta kaikki en tietueet, joissa poistettava käyttäjä esiintyy
     DB::table('folder_user')->where('user_id', '=', $userID)->delete();
     //Delete selected user from database
@@ -98,7 +104,7 @@ class UserController extends Controller
     ]);
   }
 
-  function updateUplaodPrivilege(Request $request){
+  function updateUploadPrivilege(Request $request){
     //Request the base variables
     $userID = $request['userID'];
     $uploadSelection = $request['uploadSelection'];
@@ -161,6 +167,7 @@ class UserController extends Controller
   function updateUserInfo(Request $request){
     //Check the current user's id
     $currentUser = Auth::user()->id;
+    $currentUserName = Auth::user()->name;
     //Request user's ID
     $userID = $request['userID'];
     if($currentUser == $userID){
@@ -170,13 +177,19 @@ class UserController extends Controller
       $sameUser = false;
     }
 
-    //Request user's name
-    $name = $request['userName'];
+    //Get user current name and the in input
+    $oldUserName = $request['oldUserName'];
+    $userNameInput = $request['userNameInput'];
+
     //Request user's email
     $userEmail = $request['userEmail'];
     //Trim spaces from beginning and end of string
-    $userName = trim($name);
+    $userName = trim($userNameInput);
     if($userName != null && $userName != ""){
+      if($oldUserName != $userNameInput){
+        self::updateActivityLog($currentUserName, "changed", "username", $oldUserName, "as", $userNameInput);
+
+      }
       //Update selected user with requested data
       User::where('id', $userID)->update(['name' => $userName, 'email' => $userEmail]);
     }
@@ -224,6 +237,18 @@ class UserController extends Controller
       'success' => 'Password changed',
       'error' => 'Password change failed'
     ]);
+  }
+
+  public function updateActivityLog($actor, $act, $object, $target, $preposition, $result){
+    Activity::create(['actor' => $actor,
+                    'act' => $act,
+                    'object' => $object,
+                    'target' => $target,
+                    'preposition' => $preposition,
+                    'result' => $result,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')]);
+                    return;
   }
 
 }

@@ -24,6 +24,8 @@ Route::get('/', [
 
 Route::get('/settings', 'PagesController@settings');          //Head to view pages/settings.blade.php
 
+Route::get('/activity', 'PagesController@activity');      //Shows filebrowser's activity feed.
+
 Route::post('/update-status', ['uses'=>'UserController@updateStatus','as'=>'updateUserStatus']);   //Update selected user's status (Admin or User)
 
 Route::post('/delete-user', ['uses'=>'UserController@deleteUser','as'=>'DeleteUser']);           //Delete selected user
@@ -38,7 +40,7 @@ Route::post('update-user-info', 'UserController@updateUserInfo');           //Up
 
 Route::post('/update-user-password', 'UserController@updateUserPassword');
 
-Route::post('/update-upload-privileges', 'UserController@updateUplaodPrivilege');     //Update current user's upload privileges
+Route::post('/update-upload-privileges', 'UserController@updateUploadPrivilege');     //Update current user's upload privileges
 
 Route::get('download/{file}', 'FileController@download')                  //Download selected file
   ->where(['file' => '.*']);
