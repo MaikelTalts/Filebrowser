@@ -20,6 +20,21 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="usr" id="passwordConfirmation1">Password:</label>
+            <input type="password" class="form-control userModal" id="newPassword1" placeholder="Type new password">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="userEmail" id="passwordConfirmation2">Confirm password</label>
+            <input type="password" class="form-control userModal" id="newPassword2" placeholder="Type new password">
+          </div>
+        </div>
+      </div>
               <center>
                 <button type="button" class="btn btn-primary updateUserInfo" role="button">Update</button>
               </center>

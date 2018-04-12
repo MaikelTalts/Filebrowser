@@ -36,6 +36,8 @@ Route::post('/show-user-settings', 'UserController@showUserSettings');      //If
 
 Route::post('update-user-info', 'UserController@updateUserInfo');           //Update current user name & email
 
+Route::post('/update-user-password', 'UserController@updateUserPassword');
+
 Route::post('/update-upload-privileges', 'UserController@updateUplaodPrivilege');     //Update current user's upload privileges
 
 Route::get('download/{file}', 'FileController@download')                  //Download selected file
