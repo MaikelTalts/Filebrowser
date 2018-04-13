@@ -19,7 +19,7 @@ class ActivityController extends Controller
       $activityList = View::make('pages.activityListing', ['activities' => $activities])->render();
       return response()->json([
         'success' => $activityList,
-        'error' => "No eipäs toimi perkele :D"
+        'error' => "Does not work"
       ]);
     }
 }
