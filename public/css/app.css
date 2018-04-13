@@ -8522,6 +8522,17 @@ h5 {
   animation: spin 1s linear infinite;
 }
 
+.activityLoader {
+  display: none;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 0.5s linear infinite;
+  animation: spin 0.5s linear infinite;
+}
+
 .select {
   width: 20%;
 }

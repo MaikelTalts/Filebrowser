@@ -18,9 +18,16 @@
         <?php echo $activities; ?>
         </tbody>
       </table>
+      <center>
+        <div class="activityLoader" id="activityLoader"></div>
+      </center>
     </div>
   </div>
-  <center><button class="btn btn-primary" type="button" id="loadMoreActivities" value="30">Load more</button></center>
+  <center>
+    <button class="btn btn-primary" type="button" id="loadMoreActivities" value="30">Load more</button>
+    <spans style="display:none;" id="noActivities">No more activities</span>
+  </center>
+
 </div>
 
 @endsection

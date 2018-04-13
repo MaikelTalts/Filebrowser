@@ -1013,13 +1013,22 @@ function returnOldName(span, input, oldPath) {
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
 
+//This ajax function wille be called when user cliks "Load more" button in activity feed.
 function loadMoreActivities(amount) {
   $.ajax({
     method: 'POST',
     url: '/load-more-activities',
     data: { amount: amount, _token: token },
     success: function success(response) {
-      $('#activityTable').html(response.success);
+      //If the called function succeeds insert the received json data into tablebody
+
+      $('#activityLoader').show().delay(1000).hide(0, function () {
+        $('#activityTable').html(response.success);
+        if (response.hideButton == true) {
+          $('#loadMoreActivities').css('display', 'none');
+          $('#noActivities').css('display', 'block');
+        }
+      });
     },
     error: function success(response) {
       console.log(response.error);
