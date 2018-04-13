@@ -18,12 +18,12 @@ class ActivityController extends Controller
       $amount = $request['amount'];
       //Get the amount of activities
       $activities = Activity::orderby('created_at', 'desc')->limit($amount)->get();
-      //Check how many activities were received
-      $trueAmount = count($activities);
+      //Get the amount of activities
+      $allActivities = Activity::count();
       //Check the remainder of activities divided by 10
-      $remainder = $trueAmount % 10;
+      $remainder = $allActivities - $amount;
       //If it is something else than 0, set variable to true and the Load More button wil be hidden
-      if($remainder != 0){
+      if($remainder <= 0){
         $hideButton = true;
       }
       else{
