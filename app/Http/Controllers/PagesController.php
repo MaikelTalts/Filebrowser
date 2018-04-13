@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Filebrowser\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Storage;
 use Filebrowser\Folder;
 use Filebrowser\Activity;
@@ -76,10 +77,14 @@ class PagesController extends Controller
       return view('pages.index')->with(['user' => $user, 'directories' => $user_folders]);
     }
 
-    public function activity(){
-      $activities = Activity::orderby('created_at', 'desc')->limit(10)->get();
-      return view('pages.activity')->with(['activities' => $activities]);
-    }
+  public function activity(){
+    //Get the 20 latest activities
+    $activities = Activity::orderby('created_at', 'desc')->limit(20)->get();
+    //Create rendered table row with each of those activities, that page will be used in ActivityController as well
+    $activityList = View::make('pages.activityListing', ['activities' => $activities])->render();
+    //Return activities page with recently created activity list
+    return view('pages.activity')->with(['activities' => $activityList]);
+  }
 
   public function show($directory){
     $directoryArray = array();

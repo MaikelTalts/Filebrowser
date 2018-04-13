@@ -26,6 +26,7 @@ class DirectoryController extends Controller
     $directoryPath = str_replace($directoryName, "", $directory);
     //Delete fysical directory that has same path and name witch was received.
     Storage::deleteDirectory($directory);
+    //Create new acitivity log mark
     app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($user, "deleted", "directory", $directoryName, "in", $directoryPath);
     //Split the directorypath into separate directories
     $explodeDirectory = explode("/", $directory);
@@ -63,7 +64,7 @@ class DirectoryController extends Controller
 
     //Create fysical directory in selected place.
     Storage::makeDirectory($creation_directory."/".$name);
-    //Create the folder also in database [Folders] table.
+    //Create new acitivity log mark
     app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($user, "created", "directory", $directory_name, "in", $creation_directory);
 
     //If creation directory is public, add the directoryname into database, and give access for that specific directory for logged in user and admin.
