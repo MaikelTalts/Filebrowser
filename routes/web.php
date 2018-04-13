@@ -42,7 +42,7 @@ Route::post('update-user-info', 'UserController@updateUserInfo');           //Up
 
 Route::post('/update-user-password', 'UserController@updateUserPassword');
 
-Route::post('/update-upload-privileges', 'UserController@updateUploadPrivilege');     //Update current user's upload privileges
+Route::post('/update-upload-privileges', 'UserController@updateUplaodPrivilege');     //Update current user's upload privileges
 
 Route::get('download/{file}', 'FileController@download')                  //Download selected file
   ->where(['file' => '.*']);
