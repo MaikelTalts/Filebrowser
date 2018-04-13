@@ -64,5 +64,6 @@
     <span class="close" id="notification_close-danger" aria-label="close">&times;</span>                                        <!-- Button for closing the alert -->
     <strong>Filename was not changed</strong>                                                                                   <!-- Message -->
 </div>
+<!-- Minor change -->
 
 @endsection                                                                                                                     <!-- End content -->
