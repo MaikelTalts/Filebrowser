@@ -922,6 +922,12 @@ $(document).on('keyup', '#newPassword2', function () {
   checkIfSamePassword();
 });
 
+$(document).on('click', '#loadMoreActivities', function () {
+  var amount = $(this).attr('value');
+  $(this).val(parseInt(amount) + 10);
+  loadMoreActivities(amount);
+});
+
 // == == == == == == == == == == FUNKTIOT  == == == == == == == == == == == //
 
 function checkIfSamePassword() {
@@ -1006,6 +1012,20 @@ function returnOldName(span, input, oldPath) {
 }
 
 // == == == == == == == == == == AJAX  == == == == == == == == == == == //
+
+function loadMoreActivities(amount) {
+  $.ajax({
+    method: 'POST',
+    url: '/load-more-activities',
+    data: { amount: amount, _token: token },
+    success: function success(response) {
+      $('#activityTable').html(response.success);
+    },
+    error: function success(response) {
+      console.log(response.error);
+    }
+  });
+}
 
 //updateUserPassword will be ran when user or admin changes users password.
 function updateUserPassword(userID, correctPassword) {

@@ -187,6 +187,7 @@ class UserController extends Controller
     $userName = trim($userNameInput);
     if($userName != null && $userName != ""){
       if($oldUserName != $userNameInput){
+        //Create new acitivity log mark
         self::updateActivityLog($currentUserName, "changed", "username", $oldUserName, "as", $userNameInput);
 
       }

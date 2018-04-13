@@ -38,9 +38,9 @@ public function upload(Request $request){
     $fileName = $file->getClientOriginalName();
     //Save the file into the received path variable with the files original name
     $request->file('file')->storeAs($path, $fileName);
-    //Return the user back to where he was (Refresh page)
+    //Create new activity log
     app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($currentUserName, "uploaded", "file", $fileName, "in", $path);
-
+    //Return the user back to where he was (Refresh page)
     return back()->with('success', 'Tiedoston lähetys onnistui');
   }
   //If user did not select file to upload, refresh page and send error notification

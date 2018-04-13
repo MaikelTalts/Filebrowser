@@ -28,6 +28,8 @@ Route::get('/activity', 'PagesController@activity');      //Shows filebrowser's 
 
 Route::post('/update-status', ['uses'=>'UserController@updateStatus','as'=>'updateUserStatus']);   //Update selected user's status (Admin or User)
 
+Route::post('/load-more-activities', 'ActivityController@loadMoreActivities');      //Load more activities to activity page
+
 Route::post('/delete-user', ['uses'=>'UserController@deleteUser','as'=>'DeleteUser']);           //Delete selected user
 
 Route::post('/update-user-folder-privileges', 'UserController@updateFolderPrivileges');     //update selected users folder privileges (checkbox)

@@ -7,6 +7,7 @@ The filebrowser's usage is quite easy and straight forward.
 - Create directories and fill them with files.
 - Control user privileges to access directories and upload files.
 - Download directories as zip files.
+- Inspect the activity log
 
 ## Installation guide
 Run the following installation steps
