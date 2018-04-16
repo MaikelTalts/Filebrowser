@@ -998,7 +998,7 @@ $('#searchByName').keyup(function () {
 function showInputForRename(input, span, oldPath) {
   //Bring input back to visible with old filename
   Old_name = oldPath.text(); //Receive the old filename
-  adress = document.getElementById('adress').innerHTML;
+  adress = $('#currentPath').attr('value');
   $(input).show();
   $(input).val(span.text());
   $(span).hide();
@@ -1148,7 +1148,7 @@ function switchBackToSpan(span, $input, oldPath) {
   $.ajax({
     method: 'POST',
     url: urlRename,
-    data: { OldName: oldPath.text(), NewName: adress + "/" + $input.val(), _token: token },
+    data: { OldName: oldPath.text(), NewName: adress + $input.val(), _token: token },
     success: function success(response) {
       // Show preloader before changing the name on page
       $("#rename_notification_success").fadeIn("fast");
@@ -1210,7 +1210,7 @@ function deleteUser(userID) {
 //This function creates directory with ajax call.
 function createDirectory(value) {
   //Luodaan kansio ajax kutsulla.
-  var path = $('#adress').html();
+  var path = $('#currentPath').attr('value');
   $.ajax({
     method: 'POST',
     url: urlcreateDirectory,
@@ -1243,30 +1243,6 @@ function userDirectoryPrivileges(userID) {
     }
   });
 }
-
-// TULEE KORJATA - siten että tiedostopolku yritetään noutaa ainoastaan silloin kun käyttäjä on juuressa tai show ikkunassa  //
-function breadcrumbs() {
-  var current_path = document.getElementById('adress').innerHTML; // Noudetaan app.blade.php sivulta kansiopolku
-  var folder_structure = current_path.split("/"); // Erotellaan noudetun kansiopolun kansiot
-  var count = folder_structure.length; // Tarkistetaan eroteltujen kansioiden määrä
-  var folder_name = ""; // Luodaan globaali muuttuja, jota käytetään tieostopolun tulostamiseen
-  var path = ""; // Luodaan globaali muuttuja, johon sijoitetaan kaikki kansiopolun kansiot yksitellen.
-
-  for (i = 0; i < count; i++) {
-    // Suoritetaan for loop (Niin monesti, kuin on kansiopolussa kansioita)
-    path += folder_structure[i] + "/"; // Lisätään jokaisella kierroksella polkuun seuraava kansiopolun kansio
-    folder_name = folder_structure[i]; // Muutetaan jokaisella kierroksella tulostettavan kansion nimi indeksin osoittamaa kansiota
-    $('.breadcrumb').append($("<a></a>", { // Luodaan jokaisella kierroksella uusi linkkinä toimiva kansio
-      'class': 'breadcrumb-item',
-      text: folder_name,
-      href: "http://localhost:8000/" + path
-    }));
-    $('.breadcrumb').append($("<span>", {
-      text: " / "
-    }));
-  }
-}
-breadcrumbs();
 
 /***/ }),
 /* 9 */

@@ -8351,14 +8351,26 @@ button.close {
 }
 
 .folder {
-  background-color: #F3EECC;
-  border: solid 1px #343d46;
+  background-color: #343d46;
+  border-radius: 5px !important;
   height: 57px;
+  margin-top: 2px;
+  -webkit-transition: background-color 0.5s;
+  /* Safari */
+  transition: background-color 0.5s;
+}
+
+.folder:hover {
+  background-color: #485058;
 }
 
 .folder span {
   position: relative;
   top: 20%;
+}
+
+.folder a {
+  color: #fff;
 }
 
 h5 {
@@ -8413,9 +8425,18 @@ h5 {
 }
 
 .file {
-  background-color: white;
-  border: solid 1px #343d46;
+  background-color: #f9f9f9;
+  border-radius: 5px;
   height: 57px;
+  margin-top: 2px;
+  border-color: #343d46;
+  -webkit-transition: background-color 0.5s;
+  /* Safari */
+  transition: background-color 0.5s;
+}
+
+.file:hover {
+  background-color: #E0E0E0;
 }
 
 .file span {
