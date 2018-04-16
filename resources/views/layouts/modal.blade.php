@@ -115,12 +115,12 @@
             <h4 class="modal-title">Upload file</h4>
           </div>
           <div class="modal-body">
+
             <div class="container-fluid" style="text-align:left;">
-                {!! Form::open(['url' => '/upload', 'method' => 'POST', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
-                  {{Form::file('file')}}<br>
+                {{ Form::open(['class' => 'dropzone', 'url' => 'upload', 'method' => 'POST', 'files' => true, 'enctype' => 'multipart/form-data']) }}
                   {{Form::hidden('invisible', @$directory) }}
-                  {{Form::submit('Upload file', ['class' => 'btn btn-info filebtn'])}}
-                {!! Form::close() !!}
+                  {{csrf_field()}}
+                {{ Form::close() }}
             </div>
           <br>
           <div class="modal-footer">

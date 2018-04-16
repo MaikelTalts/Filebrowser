@@ -26,7 +26,7 @@
           </li>
         @endforeach
     </ul>
-    <ul class="list-group">                                                                                                       <!-- Create visual table for files -->
+    <ul class="list-group files">                                                                                                       <!-- Create visual table for files -->
         @foreach ($files as $key => $file)                                                                                        <!-- Loop through all files in current folder location, and print them to user -->
           <?php
             $fileExpl = explode("/", $file);                                                                                      //Breaks the file path into separate folders / files

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Filebrowser\Activity;
 use Filebrowser\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use app\Download;
@@ -23,6 +24,8 @@ class FileController extends Controller
 //Upload function
 public function upload(Request $request){
   $currentUserName = Auth::user()->name;
+  $currentUser = Auth::user();
+  $token = $request->input('_token');
   //Checks if user has selected a file to send.
   if($request->hasFile('file')){
     //Check if file is any of following file types
@@ -41,11 +44,16 @@ public function upload(Request $request){
     //Create new activity log
     app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($currentUserName, "uploaded", "file", $fileName, "in", $path);
     //Return the user back to where he was (Refresh page)
-    return back()->with('success', 'Tiedoston lähetys onnistui');
+    $fileRender = View::make('pages.file', ['fileName' => $fileName, 'path' => $path . "/" . $fileName, 'user' => $currentUser])->render();
+    return response()->json([
+      'success' => $fileRender
+    ]);
   }
   //If user did not select file to upload, refresh page and send error notification
   else {
-    return back()->with('error', 'Valitse lähetettävä tiedosto');
+    return response()->json([
+      'error' => 'Did not work'
+    ]);
   }
 }
 

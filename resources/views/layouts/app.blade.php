@@ -20,6 +20,7 @@
     </div>
 
     <script src="{{asset('js/app.js')}}"></script>                              <!-- Noudetaan oma custom javascript tiedosto -->
+    <script type="text/javascript" src="{{ asset('js/dropzone.js') }}"></script>
     <script>
       var token = "{{Session::token()}}";                                       //Muuttujaan sijoitettu istunnon CSRF token.
       var urlRename = '{{route('rename')}}';                                    //Muuttujaan sijoitettu url, jonka ajax toiminto noutaa.

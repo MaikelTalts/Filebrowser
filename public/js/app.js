@@ -849,7 +849,7 @@ $('body').on('click', '.confirm', function () {
 });
 
 //After clicking cancel, hide both confirm and cancel buttons and bring rename buttons back to visible
-$('.cancel').on('click', function () {
+$(document).on('click', '.cancel', function () {
   $('.cancel').hide(250);
   $('.confirm').hide(250);
   $('.rename').show(250);
@@ -998,7 +998,7 @@ $('#searchByName').keyup(function () {
 function showInputForRename(input, span, oldPath) {
   //Bring input back to visible with old filename
   Old_name = oldPath.text(); //Receive the old filename
-  adress = $('#currentPath').attr('value');
+  adress = $('#currentPath').attr('value') + "/";
   $(input).show();
   $(input).val(span.text());
   $(span).hide();
