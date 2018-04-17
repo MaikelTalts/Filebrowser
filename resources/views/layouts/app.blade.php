@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">        <!-- Ruudunkoko metatietoja -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">                     <!-- Linkitys tyylittelytiedostoon, kansiossa CSS, tiedosto app.css -->
+    <link rel="stylesheet" href="{{asset('css/dropzone.css')}}">
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>   <!-- JQuery -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">                       <!-- CSRF-TOKEN -->

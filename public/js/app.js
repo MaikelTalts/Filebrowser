@@ -1156,6 +1156,7 @@ function switchBackToSpan(span, $input, oldPath) {
         //Show preloader before change
         $('#upload_message').show().delay(1000);
         $($input).hide();
+        $($input).siblings(".btn-delete").attr("href", "/delete" + response.new_path);
         $(span).text(response['new_name']);
         $(oldPath).text(response['new_path']);
         $(span).show();

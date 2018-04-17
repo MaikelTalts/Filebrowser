@@ -54,8 +54,8 @@
                         <div class="panel-body">
                           <ul>
                             <li><p>Click the <kbd>green text-file icon</kbd> at the bottom right of the screen.</p></li>
-                            <li><p>Click <kbd>Select...</kbd> and select the file that you want to upload.</p></li>
-                            <li><p>After selecting your file click <kbd>Upload file</kbd>.</p></li>
+                            <li><p><kbd>Drag'n drop</kbd> the files you want to upload, into orange dotted dropzone.</p></li>
+                            <li><p>After dropping your files into the dropzone, they will automatically get uploaded.</p></li>
                             <li><p><code>NOTE!</code> File will always be uploaded at your current directory location.</p></li>
                           </ul>
                         </div>
@@ -115,15 +115,13 @@
             <h4 class="modal-title">Upload file</h4>
           </div>
           <div class="modal-body">
-
-            <div class="container-fluid" style="text-align:left;">
+            <div class="container-fluid" style="margin-bottom:20px;">
                 {{ Form::open(['class' => 'dropzone', 'url' => 'upload', 'method' => 'POST', 'files' => true, 'enctype' => 'multipart/form-data']) }}
                   {{Form::hidden('invisible', @$directory) }}
                   {{csrf_field()}}
                 {{ Form::close() }}
             </div>
-          <br>
-          <div class="modal-footer">
+          <div class="modal-footer" style="text-align:center;">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
