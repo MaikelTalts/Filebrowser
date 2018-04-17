@@ -60,15 +60,4 @@
     </div>
 </div>
 
-<div class="alert alert-success alert-dismissable fade in rename-notification text-center" id="rename_notification_success">    <!-- Alert for successful file renaming -->
-  <span class="close" id="notification_close-success" aria-label="close">&times;</span>                                         <!-- Button for closing the alert -->
-    <center><div class="loader" id="loader1"></div></center>                                                                    <!-- Preloader -->
-    <strong id="upload_message">Rename completed</strong>                                                                       <!-- Message -->
-</div>
-
-<div class="alert alert-danger alert-dismissable fade in rename-notification text-center" id="rename_notification_danger">      <!-- Alert for unsuccessful rename event -->
-    <span class="close" id="notification_close-danger" aria-label="close">&times;</span>                                        <!-- Button for closing the alert -->
-    <strong>Filename was not changed</strong>                                                                                   <!-- Message -->
-</div>
-
 @endsection                                                                                                                     <!-- End content -->

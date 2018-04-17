@@ -80,7 +80,7 @@ class PagesController extends Controller
   public function activity(){
     $userPrivilege = Auth::user()->user_privileges;
     if($userPrivilege != 2){
-      return redirect('/');
+      return redirect('home');
     }
     //Get the 20 latest activities
     $activities = Activity::orderby('created_at', 'desc')->limit(20)->get();

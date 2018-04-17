@@ -8587,6 +8587,14 @@ h5 {
   background-color: #f1f1f1;
 }
 
+.alert-success {
+  z-index: 100;
+}
+
+.alert-danger {
+  z-index: 100;
+}
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);

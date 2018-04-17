@@ -68,7 +68,7 @@ class DirectoryController extends Controller
     app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($user, "created", "directory", $directory_name, "in", $creation_directory);
 
     //If creation directory is public, add the directoryname into database, and give access for that specific directory for logged in user and admin.
-    if($creation_directory == "public"){
+    if($creation_directory == "/public"){
     Folder::create([
       'folder_name' => $name
     ]);
@@ -119,7 +119,7 @@ class DirectoryController extends Controller
       return response()->download(public_path("/") . $name . ".zip")->deleteFileAfterSend(true);
     }
     else{
-      return back()->with('error', 'Kansio on tyhjä, eikä zip tiedostoa luotu');;
+      return back()->with('error', 'Directory is empty');;
     }
 
   }

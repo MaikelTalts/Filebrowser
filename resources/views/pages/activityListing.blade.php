@@ -1,3 +1,5 @@
+<!-- This page will be run through when user is heading to activity page. It will receive list of activities in database
+     And all of them will be ran through as foreach loop to create table content -->
 @foreach($activities as $activity)
   <tr>
     <td style="vertical-align:middle;">

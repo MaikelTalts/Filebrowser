@@ -1,3 +1,4 @@
+<!-- This page is called when new file is inserted into system, it will create representation of that uploaded file -->
 <li class='list-group-item file'>
   <span class="file_name">{{$fileName}}</span>
   @if($user->user_privileges == 2)
