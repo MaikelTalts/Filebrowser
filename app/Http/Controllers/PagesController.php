@@ -78,6 +78,10 @@ class PagesController extends Controller
     }
 
   public function activity(){
+    $userPrivilege = Auth::user()->user_privileges;
+    if($userPrivilege != 2){
+      return redirect('/');
+    }
     //Get the 20 latest activities
     $activities = Activity::orderby('created_at', 'desc')->limit(20)->get();
     //Create rendered table row with each of those activities, that page will be used in ActivityController as well
@@ -135,7 +139,7 @@ class PagesController extends Controller
       }
       //If not, redirect back to index page
       else{
-        return view('pages.index');
+        return redirect('/');
       }
     }
 
