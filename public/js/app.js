@@ -997,10 +997,23 @@ $('#searchByName').keyup(function () {
 
 function showInputForRename(input, span, oldPath) {
   //Bring input back to visible with old filename
-  Old_name = oldPath.text(); //Receive the old filename
+  //Get the old filepath
+  Old_name = oldPath.text();
   adress = $('#currentPath').attr('value') + "/";
+  //Get the current fime name
+  var currentName = span.text();
+  //Split the name to get the filetype
+  var nameSplit = currentName.split(".");
+  //Check the array length and decrease with one
+  var splitLength = nameSplit.length - 1;
+  //Get the last element in array and add . at the start to create filetype
+  var fileType = "." + nameSplit[splitLength];
+  //Add the filetype in to the oldPath element as value
+  $(oldPath).attr('value', fileType);
+  //Remove the path from the current name to get the actual name inside input
+  var name = currentName.replace(fileType, "");
   $(input).show();
-  $(input).val(span.text());
+  $(input).val(name);
   $(span).hide();
 }
 
@@ -1144,11 +1157,12 @@ function updateFolderPrivileges(folderID, userID) {
 }
 
 function switchBackToSpan(span, $input, oldPath) {
+  var fileType = $(oldPath).attr('value');
   // Run namechange in server, if it success it also changes the name in front page as well. If namechange fails it returns the original name.
   $.ajax({
     method: 'POST',
     url: urlRename,
-    data: { OldName: oldPath.text(), NewName: adress + $input.val(), _token: token },
+    data: { OldName: oldPath.text(), NewName: adress + $input.val() + fileType, _token: token },
     success: function success(response) {
       // Show preloader before changing the name on page
       $("#rename_notification_success").fadeIn("fast");
