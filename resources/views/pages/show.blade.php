@@ -19,7 +19,7 @@
           ?>
           <li class="list-group-item folder">
             <a href="/{{$kansio}}"><span>{{$folderName}}</span></a>                                                               <!-- Create link as path to next directory -->
-            @if($userPrivileges == 2)                                                                                             <!-- Check if current user has value 2 in user_privileges table row -->
+            @if($user->user_privileges == 2)                                                                                             <!-- Check if current user has value 2 in user_privileges table row -->
             <a href="/delete-folder/{{$kansio}}" class="btn btn-danger btn-delete-folder pull-right" role="button"><i class="far fa-trash-alt"></i></a>     <!-- Delete folder button -->
             @endif
             <a href="/download-zip/{{$kansio}}" class="btn btn-success pull-right" role="button"><i class="fas fa-download"></i></a>                        <!-- Download button for entire directory -->

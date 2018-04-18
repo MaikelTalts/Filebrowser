@@ -7,13 +7,13 @@
     <input id="searchByName" type="text" class="form-control" placeholder="Search by name">
 
     <ul class="list-group" id="userList">
-        @foreach ($user as $key => $users)                                                                          <!-- List all users in database and their current privileges -->
-          <li class='list-group-item file' id="userLi_{{$users->id}}"  style="border-radius:0px;">
-            <span class="pull-left user userLink pseudolink" value="{{$users->id}}" id="userNameLink_{{$users->id}}">{{$users->name}}</span>
-              @if ($users->user_privileges == 1)
-                <span class="pull-right" id="userStatus_{{$users->id}}">User</span>
+        @foreach ($users as $user)                                                                          <!-- List all users in database and their current privileges -->
+          <li class='list-group-item file' id="userLi_{{$user->id}}"  style="border-radius:0px;">
+            <span class="pull-left user userLink pseudolink" value="{{$user->id}}" id="userNameLink_{{$user->id}}">{{$user->name}}</span>
+              @if ($user->user_privileges == 1)
+                <span class="pull-right" id="userStatus_{{$user->id}}">User</span>
               @else
-                <span class="pull-right" id="userStatus_{{$users->id}}"><strong>Admin</strong></span>
+                <span class="pull-right" id="userStatus_{{$user->id}}"><strong>Admin</strong></span>
               @endif
             </select>
           </li>

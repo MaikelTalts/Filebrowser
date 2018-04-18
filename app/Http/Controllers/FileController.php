@@ -23,7 +23,7 @@ class FileController extends Controller
 
 //Upload function
 public function upload(Request $request){
-  $currentUserName = Auth::user()->name;
+  $userName = Auth::user()->name;
   $currentUser = Auth::user();
   $token = $request->input('_token');
   //Checks if user has selected a file to send.
@@ -42,7 +42,7 @@ public function upload(Request $request){
     //Save the file into the received path variable with the files original name
     $request->file('file')->storeAs($path, $fileName);
     //Create new activity log
-    app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "uploaded", "file", $fileName, "in", $path);
+    app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($userName, "uploaded", "file", $fileName, "in", $path);
     //Return the user back to where he was (Refresh page)
     $fileRender = View::make('pages.file', ['fileName' => $fileName, 'path' => $path . "/" . $fileName, 'user' => $currentUser])->render();
     return response()->json([
@@ -59,7 +59,7 @@ public function upload(Request $request){
 
 public function delete($file){
   //Get the current logged in user's name
-  $currentUserName = Auth::user()->name;
+  $userName = Auth::user()->name;
   //Explode the filepath
   $fileExpl = explode("/", $file);
   //Use the last element in exploded array
@@ -69,42 +69,42 @@ public function delete($file){
   //Deletes the file that it received.
   Storage::delete($file);
   //Insert activity
-  app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "deleted", "file", $fileName, "from", $filepath);
+  app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($userName, "deleted", "file", $fileName, "from", $filepath);
   //Updates page and shows notification about the successful deleton.
   return back()->with('delete', 'Tiedoston poisto onnistui');
 }
 
 public function rename(Request $request){
 //Get the current logged in user's name
-$currentUserName = Auth::user()->name;
+$userName = Auth::user()->name;
   //Array that contains letters that will be replaced
 $search = array("Å","å","Ä","ä","Ö","ö", " ");
   //Variable that contains letters that will replace the previous arrays letters
 $replace = array("A","a","A","a","O","o", "_");
 
   //Variable that receives old file name
-$old_name = $request['OldName'];
+$oldName = $request['OldName'];
   //Variable that receives new file name
-$new_name = $request['NewName'];
+$newName = $request['NewName'];
 
 //Explode the old filename (as it is path to the file)
-$oldFileExpl = explode("/", $old_name);
+$oldFileExpl = explode("/", $oldName);
 //Use the last element in exploded array
 $oldFileName = end($oldFileExpl);
 //Check and remove letters from new file name
-$new_name = str_replace($search, $replace, $new_name);
+$newName = str_replace($search, $replace, $newName);
 //Checks and removes all special characters from the new file name
-$result = preg_replace('/[^a-zA-Z0-9-_\/.]/','', $new_name);
+$result = preg_replace('/[^a-zA-Z0-9-_\/.]/','', $newName);
 
 //Moves the file back to its current location with new name
-Storage::move($old_name,$result);
+Storage::move($oldName,$result);
 $newFileNameExpl = explode("/", $result);
 $newFileName = end($newFileNameExpl);
 
-app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "renamed", "file", $oldFileName, "as", $newFileName);
+app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($userName, "renamed", "file", $oldFileName, "as", $newFileName);
 //Returns ajax response if the rename was successful or not, new name and old name
 return response()->json([
-            'old_name' => $old_name,
+            'old_name' => $oldName,
             'new_path' => $result,
             'new_name' => $newFileName,
             'success'  => "Nimi muutettu onnistuneesti",

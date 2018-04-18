@@ -14,15 +14,15 @@ use Filebrowser\Folder;
 class UserController extends Controller
 {
   public function updateStatus(Request $request){
-    //Check witch status was selected
+    //Get selected user
     $userID = $request['userID'];
-    //Check witch user was selected
-    $selection = $request['statusSelection'];
-    //Update selected users privilege status.
-    DB::table('users')->where('id',$userID)->update(array('user_privileges'=>$selection));
-
     $user = User::find($userID);
     $userName = $user->name;
+    //Get selection
+    $selection = $request['statusSelection'];
+    //Update selected users privilege status.
+    User::where('id', $userID)->update(['user_privileges'=>$selection]);
+
     //Return response
     if($selection == 1){
       $newUserStatus = "User";
@@ -80,11 +80,11 @@ class UserController extends Controller
     //Get the folders named
     $folderName = $folder->folder_name;
     //Search if there already is a row in folder_user table with selected user and selected folder
-    $user_folder_status = DB::table('folder_user')->where(
+    $userFolderStatus = DB::table('folder_user')->where(
                             'user_id', '=', $userID)->where(
                             'folder_id', '=', $folderID)->first();
     //If user does not yet have access in selected folder remove the access.
-    if($user_folder_status == null){
+    if($userFolderStatus == null){
         DB::table('folder_user')->insert(
           ['user_id' => $userID, 'folder_id' => $folderID]);
           //Write a notification message
