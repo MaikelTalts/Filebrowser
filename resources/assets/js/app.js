@@ -466,7 +466,8 @@ function deleteUser(userID) {
     success: function success(response) {
       var userLi = "#userLi_"+userID;
       $('#userControlModal').modal('toggle');
-      $(userLi).fadeOut(700, function () {//Poistetaan käyttäjän rivi näkyvistä, jos poisto onnistui.
+      $(userLi).fadeOut(700, function () {
+        //Hide user row if the deletion succeeds
         showNotification(response.notificationMessage, "#2BBBAD");
       });
 
@@ -487,8 +488,7 @@ function createDirectory(value) {
     url: urlcreateDirectory,
     data: { dir_name: value, creation_dir: path, _token: token },
     success: function success(response) {
-
-      console.log(response.success); //Jos kansion luonti onnistuu, luodaan kansiorivi, johon sijoitetaan käyttäjän kirjoittama kansion nimi, sekä poisto painike.
+       //If directory creation succeeds, receive a <li> element of that folder and append it to folder list.
       console.log(response.append);
       $('.directories').append(response.append);
     },

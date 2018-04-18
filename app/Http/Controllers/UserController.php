@@ -50,7 +50,8 @@ class UserController extends Controller
     //Get the users name
     $userName = $user->name;
     //Insert new activity
-    self::updateActivityLog($currentUserName, "deleted", "user", $userName, "", "");
+    app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "deleted", "user", $userName, "", "");
+
 
     //Poistetaan folder_user tietokantataulusta kaikki en tietueet, joissa poistettava käyttäjä esiintyy
     DB::table('folder_user')->where('user_id', '=', $userID)->delete();
@@ -188,7 +189,7 @@ class UserController extends Controller
     if($userName != null && $userName != ""){
       if($oldUserName != $userNameInput){
         //Create new acitivity log mark
-        self::updateActivityLog($currentUserName, "changed", "username", $oldUserName, "as", $userNameInput);
+        app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "changed", "username", $oldUserName, "as", $userNameInput);
 
       }
       //Update selected user with requested data
@@ -240,16 +241,5 @@ class UserController extends Controller
     ]);
   }
 
-  public function updateActivityLog($actor, $act, $object, $target, $preposition, $result){
-    Activity::create(['actor' => $actor,
-    'act' => $act,
-    'object' => $object,
-    'target' => $target,
-    'preposition' => $preposition,
-    'result' => $result,
-    'created_at' => date('Y-m-d H:i:s'),
-    'updated_at' => date('Y-m-d H:i:s')]);
-  return;
-  }
 
 }

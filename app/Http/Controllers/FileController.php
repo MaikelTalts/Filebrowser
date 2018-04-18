@@ -42,7 +42,7 @@ public function upload(Request $request){
     //Save the file into the received path variable with the files original name
     $request->file('file')->storeAs($path, $fileName);
     //Create new activity log
-    app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($currentUserName, "uploaded", "file", $fileName, "in", $path);
+    app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "uploaded", "file", $fileName, "in", $path);
     //Return the user back to where he was (Refresh page)
     $fileRender = View::make('pages.file', ['fileName' => $fileName, 'path' => $path . "/" . $fileName, 'user' => $currentUser])->render();
     return response()->json([
@@ -69,7 +69,7 @@ public function delete($file){
   //Deletes the file that it received.
   Storage::delete($file);
   //Insert activity
-  app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($currentUserName, "deleted", "file", $fileName, "from", $filepath);
+  app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "deleted", "file", $fileName, "from", $filepath);
   //Updates page and shows notification about the successful deleton.
   return back()->with('delete', 'Tiedoston poisto onnistui');
 }
@@ -101,7 +101,7 @@ Storage::move($old_name,$result);
 $newFileNameExpl = explode("/", $result);
 $newFileName = end($newFileNameExpl);
 
-app('Filebrowser\Http\Controllers\UserController')->updateActivityLog($currentUserName, "renamed", "file", $oldFileName, "as", $newFileName);
+app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "renamed", "file", $oldFileName, "as", $newFileName);
 //Returns ajax response if the rename was successful or not, new name and old name
 return response()->json([
             'old_name' => $old_name,

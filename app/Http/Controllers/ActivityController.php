@@ -38,4 +38,17 @@ class ActivityController extends Controller
         'error' => "Does not work"
       ]);
     }
+
+    public function updateActivityLog($actor, $act, $object, $target, $preposition, $result){
+      Activity::create(['actor' => $actor,
+      'act' => $act,
+      'object' => $object,
+      'target' => $target,
+      'preposition' => $preposition,
+      'result' => $result,
+      'created_at' => date('Y-m-d H:i:s'),
+      'updated_at' => date('Y-m-d H:i:s')]);
+    return;
+    }
+
 }
