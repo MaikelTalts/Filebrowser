@@ -8351,9 +8351,9 @@ button.close {
 }
 
 .folder {
+  word-wrap: break-word;
   background-color: #343d46;
   border-radius: 5px !important;
-  height: 57px;
   margin-top: 2px;
   -webkit-transition: background-color 0.5s;
   /* Safari */
@@ -8371,6 +8371,30 @@ button.close {
 
 .folder a {
   color: #fff;
+}
+
+.folder-col {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.dirVertCent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.folderLinks {
+  text-align: right;
+}
+
+@media (max-width: 500px) {
+  .folderIcon {
+    display: none;
+  }
 }
 
 h5 {
@@ -8503,8 +8527,8 @@ h5 {
   width: 50%;
 }
 
-.btn {
-  margin-left: 10px;
+.folderBtn {
+  line-height: 0.5 !important;
 }
 
 .filebtn {

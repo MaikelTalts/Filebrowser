@@ -1,8 +1,9 @@
 
   .folder{
+    word-wrap:break-word;
     background-color:#343d46;
     border-radius: 5px !important;
-    height:57px;
+    //height:57px;
     margin-top:2px;
     -webkit-transition: background-color 0.5s; /* Safari */
     transition: background-color 0.5s;
@@ -17,6 +18,25 @@
       color:#fff;
     }
   }
+
+.folder-col{
+   text-align:left;
+   vertical-align: middle;
+}
+
+//Centers the folders name in folder li
+.dirVertCent{
+  display: flex; align-items: center;
+}
+
+//Aligns folder li buttons to right
+.folderLinks{
+  text-align: right;
+}
+
+@media (max-width: 500px) {
+    .folderIcon { display:none; }
+}
 
 h5{
   padding:0px;
@@ -146,10 +166,14 @@ h5{
 
 // Painikkeiden välit
   .btn {                                                                        //Lisätään painikkeille pienet völit
-    margin-left: 10px;
+    //margin-left: 10px;
     //border-radius: 3px;
+
   }
 
+.folderBtn{
+  line-height:0.5 !important;
+}
   .filebtn{                                                                     //Poistetaan [Upload file] painikkeen vasemmanpuolimmainen margin
     margin-left: 0px;
   }

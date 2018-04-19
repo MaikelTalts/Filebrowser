@@ -10,18 +10,25 @@
 
   @include('inc.breadcrumbs')                                                                                                     <!-- Receivel a breadcrumbs file that includes filepath -->
 <div class="container text-left" id="container">
-    <ul class="list-group directories">                                                                                           <!-- Create visual table for folders -->
-        @foreach ($directories as $key => $dir)                                                                                   <!-- Loop through all folders in current directory -->
-          <li class="list-group-item folder">                                                                                     <!-- Create link as path to next directory -->
-            <span class="folderIcon"><i class="far fa-folder"></i></span>
-            <a href="/{{env('ROOTFOLDER')}}{{$dir->folder_name}}"><span>{{$dir->folder_name}}</span></a>
-            @if($user->user_privileges == 2)                                                                                      <!-- Check if current user has value 2 in user_privileges table row -->
-            <a href="/delete-folder/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-danger btn-delete-folder pull-right" role="button"><i class="far fa-trash-alt"></i></a>     <!-- Delete folder button -->
-            @endif
-            <a href="/download-zip/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-success pull-right" role="button"><i class="fas fa-download"></i></a>    <!-- Download button for entire directory -->
-          </li>
-        @endforeach
+    <ul class="list-group directories">
+      @foreach ($directories as $key => $dir)
+        <li class="list-group-item clearfix folder">
+            <div class="row dirVertCent">
+                <div class="col-xs-7 folder-col">
+                    <span class="folderIcon"><i class="far fa-folder"></i></span>
+                    <a href="/{{env('ROOTFOLDER')}}{{$dir->folder_name}}"><span>{{$dir->folder_name}}</span></a>
+                </div>
+                <div class="col-xs-5 folderLinks">
+                    <a href="/download-zip/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-success folderBtn" role="button"><i class="fas fa-download"></i></a>    <!-- Download button for entire directory -->
+                    @if($user->user_privileges == 2)
+                    <a href="/delete-folder/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-danger folderBtn" role="button"><i class="far fa-trash-alt"></i></a>
+                    @endif
+                </div>
+            </div>
+        </li>
+      @endforeach
     </ul>
+
     <ul class="list-group files">                                                                                                       <!-- Create visual table for files -->
         @foreach ($files as $key => $file)                                                                                        <!-- Loop through all files in current folder location, and print them to user -->
           <?php
@@ -44,6 +51,9 @@
         @endforeach
     </ul>
 </div>
+
+
+
 <div class="container">
     <div class="row">
       <div class="col-md-offset-6 col-md-6">
