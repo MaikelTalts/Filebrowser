@@ -115,11 +115,16 @@ class PagesController extends Controller
     }
 
     public function settings(){
+      $files = Storage::allFiles(env('ROOTFOLDER'));
+      $fileAmount = count($files);
+      $directories = Storage::allDirectories(env('ROOTFOLDER'));
+      $directoryAmount = count($directories);
       //Check if current user has rights to enter the settins page
       if (Auth::user()->user_privileges == 2){
         //get all users from database
         $allUsers = User::all();
-        return view('pages.settings')->with(['users' => $allUsers]);
+        $userAmount = count($allUsers);
+        return view('pages.settings')->with(['users' => $allUsers, 'files' => $fileAmount, 'userAmount' => $userAmount, 'directories' => $directoryAmount]);
       }
       //If not, redirect back to index page
       else{

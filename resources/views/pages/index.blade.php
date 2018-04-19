@@ -13,6 +13,7 @@
     <ul class="list-group directories">                                                                                           <!-- Create visual table for folders -->
         @foreach ($directories as $key => $dir)                                                                                   <!-- Loop through all folders in current directory -->
           <li class="list-group-item folder">                                                                                     <!-- Create link as path to next directory -->
+            <span class="folderIcon"><i class="far fa-folder"></i></span>
             <a href="/{{env('ROOTFOLDER')}}{{$dir->folder_name}}"><span>{{$dir->folder_name}}</span></a>
             @if($user->user_privileges == 2)                                                                                      <!-- Check if current user has value 2 in user_privileges table row -->
             <a href="/delete-folder/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-danger btn-delete-folder pull-right" role="button"><i class="far fa-trash-alt"></i></a>     <!-- Delete folder button -->
@@ -28,6 +29,7 @@
             $fileName = end($fileExpl);                                                                                           //Uses the last value in table
            ?>
           <li class='list-group-item file'>
+            <span class="fileIcon"><i class="far fa-file"></i></span>
             <span class="file_name">{{$fileName}}</span>                                                                                                 <!-- Creates span with filename -->
             @if($user->user_privileges == 2)                                                                                                             <!-- Check if current user has value 2 in user_privileges table row -->
               <span style="display:none;" class="old_path">{{$file}}</span>                                                                              <!-- Save current file old path to hidden span -->

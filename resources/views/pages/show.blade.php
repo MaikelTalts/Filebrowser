@@ -18,6 +18,7 @@
             $folderName = end($explFolderPath);                                                                                   //Uses the last value in table
           ?>
           <li class="list-group-item folder">
+            <span class="folderIcon"><i class="far fa-folder"></i></span>
             <a href="/{{$kansio}}"><span>{{$folderName}}</span></a>                                                               <!-- Create link as path to next directory -->
             @if($user->user_privileges == 2)                                                                                             <!-- Check if current user has value 2 in user_privileges table row -->
             <a href="/delete-folder/{{$kansio}}" class="btn btn-danger btn-delete-folder pull-right" role="button"><i class="far fa-trash-alt"></i></a>     <!-- Delete folder button -->
@@ -33,6 +34,7 @@
             $fileName = end($fileExpl);                                                                                           //Uses the last value in table
            ?>
           <li class='list-group-item file'>
+            <span class="fileIcon"><i class="far fa-file"></i></span>
             <span class="file_name">{{ $fileName }}</span>                                                                        <!-- Creates span with filename in it -->
             @if($user->user_privileges == 2)                                                                                      <!-- Check if current user has value 2 in user_privileges table row -->
               <span style="display:none;" class="old_path">{{$file}}</span>                                                       <!-- Check if current user has value 2 in user_privileges table row -->

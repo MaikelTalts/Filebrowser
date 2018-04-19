@@ -23,6 +23,32 @@ h5{
   margin-top:0px;
 }
 
+.outerAnalyticsBox{
+  padding:10px;
+}
+.innerAnalyticsBox{
+  background-color:#f9f9f9;
+  border-radius: 5px;
+  padding:5px;
+  border: 1px solid #343d46;
+}
+
+.analyticIcon{
+  font-size: 30px;
+  color:#f37735;
+}
+
+.folderIcon{
+  font-size:14px;
+  color:white;
+  margin-right:5px;
+}
+
+.fileIcon{
+  font-size:14px;
+  margin-right:5px;
+}
+
 #searchByName{
   width:25%;
   margin-top:10px;
@@ -74,7 +100,7 @@ h5{
     border-radius:5px;
     height:57px;
     margin-top:2px;
-    border-color: #343d46;
+    border-color: #C2C4C7;
     -webkit-transition: background-color 0.5s; /* Safari */
     transition: background-color 0.5s;
     &:hover{

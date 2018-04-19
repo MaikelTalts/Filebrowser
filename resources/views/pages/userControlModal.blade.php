@@ -71,8 +71,8 @@
         <div class="row"  style="margin-top:20px;">
           <div class="col-md-12">
             <div class="panel-group" id="accordion">
-              <div class="panel panel-primary" >
-                <div class="panel-heading text-center" >
+              <div class="panel panel-primary" style="border-color:#343d46;">
+                <div class="panel-heading text-center" style="background-color:#343d46;">
                   <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#folderCollapse" style="text-decoration:none;">Directory privileges</a>
                   </h4>
