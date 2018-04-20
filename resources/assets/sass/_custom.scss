@@ -1,5 +1,4 @@
-
-  .folder{
+.folder{
     word-wrap:break-word;
     background-color:#343d46;
     border-radius: 5px !important;
@@ -16,6 +15,33 @@
     }
     a{
       color:#fff;
+    }
+    .folderIcon{
+      font-size:14px;
+      color:white;
+      margin-right:5px;
+    }
+  }
+
+  .file{
+    word-wrap:break-word;
+    background-color:#f9f9f9;
+    border-radius:5px;
+    //height:57px;
+    margin-top:2px;
+    border-color: #C2C4C7;
+    -webkit-transition: background-color 0.5s; /* Safari */
+    transition: background-color 0.5s;
+    &:hover{
+      background-color: #E0E0E0;
+    }
+    span{
+      position:relative;
+      top:20%;
+    }
+    .fileIcon{
+      font-size:14px;
+      margin-right:5px;
     }
   }
 
@@ -54,17 +80,6 @@ h5{
   color:#f37735;
 }
 
-.folderIcon{
-  font-size:14px;
-  color:white;
-  margin-right:5px;
-}
-
-.fileIcon{
-  font-size:14px;
-  margin-right:5px;
-}
-
 #searchByName{
   width:25%;
   margin-top:10px;
@@ -77,22 +92,15 @@ h5{
   width:100% !important;
 }
 
+//Checkbox for user directory privileges in userControlModal
 .folder_check{
   height:20px;
   width:20px;
 }
 
+//User search input in settings page
 #searchByName:focus{
   width:100%;
-}
-
-.select_user{
-  padding:25px;
-  border-radius:5px;
-}
-
-.directorylist{
-  display:none;
 }
 
 .btn-warning{
@@ -110,24 +118,6 @@ h5{
   padding:25px;
   border-radius:5px;
 }
-
-  .file{
-    word-wrap:break-word;
-    background-color:#f9f9f9;
-    border-radius:5px;
-    //height:57px;
-    margin-top:2px;
-    border-color: #C2C4C7;
-    -webkit-transition: background-color 0.5s; /* Safari */
-    transition: background-color 0.5s;
-    &:hover{
-      background-color: #E0E0E0;
-    }
-    span{
-      position:relative;
-      top:20%;
-    }
-  }
 
   .glyphicon {                                                                  // Glyphiconien koko ja alleviivauksen poisto
     font-size: 20px;
@@ -243,6 +233,10 @@ h5{
   width:20%;
 }
 
+#directoryName{
+    text-align: center;
+}
+
 .userControlTable {
     border-collapse: collapse;
     width: 100%;
@@ -250,11 +244,10 @@ h5{
 
 .pseudolink{
   color:#3097D1;
-}
-
-.pseudolink:hover{
-  color:#216A8C;
-  cursor:pointer;
+  &:hover{
+    color:#216A8C;
+    cursor:pointer;
+  }
 }
 
 .userControlTable th, .userControlTable td {

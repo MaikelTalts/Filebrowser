@@ -91,7 +91,6 @@ $('body').on('click', '.rename', function () {
   $("#notification_close-success").trigger("click");
   $("#notification_close-danger").trigger("click");
 
-
   showInputForRename(fileNameInput, fileName, oldPath);
 });
 
@@ -133,12 +132,6 @@ $('#notification_close-success').click(function () {
 
 $('#notification_close-danger').click(function () {
   $("#rename_notification_danger").fadeOut("slow", function () {});
-});
-
-//Check if user changes dropdown value, pick the selected value and start userDirectoryPrivileges function with it
-$(".user_dropdown").change(function () {
-  var userID = $('.user_dropdown').val();
-  userDirectoryPrivileges(userID);
 });
 
 //Check if user changes users upload privilege, if so check witch user the current user did select and start updateUploadPrivileges function with it.
@@ -515,23 +508,6 @@ function createDirectory(value) {
        //If directory creation succeeds, receive a <li> element of that folder and append it to folder list.
       console.log(response.append);
       $('.directories').append(response.append);
-    },
-    error: function error(response) {
-      console.log(response.error);
-    }
-  });
-}
-
-//This function updates selected users (in settings modal), privilege to selected folder
-function userDirectoryPrivileges(userID) {
-  $.ajax({
-    method: 'POST',
-    url: '/user-directory-privileges',
-    data: { userId: userID, _token: token },
-    success: function success(response) {
-      $('.directorylist').show(100, function () {
-        $('.directorylist').html(response.success);
-      });
     },
     error: function error(response) {
       console.log(response.error);

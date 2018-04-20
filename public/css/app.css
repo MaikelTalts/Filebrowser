@@ -8373,6 +8373,37 @@ button.close {
   color: #fff;
 }
 
+.folder .folderIcon {
+  font-size: 14px;
+  color: white;
+  margin-right: 5px;
+}
+
+.file {
+  word-wrap: break-word;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-top: 2px;
+  border-color: #C2C4C7;
+  -webkit-transition: background-color 0.5s;
+  /* Safari */
+  transition: background-color 0.5s;
+}
+
+.file:hover {
+  background-color: #E0E0E0;
+}
+
+.file span {
+  position: relative;
+  top: 20%;
+}
+
+.file .fileIcon {
+  font-size: 14px;
+  margin-right: 5px;
+}
+
 .item-vertical-center {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8417,17 +8448,6 @@ h5 {
   color: #f37735;
 }
 
-.folderIcon {
-  font-size: 14px;
-  color: white;
-  margin-right: 5px;
-}
-
-.fileIcon {
-  font-size: 14px;
-  margin-right: 5px;
-}
-
 #searchByName {
   width: 25%;
   margin-top: 10px;
@@ -8449,15 +8469,6 @@ h5 {
   width: 100%;
 }
 
-.select_user {
-  padding: 25px;
-  border-radius: 5px;
-}
-
-.directorylist {
-  display: none;
-}
-
 .btn-warning {
   background-color: #F0AD4E;
   border-color: #EEA236;
@@ -8472,26 +8483,6 @@ h5 {
   margin-top: 20px;
   padding: 25px;
   border-radius: 5px;
-}
-
-.file {
-  word-wrap: break-word;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  margin-top: 2px;
-  border-color: #C2C4C7;
-  -webkit-transition: background-color 0.5s;
-  /* Safari */
-  transition: background-color 0.5s;
-}
-
-.file:hover {
-  background-color: #E0E0E0;
-}
-
-.file span {
-  position: relative;
-  top: 20%;
 }
 
 .glyphicon {
@@ -8602,6 +8593,10 @@ h5 {
 
 .select {
   width: 20%;
+}
+
+#directoryName {
+  text-align: center;
 }
 
 .userControlTable {
