@@ -52,13 +52,18 @@
               <ul class="list-group" id="userList">
                   @foreach ($users as $user)                                                                          <!-- List all users in database and their current privileges -->
                     <li class='list-group-item file' id="userLi_{{$user->id}}">
-                      <span class="pull-left user userLink pseudolink" value="{{$user->id}}" id="userNameLink_{{$user->id}}">{{$user->name}}</span>
+                      <div class="row">
+                        <div class="col-xs-8 text-left">
+                          <span class=" user userLink pseudolink" value="{{$user->id}}" id="userNameLink_{{$user->id}}">{{$user->name}}</span>
+                        </div>
+                        <div class="col-xs-4 text-right">
                         @if ($user->user_privileges == 1)
-                          <span class="pull-right" id="userStatus_{{$user->id}}">User</span>
+                          <span id="userStatus_{{$user->id}}">User</span>
                         @else
-                          <span class="pull-right" id="userStatus_{{$user->id}}"><strong>Admin</strong></span>
+                          <span id="userStatus_{{$user->id}}"><strong>Admin</strong></span>
                         @endif
-                      </select>
+                      </div>
+                    </div>
                     </li>
                   @endforeach
               </ul>

@@ -90,10 +90,19 @@ class DirectoryController extends Controller
         }
   }
 
-    $dirElement = "<li class='list-group-item folder'>
-                  <a href='$creationDirectory/$name'><span>$name</span></a>
-                  <a href='/delete-folder$creationDirectory/$name' class='btn btn-danger btn-delete-folder pull-right 'role='button'><i class='far fa-trash-alt'></i></a>
-                  <a href='/download-zip$creationDirectory/$name' class='btn btn-success pull-right' role='button'><i class='fas fa-download'></i></a></li>";
+    $dirElement = "<li class='list-group-item clearfix folder'>
+                      <div class='row item-vertical-center'>
+                          <div class='col-xs-7'>
+                              <span class='folderIcon'><i class='far fa-folder'></i></span>
+                              <a href='$creationDirectory/$name'><span>$name</span></a>
+                          </div>
+                          <div class='col-xs-5 itemButtons'>
+                              <a href='/download-zip$creationDirectory/$name' class='btn btn-success itemBtn' role='button'><i class='fas fa-download'></i></a>
+                              <a href='/delete-folder$creationDirectory/$name' class='btn btn-danger itemBtn' role='button'><i class='far fa-trash-alt'></i></a>
+                          </div>
+                      </div>
+                  </li>";
+                  
     //Send response if the function was successful or not.
     return response()->json([
                 'append' => $dirElement,

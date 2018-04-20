@@ -59,14 +59,14 @@
 </div>
 
 
-<div class="container">
+<div class="container text-right">
     <div class="row">
-      <div class="col-md-offset-6 col-md-6">
-          <button type="button" class="btn btn-default pull-right btn-home" data-toggle="modal" data-target="#infoModal"><i class="far fa-question-circle glyphicon"></i></button>    <!-- Help/ Info modal toggle button -->
+      <div class="col-md-offset-6 col-md-6" style="font-size:5px; !important">
           @if($user->user_upload_privilege == 2)                                                                                                                                      <!-- Check if current user has value 2 in user_privileges table row -->
-            <button type="button" class="btn btn-default btn-home pull-right" data-toggle="modal" data-target="#fileModal"><i class="far fa-file-alt newItem"></i></button>           <!-- Add new file button -->
-            <button type="button" class="btn btn-default btn-home pull-right" data-toggle="modal" data-target="#directoryModal"><i class="far fa-folder newItem"></i></span></button> <!-- Add new folder button -->
+            <button type="button" class="btn btn-default btn-home" data-toggle="modal" data-target="#directoryModal"><i class="far fa-folder newItem"></i></span></button> <!-- Add new folder button -->
+            <button type="button" class="btn btn-default btn-home" data-toggle="modal" data-target="#fileModal"><i class="far fa-file-alt newItem"></i></button>           <!-- Add new file button -->
           @endif
+          <button type="button" class="btn btn-default btn-home" data-toggle="modal" data-target="#infoModal"><i class="far fa-question-circle glyphicon"></i></button>    <!-- Help/ Info modal toggle button -->
       </div>
     </div>
 </div>
