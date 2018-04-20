@@ -829,6 +829,13 @@ $('.btn-create-directory').on('click', function () {
 
 // When user clicks any rename class button, hide all rename buttons and bring the confirm and cancel buttons on the same row visible. Start createInputForRename function.
 $('body').on('click', '.rename', function () {
+  //Get the path for fileNameInput
+  var filePath = $(this).parent('.itemButtons').attr('data-filename');
+  var itemSpans = $('.itemSpans[data-filename="' + filePath + '"]');
+  var fileNameInput = $(itemSpans).children('.fileNameInput');
+  var fileName = $(itemSpans).children('.fileName');
+  var oldPath = $(itemSpans).children('.oldFilePath');
+  //Show confirm and cancel buttons and hide rename and download buttons (too many buttons!!)
   $(this).siblings('.confirm').show(250);
   $(this).siblings('.cancel').show(250);
   $('.rename').hide(250);
@@ -836,25 +843,38 @@ $('body').on('click', '.rename', function () {
   //Hide all the current notifications
   $("#notification_close-success").trigger("click");
   $("#notification_close-danger").trigger("click");
-  showInputForRename($(this).siblings('.file_name_input'), $(this).siblings('.file_name'), $(this).siblings('.old_path'));
+
+  showInputForRename(fileNameInput, fileName, oldPath);
 });
 
 //After clicking confirm, hide both confirm and cancel buttons and bring rename buttons back to visible
 $('body').on('click', '.confirm', function () {
+  var filePath = $(this).parent('.itemButtons').attr('data-filename');
+  var itemSpans = $('.itemSpans[data-filename="' + filePath + '"]');
+  var fileName = $(itemSpans).children('.fileName');
+  var fileNameInput = $(itemSpans).children('.fileNameInput');
+  var oldPath = $(itemSpans).children('.oldFilePath');
+  var downloadPath = $(this).siblings('.download');
+  var deletePath = $(this).siblings('.btn-delete');
   $('.cancel').hide(250);
   $('.confirm').hide(250);
   $('.rename').show(250);
   $('.download').show(250);
-  switchBackToSpan($(this).siblings('.file_name'), $(this).siblings('.file_name_input'), $(this).siblings('.old_path'));
+  switchBackToSpan(fileName, fileNameInput, oldPath, downloadPath, deletePath);
 });
 
 //After clicking cancel, hide both confirm and cancel buttons and bring rename buttons back to visible
 $(document).on('click', '.cancel', function () {
+  var filePath = $(this).parent('.itemButtons').attr('data-filename');
+  var itemSpans = $('.itemSpans[data-filename="' + filePath + '"]');
+  var fileName = $(itemSpans).children('.fileName');
+  var fileNameInput = $(itemSpans).children('.fileNameInput');
+  var oldPath = $(itemSpans).children('.oldFilePath');
   $('.cancel').hide(250);
   $('.confirm').hide(250);
   $('.rename').show(250);
   $('.download').show(250);
-  returnOldName($(this).siblings('.file_name'), $(this).siblings('.file_name_input'), $(this).siblings('.old_path'));
+  returnOldName(fileName, fileNameInput, oldPath);
 });
 //After clicking the x in both success and error notifications it closes the notification with slow fadeout.
 $('#notification_close-success').click(function () {
@@ -1000,7 +1020,7 @@ function showInputForRename(input, span, oldPath) {
   //Get the old filepath
   Old_name = oldPath.text();
   adress = $('#currentPath').attr('value') + "/";
-  //Get the current fime name
+  //Get the current file name
   var currentName = span.text();
   //Split the name to get the filetype
   var nameSplit = currentName.split(".");
@@ -1156,8 +1176,9 @@ function updateFolderPrivileges(folderID, userID) {
   });
 }
 
-function switchBackToSpan(span, $input, oldPath) {
+function switchBackToSpan(span, $input, oldPath, downloadPath, deletePath) {
   var fileType = $(oldPath).attr('value');
+  oldPathName = oldPath.text();
   // Run namechange in server, if it success it also changes the name in front page as well. If namechange fails it returns the original name.
   $.ajax({
     method: 'POST',
@@ -1170,11 +1191,13 @@ function switchBackToSpan(span, $input, oldPath) {
         //Show preloader before change
         $('#upload_message').show().delay(1000);
         $($input).hide();
-        $($input).siblings(".btn-delete").attr("href", "/delete" + response.new_path);
+        $(downloadPath).attr('href', "/download" + response.new_path);
+        $(deletePath).attr('href', "/delete" + response.new_path);
         $(span).text(response['new_name']);
         $(oldPath).text(response['new_path']);
         $(span).show();
       });
+      //$('.btn-delete[data-filename='+  data.OldName +']').attr('data-filename', data.NewName)
     },
     error: function error(response) {
       //If namechange does not success then return the old name back

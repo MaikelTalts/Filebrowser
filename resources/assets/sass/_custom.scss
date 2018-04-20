@@ -19,23 +19,19 @@
     }
   }
 
-.folder-col{
-   text-align:left;
-   vertical-align: middle;
-}
-
-//Centers the folders name in folder li
-.dirVertCent{
+//Centers the folder and file name in li elements
+.item-vertical-center{
   display: flex; align-items: center;
 }
 
-//Aligns folder li buttons to right
-.folderLinks{
+//Aligns folder and file li buttons to right
+.itemButtons{
   text-align: right;
 }
 
 @media (max-width: 500px) {
     .folderIcon { display:none; }
+    .fileIcon {display:none;}
 }
 
 h5{
@@ -116,9 +112,10 @@ h5{
 }
 
   .file{
+    word-wrap:break-word;
     background-color:#f9f9f9;
     border-radius:5px;
-    height:57px;
+    //height:57px;
     margin-top:2px;
     border-color: #C2C4C7;
     -webkit-transition: background-color 0.5s; /* Safari */
@@ -171,12 +168,9 @@ h5{
 
   }
 
-.folderBtn{
+.itemBtn{
   line-height:0.5 !important;
 }
-  .filebtn{                                                                     //Poistetaan [Upload file] painikkeen vasemmanpuolimmainen margin
-    margin-left: 0px;
-  }
 
   .cancel, .confirm {                                                           //Cancel ja Confirm painikkeet oletuksena pois näkyvistä
     display:none;
@@ -202,7 +196,7 @@ h5{
     width:15%;
   }
 
-  .file_name_input{                                                             //Oletuksena tiedoston uudelleennimeämiseen tarkoitettu tekstikenttä pidetään piilossa.
+  .fileNameInput{                                                             //Oletuksena tiedoston uudelleennimeämiseen tarkoitettu tekstikenttä pidetään piilossa.
     display:none;
   }
 
