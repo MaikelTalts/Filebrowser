@@ -8356,7 +8356,6 @@ button.close {
   border-radius: 5px !important;
   margin-top: 2px;
   -webkit-transition: background-color 0.5s;
-  /* Safari */
   transition: background-color 0.5s;
 }
 
@@ -8386,7 +8385,6 @@ button.close {
   margin-top: 2px;
   border-color: #C2C4C7;
   -webkit-transition: background-color 0.5s;
-  /* Safari */
   transition: background-color 0.5s;
 }
 
@@ -8479,13 +8477,7 @@ h5 {
   border-color: #D58512;
 }
 
-.directory_check {
-  margin-top: 20px;
-  padding: 25px;
-  border-radius: 5px;
-}
-
-.glyphicon {
+.infoBtn {
   font-size: 20px;
   text-decoration: none;
   margin: 5px;
@@ -8497,20 +8489,6 @@ h5 {
   text-decoration: none;
   margin: 5px;
   color: #449D44;
-}
-
-.privileges_success {
-  top: -10%;
-  color: #00C851;
-  margin-right: 10px;
-  display: none;
-}
-
-.privileges_error {
-  top: -10%;
-  color: #ff4444;
-  margin-right: 10px;
-  display: none;
 }
 
 .form-control {
@@ -8628,10 +8606,7 @@ h5 {
   background-color: #f1f1f1;
 }
 
-.alert-success {
-  z-index: 100;
-}
-
+.alert-success,
 .alert-danger {
   z-index: 100;
 }

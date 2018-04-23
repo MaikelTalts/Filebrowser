@@ -14,6 +14,8 @@ use Filebrowser\Folder;
 class UserController extends Controller
 {
   public function updateStatus(Request $request){
+    //Get the current logged in user's name for activity insert
+    $currentUserName = Auth::user()->name;
     //Get selected user
     $userID = $request['userID'];
     $user = User::find($userID);
@@ -27,10 +29,12 @@ class UserController extends Controller
     if($selection == 1){
       $newUserStatus = "User";
       $notificationText = $userName . " " . "is now a user";
+      app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "changed", "user", $userName, "as", "user");
     }
     else{
       $newUserStatus = "<strong>Admin</strong>";
       $notificationText = $userName . " " . "is now an admin";
+      app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($currentUserName, "changed", "user", $userName, "as", "admin");
     }
     return response()->json([
       'notificationMessage' => $notificationText,

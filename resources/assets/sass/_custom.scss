@@ -1,10 +1,10 @@
+//Folder styling in directory listing ul
 .folder{
     word-wrap:break-word;
     background-color:#343d46;
     border-radius: 5px !important;
-    //height:57px;
     margin-top:2px;
-    -webkit-transition: background-color 0.5s; /* Safari */
+    -webkit-transition: background-color 0.5s;
     transition: background-color 0.5s;
     &:hover{
       background-color: #485058;
@@ -23,14 +23,14 @@
     }
   }
 
+//File styling in file listing ul
   .file{
     word-wrap:break-word;
     background-color:#f9f9f9;
     border-radius:5px;
-    //height:57px;
     margin-top:2px;
     border-color: #C2C4C7;
-    -webkit-transition: background-color 0.5s; /* Safari */
+    -webkit-transition: background-color 0.5s;
     transition: background-color 0.5s;
     &:hover{
       background-color: #E0E0E0;
@@ -65,9 +65,11 @@ h5{
   margin-top:0px;
 }
 
+//Analytics row in settings page
 .outerAnalyticsBox{
   padding:10px;
 }
+
 .innerAnalyticsBox{
   background-color:#f9f9f9;
   border-radius: 5px;
@@ -75,11 +77,13 @@ h5{
   border: 1px solid #343d46;
 }
 
+//Analytics icon size (User, folder, file)
 .analyticIcon{
   font-size: 30px;
   color:#f37735;
 }
 
+//Settings page search user by name
 #searchByName{
   width:25%;
   margin-top:10px;
@@ -88,6 +92,7 @@ h5{
     transition: width 0.4s ease-in-out;
 }
 
+//UserControlModal.blade.php
 .userModal{
   width:100% !important;
 }
@@ -113,19 +118,15 @@ h5{
   border-color: #D58512;
 }
 
-.directory_check{
-  margin-top:20px;
-  padding:25px;
-  border-radius:5px;
-}
-
-  .glyphicon {                                                                  // Glyphiconien koko ja alleviivauksen poisto
+//Info and Home button styling in index and show pages
+  .infoBtn {
     font-size: 20px;
     text-decoration: none;
     margin:5px;
     color:#f37735;
   }
 
+//Icon in both index and show pages, indicates new file or folder upload.
   .newItem{
     font-size: 20px;
     text-decoration: none;
@@ -133,36 +134,18 @@ h5{
     color:#449D44;
   }
 
-  .privileges_success{
-    top:-10%;
-    color:#00C851;
-    margin-right:10px;
-    display:none;
-  }
-
-  .privileges_error{
-    top:-10%;
-    color:#ff4444;
-    margin-right:10px;
-    display:none;
-  }
-
-  .form-control {                                                               //Pienennetään input kentän kokoa
+//Scale down form inputs
+  .form-control {
     width: 50%;
   }
 
-// Painikkeiden välit
-  .btn {                                                                        //Lisätään painikkeille pienet völit
-    //margin-left: 10px;
-    //border-radius: 3px;
-
-  }
-
+//The button height in directory and file listings are controlled with this
 .itemBtn{
   line-height:0.5 !important;
 }
 
-  .cancel, .confirm {                                                           //Cancel ja Confirm painikkeet oletuksena pois näkyvistä
+//By default hide cancel and confirm buttons that are needed in file renaming
+  .cancel, .confirm {
     display:none;
   }
 
@@ -174,7 +157,8 @@ h5{
       margin:0;
   }
 
-  .rename-notification{                                                         //Sijoitetaan uudelleennimeämisen ilmoitukset oikeaan alakulmaan
+//Placing the rename notification element
+  .rename-notification{
     bottom:0;
     right:0;
     position:fixed;
@@ -182,11 +166,13 @@ h5{
     display:none;
   }
 
-  #rename_notification_success{                                                 //Pienennetään onnistuneen nimenmuutoksen ilmoitus 15%
+//Renaming notifiation, decrease width to 15%, otherwise it will take too much space
+  #rename_notification_success{
     width:15%;
   }
 
-  .fileNameInput{                                                             //Oletuksena tiedoston uudelleennimeämiseen tarkoitettu tekstikenttä pidetään piilossa.
+//File renaming input. By default its hidden
+  .fileNameInput{
     display:none;
   }
 
@@ -197,6 +183,7 @@ h5{
     margin-right:5px;
   }
 
+//The header text [Filebrowser]
   .header-tron{
     background-color:#343d46;
     width:auto;
@@ -208,7 +195,8 @@ h5{
     padding-bottom: 10px;
   }
 
-  .loader {                                                                     //Preloaderin tyylittely
+//Renaming reloader
+  .loader {
     border: 5px solid #f3f3f3;
     border-radius: 50%;
     border-top: 5px solid #3498db;
@@ -218,8 +206,9 @@ h5{
     animation: spin 1s linear infinite;
   }
 
+//The preloader that will be shown in activity page 1.0s before showing more activities
   .activityLoader {
-    display:none;                                                                     //Preloaderin tyylittely
+    display:none;
     border: 5px solid #f3f3f3;
     border-radius: 50%;
     border-top: 5px solid #3498db;
@@ -233,6 +222,7 @@ h5{
   width:20%;
 }
 
+//modal.blade.php [Create new directory], centers the input text and placeholder
 #directoryName{
     text-align: center;
 }
@@ -242,6 +232,7 @@ h5{
     width: 100%;
 }
 
+//Styles span text to look like links in settings page (user listing)
 .pseudolink{
   color:#3097D1;
   &:hover{
@@ -250,6 +241,7 @@ h5{
   }
 }
 
+//User folder listing in user modal after selecting user
 .userControlTable th, .userControlTable td {
     text-align: left;
     padding: 12px;
@@ -263,11 +255,8 @@ h5{
     background-color: #f1f1f1;
 }
 
-.alert-success{
-  z-index: 100;
-}
-
-.alert-danger{
+//Succes and error alerts (Both z-index brought) forward
+.alert-success, .alert-danger{
   z-index: 100;
 }
 
@@ -281,10 +270,12 @@ h5{
   100% { transform: rotate(360deg); }
 }
 
-#upload_message{                                                                //Oletuksena tiedoston lähetyksestö ilmoittava upload message elementti pidetään piilossa.
+//File upload message
+#upload_message{
   display:none;
 }
 
+//Notification bar that will be shown every time user makes changes in system
 #notificationBar{
   visibility: hidden;
   width:250px;
@@ -318,6 +309,7 @@ h5{
   to {bottom:0; opacity:0;}
 }
 
+//Drag and drop file upload
 .dropzone{
   border:2px dashed #0087F7;
   border-radius: 5px;
