@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Http\Request;
 
+Route::get('auth/google', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/google/callback', 'Auth\LoginController@handleProviderCallback');
+
 Auth::routes();
 // Route::get('/login', '');
 
@@ -21,6 +24,8 @@ Route::get('/', [
   'middleware' => 'auth',
   'uses' => 'PagesController@index'       //Head to root = /public directory
 ]);
+
+
 
 Route::get('/settings', 'PagesController@settings');          //Head to view pages/settings.blade.php
 

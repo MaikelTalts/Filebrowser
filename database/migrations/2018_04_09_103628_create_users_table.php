@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->integer('user_privileges')->length(1)->default(1);
             $table->integer('user_upload_privilege')->length(1)->default(1);
+            $table->string('google_id')->nullable();
         });
 
         // Insert admin account right away, as the admin is hard coded to be account ID -> 1

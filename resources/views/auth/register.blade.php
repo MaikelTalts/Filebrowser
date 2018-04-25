@@ -66,6 +66,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
+                                <a href="auth/google" class="btn btn-danger">Register with google</a>
                             </div>
                         </div>
                     </form>
