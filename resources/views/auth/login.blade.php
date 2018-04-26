@@ -55,11 +55,7 @@
                                     Login
                                 </button>
 
-
-                                <a href="auth/google" class="btn btn-danger">Login with google</a><br>
-                                <a class="btn btn-link" style="padding-left:0px;" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
+                                <a href="auth/google" class="btn btn-danger">Sign in with google</a><br>
                             </div>
                         </div>
                     </form>

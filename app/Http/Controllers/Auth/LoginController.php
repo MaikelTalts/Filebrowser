@@ -71,8 +71,10 @@ class LoginController extends Controller
 
             // Auth the login
             Auth::login($authUser, true);
+
+            $testi = $authUser->user_privileges;
             // Return user to root
-            return redirect('/');
+            return redirect('/')->with(['testi' => $testi]);
               //return $user->token;
           }
         }
@@ -93,10 +95,12 @@ class LoginController extends Controller
       if($authUser){
         return $authUser;
       }
+
+      $password = str_replace(" ", "", $user->name);
       return User::create([
           'name' => $user->name,
           'email' => $user->email,
-          'password' => bcrypt('1q2w3e4r'),
+          'password' => bcrypt($password),
           'user_privileges' => 1,
           'user_upload_privilege' => 1,
           'google_id' => $user->id,
