@@ -20,7 +20,7 @@ class DirectoryController extends Controller
   }
 
   public function deleteDirectory($directory){
-    if(Auth::user()->userPrivileges == 2){
+    if(Auth::user()->user_privileges == 2){
       $userName = Auth::user()->name;
       $directoryExpl = explode("/", $directory);
       $directoryName = end($directoryExpl);
@@ -117,23 +117,38 @@ class DirectoryController extends Controller
   }
 
   function downloadDirectory($directory) {
-    //Explode the received directory path to get the actual directory name
-    $path = explode("/",$directory);
-    $name = end($path);
-    //Define new zipper
-    $zipper = new Zipper;
-    //Check all files and folders in received directory
-    $files = storage_path('app/' . $directory);
-    //Create new zip with the directory name and add all files that were doind into it.
-    $zipper = Zipper::make($name . ".zip")->folder($name)->add($files)->close();
-    //Check if the zip file exists, (if selected directory is empty, it wont create zip)
-    if(file_exists($name . ".zip")){
-      //Return the zip file download as resut, and delete it from system folder after that.
-      return response()->download(public_path("/") . $name . ".zip")->deleteFileAfterSend(true);
+    //Explode the received directory, to get first and last directory
+    $explodeDirectory = explode("/",$directory);
+    //Select the folder from database by its name
+    $folder = Folder::where('folder_name', '=' , $explodeDirectory[1])->first();
+    //Get the folder's ID
+    $folderID = $folder->id;
+    //Select current system user from database
+    $user = Auth::user();
+    //Select current user's ID
+    $userID = $user->id;
+    //Check if current user has access into a selected directory
+    if(DB::table('folder_user')->where('folder_id', '=', $folderID)->where('user_id', '=', $userID)->exists()){
+      $name = end($explodeDirectory);
+      //Define new zipper
+      $zipper = new Zipper;
+      //Check all files and folders in received directory
+      $files = storage_path('app/' . $directory);
+      //Create new zip with the directory name and add all files that were doind into it.
+      $zipper = Zipper::make($name . ".zip")->folder($name)->add($files)->close();
+      //Check if the zip file exists, (if selected directory is empty, it wont create zip)
+      if(file_exists($name . ".zip")){
+        //Return the zip file download as resut, and delete it from system folder after that.
+        return response()->download(public_path("/") . $name . ".zip")->deleteFileAfterSend(true);
+      }
+      else{
+        return back()->with('error', 'Directory is empty');;
+      }
     }
     else{
-      return back()->with('error', 'Directory is empty');;
+      return redirect('/')->with('error', 'You do not have access to this directory');
     }
+
 
   }
 
