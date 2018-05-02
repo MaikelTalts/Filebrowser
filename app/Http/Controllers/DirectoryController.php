@@ -20,30 +20,35 @@ class DirectoryController extends Controller
   }
 
   public function deleteDirectory($directory){
-    $userName = Auth::user()->name;
-    $directoryExpl = explode("/", $directory);
-    $directoryName = end($directoryExpl);
-    $directoryPath = str_replace($directoryName, "", $directory);
-    //Delete fysical directory that has same path and name witch was received.
-    Storage::deleteDirectory($directory);
-    //Create new acitivity log mark
-    app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($userName, "deleted", "directory", $directoryName, "in", $directoryPath);
-    //Split the directorypath into separate directories
-    $explodeDirectory = explode("/", $directory);
-    //Check how long is the directory path
-    $pathLenght = count($explodeDirectory);
-    //If the directory path is same as 2, witch means that the directory that we are deleting is located inside public, then remove the folder from database as well.
-    if($pathLenght == 2){
-      $directory = end($explodeDirectory);
-      //Get folders id, so that it can also be removed from folder_user table
-      $directoryId = Folder::where('folder_name', '=' , $directory)->first()->id;
-      //Delete folder from folder_user table
-      DB::table('folder_user')->where('folder_id', '=', $directoryId)->delete();
-      //Delete folder from folders table
-      Folder::where('folder_name', '=' , $directory)->delete();
-      //Needs to be changed to ajax call!! (Works, but ugly AF)
-  }
-    return back();
+    if(Auth::user()->userPrivileges == 2){
+      $userName = Auth::user()->name;
+      $directoryExpl = explode("/", $directory);
+      $directoryName = end($directoryExpl);
+      $directoryPath = str_replace($directoryName, "", $directory);
+      //Delete fysical directory that has same path and name witch was received.
+      Storage::deleteDirectory($directory);
+      //Create new acitivity log mark
+      app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($userName, "deleted", "directory", $directoryName, "in", $directoryPath);
+      //Split the directorypath into separate directories
+      $explodeDirectory = explode("/", $directory);
+      //Check how long is the directory path
+      $pathLenght = count($explodeDirectory);
+      //If the directory path is same as 2, witch means that the directory that we are deleting is located inside public, then remove the folder from database as well.
+      if($pathLenght == 2){
+        $directory = end($explodeDirectory);
+        //Get folders id, so that it can also be removed from folder_user table
+        $directoryId = Folder::where('folder_name', '=' , $directory)->first()->id;
+        //Delete folder from folder_user table
+        DB::table('folder_user')->where('folder_id', '=', $directoryId)->delete();
+        //Delete folder from folders table
+        Folder::where('folder_name', '=' , $directory)->delete();
+        //Needs to be changed to ajax call!! (Works, but ugly AF)
+      }
+      return back();
+    }
+    else{
+      return redirect('/');
+    }
   }
 
 
@@ -102,7 +107,7 @@ class DirectoryController extends Controller
                           </div>
                       </div>
                   </li>";
-                  
+
     //Send response if the function was successful or not.
     return response()->json([
                 'append' => $dirElement,

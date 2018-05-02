@@ -1069,9 +1069,7 @@ function updateUserPassword(userID, correctPassword) {
     method: 'POST',
     url: '/update-user-password',
     data: { userID: userID, password: correctPassword, _token: token },
-    success: function success(response) {
-      console.log(response.success);
-    },
+    success: function success(response) {},
     error: function error(response) {
       console.log(response.error);
     }
@@ -1135,7 +1133,7 @@ function printUserPage(userID) {
       }
     },
     error: function error() {
-      console.log("Ei toimi");
+      console.log("Does not work");
     }
   });
 }
@@ -1249,7 +1247,6 @@ function createDirectory(value) {
     data: { dir_name: value, creation_dir: path, _token: token },
     success: function success(response) {
       //If directory creation succeeds, receive a <li> element of that folder and append it to folder list.
-      console.log(response.append);
       $('.directories').append(response.append);
     },
     error: function error(response) {
