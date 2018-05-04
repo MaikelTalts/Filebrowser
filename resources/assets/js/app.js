@@ -56,14 +56,14 @@ $(document).on('click', '.deleteUser', function(){
   }
 });
 
-$('.btn-delete').on('click', function (e) {
+$(document).on('click', '.btn-delete', function(e){
   //Get user confirmation for file deletion
   if (!confirm("haluatko varmasti poistaa tämän tiedoston?")) {
     e.preventDefault();
   }
 });
 
-$('.btn-delete-folder').on('click', function (e) {
+$(document).on('click', '.btn-delete-folder', function(e){
   //Get user confirmation for folder deletion
   if (!confirm("Haluatko varmasti poistaa tämän kansion?")) {
     e.preventDefault();

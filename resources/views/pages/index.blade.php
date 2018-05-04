@@ -20,7 +20,7 @@
                 <div class="col-xs-5 itemButtons">
                     <a href="/download-zip/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-success itemBtn" role="button"><i class="fas fa-download"></i></a>    <!-- Download button for entire directory -->
                     @if($user->user_privileges == 2)
-                    <a href="/delete-folder/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-danger itemBtn" role="button"><i class="far fa-trash-alt"></i></a>
+                    <a href="/delete-folder/{{env('ROOTFOLDER').$dir->folder_name}}" class="btn btn-danger itemBtn btn-delete-folder" role="button"><i class="far fa-trash-alt"></i></a>
                     @endif
                 </div>
             </div>
