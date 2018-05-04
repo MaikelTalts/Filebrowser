@@ -77,10 +77,13 @@ class LoginController extends Controller
             return redirect('/')->with(['testi' => $testi]);
               //return $user->token;
           }
+          else{
+            return redirect('/login')->with('error', 'You must have right domain to access');
+          }
         }
         else{
           // If user has not domain or the domain is not the same as in .env file then don't allow user to login.
-          dd("Shame on you!");
+          return redirect('/login')->with('error', 'You must have right domain to access');
         }
       }
       catch(Exeption $e){

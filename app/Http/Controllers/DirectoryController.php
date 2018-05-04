@@ -142,7 +142,7 @@ class DirectoryController extends Controller
         return response()->download(public_path("/") . $name . ".zip")->deleteFileAfterSend(true);
       }
       else{
-        return back()->with('error', 'Directory is empty');;
+        return back()->with('error', 'Directory is empty');
       }
     }
     else{
