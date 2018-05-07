@@ -47,7 +47,7 @@ class DirectoryController extends Controller
       return back();
     }
     else{
-      return redirect('/');
+      return redirect("/")->with('error', 'You do not have rights to delete files of folders');
     }
   }
 

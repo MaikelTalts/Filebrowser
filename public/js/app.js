@@ -789,18 +789,21 @@ Old_name = "";
 adress = "";
 
 // == == == == == == == == == == BUTTON CLICK == == == == == == == == == == == //
+//When user clicks folder checkbox in settings modal, it starts updateFolderPrivileges function
 $(document).on('change', '.folder_check', function () {
   var folderID = $(this).val();
   var userID = $('#userNameTitle').attr('value');
   updateFolderPrivileges(folderID, userID);
 });
 
+//In settings page, when user status is changed, it starts updateUserStatus function
 $(document).on('change', '.userStatusSelection', function () {
   var userID = $('#userNameTitle').attr('value');
   var statusSelection = $(this).val();
   updateUserStatus(userID, statusSelection);
 });
 
+//By clicking delete user button in settings page and user modal, browser confirms the deletion and after that the deleteUser function will be called
 $(document).on('click', '.deleteUser', function () {
   var userID = $('#userNameTitle').attr('value');
   //Confirm user deletion
@@ -809,6 +812,7 @@ $(document).on('click', '.deleteUser', function () {
   }
 });
 
+//By clicking btn-delete class button, the selected file will be deleted from system.
 $(document).on('click', '.btn-delete', function (e) {
   //Get user confirmation for file deletion
   if (!confirm("haluatko varmasti poistaa tämän tiedoston?")) {
@@ -816,6 +820,7 @@ $(document).on('click', '.btn-delete', function (e) {
   }
 });
 
+//By clicking the btn-delete-folder class button, the selected folder will be deleted from the system 
 $(document).on('click', '.btn-delete-folder', function (e) {
   //Get user confirmation for folder deletion
   if (!confirm("Haluatko varmasti poistaa tämän kansion?")) {

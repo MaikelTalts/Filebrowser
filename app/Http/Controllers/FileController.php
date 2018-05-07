@@ -59,32 +59,46 @@ public function upload(Request $request){
 }
 
 public function delete($file){
-  //Get the current logged in user's name
-  $userName = Auth::user()->name;
-  //Get the current user ID
-  $userID = Auth::user()->id;
+  $user = Auth::user();
   //Explode the filepath
   $fileExpl = explode("/", $file);
   //Get the folder
-  $folder = Folder::where('folder_name', '=' , $fileExpl[1])->first();
-  //Get the folder's ID
-  $folderID = $folder->id;
-  //Check if current user has access into a selected directory
-  if(DB::table('folder_user')->where('folder_id', '=', $folderID)->where('user_id', '=', $userID)->exists()){
-    //Use the last element in exploded array
-    $fileName = end($fileExpl);
-    //Remove the filename from received filepath to get the directory
-    $filepath = str_replace($fileName, "", $file);
-    //Deletes the file that it received.
-    Storage::delete($file);
-    //Insert activity
-    app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($userName, "deleted", "file", $fileName, "from", $filepath);
-    //Updates page and shows notification about the successful deleton.
-    return back()->with('delete', 'Tiedoston poisto onnistui');
+
+  if(sizeof($fileExpl) == 2){
+    if($user->user_privileges == 2){
+      $this->deletion($fileExpl, $file, $user);
+      return back()->with('delete', 'Tiedoston poisto onnistui');
+    }
+    else{
+      return redirect("/")->with('error', 'You do not have rights to delete files of folders');
+    }
   }
   else{
-    return redirect("/")->with('error', 'You do not have access to this directory');
+    $folder = Folder::where('folder_name', '=' , $fileExpl[1])->first();
+    //Get the folder's ID
+    $folderID = $folder->id;
+    //Check if current user has access into a selected directory
+    if(DB::table('folder_user')->where('folder_id', '=', $folderID)->where('user_id', '=', $user->id)->exists()){
+      $this->deletion($fileExpl, $file, $user);
+      return back()->with('delete', 'Tiedoston poisto onnistui');
+    }
+    else{
+      return redirect("/")->with('error', 'You do not have access to this directory');
+    }
   }
+}
+
+public function deletion($fileExpl, $file, $user){
+  //Use the last element in exploded array
+  $fileName = end($fileExpl);
+  //Remove the filename from received filepath to get the directory
+  $filepath = str_replace($fileName, "", $file);
+  //Deletes the file that it received.
+  Storage::delete($file);
+  //Insert activity
+  app('Filebrowser\Http\Controllers\ActivityController')->updateActivityLog($user->name, "deleted", "file", $fileName, "from", $filepath);
+  //Updates page and shows notification about the successful deleton.
+  return;
 }
 
 public function rename(Request $request){
