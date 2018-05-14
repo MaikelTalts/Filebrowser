@@ -11,7 +11,7 @@ The filebrowser's usage is quite easy and straight forward.
 
 ## Installation guide
 Run the following installation steps.\
-If you already have XAMPP, composer and git on your computer then head straight to step **4.0**
+If you already have XAMPP, composer and git on your computer then head straight to step **[4.0](https://github.com/MaikelTalts/Filebrowser#40-laravel)**
 
 ### 1.0 [Xampp](https://www.apachefriends.org/index.html)
 You need MySQL-database to use filebrowser, you can get one from [here](https://www.apachefriends.org/index.html).
