@@ -25,8 +25,6 @@ Route::get('/', [
   'uses' => 'PagesController@index'       //Head to root = /public directory
 ]);
 
-
-
 Route::get('/settings', 'PagesController@settings');          //Head to view pages/settings.blade.php
 
 Route::get('/activity', 'PagesController@activity');      //Shows filebrowser's activity feed.
@@ -69,5 +67,3 @@ Route::get('delete-folder/{directory}', 'DirectoryController@deleteDirectory')  
 
 Route::get('{directory}', ['uses' => 'PagesController@show'])             //Clicked directory will print pages/show.blade.php page with selected directory path
   ->where(['directory' => '.*']);
-
-Route::get('/home', 'PagesController@index');       //Heads back to root = /public directory

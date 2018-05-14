@@ -807,7 +807,7 @@ $(document).on('change', '.userStatusSelection', function () {
 $(document).on('click', '.deleteUser', function () {
   var userID = $('#userNameTitle').attr('value');
   //Confirm user deletion
-  if (!confirm("Are you sure you wanna delete this user?") == true) {} else {
+  if (confirm("Are you sure you wanna delete this user?") == true) {
     deleteUser(userID);
   }
 });
@@ -820,7 +820,7 @@ $(document).on('click', '.btn-delete', function (e) {
   }
 });
 
-//By clicking the btn-delete-folder class button, the selected folder will be deleted from the system 
+//By clicking the btn-delete-folder class button, the selected folder will be deleted from the system
 $(document).on('click', '.btn-delete-folder', function (e) {
   //Get user confirmation for folder deletion
   if (!confirm("Haluatko varmasti poistaa tämän kansion?")) {
@@ -848,7 +848,6 @@ $('body').on('click', '.rename', function () {
   //Hide all the current notifications
   $("#notification_close-success").trigger("click");
   $("#notification_close-danger").trigger("click");
-
   showInputForRename(fileNameInput, fileName, oldPath);
 });
 
@@ -881,6 +880,7 @@ $(document).on('click', '.cancel', function () {
   $('.download').show(250);
   returnOldName(fileName, fileNameInput, oldPath);
 });
+
 //After clicking the x in both success and error notifications it closes the notification with slow fadeout.
 $('#notification_close-success').click(function () {
   $("#rename_notification_success").fadeOut("slow", function () {
@@ -1015,7 +1015,6 @@ $('#searchByName').keyup(function () {
 });
 
 function showInputForRename(input, span, oldPath) {
-  //Bring input back to visible with old filename
   //Get the old filepath
   Old_name = oldPath.text();
   adress = $('#currentPath').attr('value') + "/";
@@ -1053,7 +1052,6 @@ function loadMoreActivities(amount) {
     data: { amount: amount, _token: token },
     success: function success(response) {
       //If the called function succeeds insert the received json data into tablebody
-
       $('#activityLoader').show().delay(1000).hide(0, function () {
         $('#activityTable').html(response.success);
         if (response.hideButton == true) {

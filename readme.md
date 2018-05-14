@@ -5,12 +5,12 @@ Online Filebrowser is basically an open source cloud storage created with Larave
 The filebrowser's usage is quite easy and straight forward.
 
 - Create directories and fill them with files.
-- Control user privileges to access directories and upload files.
+- Control user upload and access privileges.
 - Download directories as zip files.
-- Inspect the activity log
+- Inspect the activity log.
 
 ## Installation guide
-Run the following installation steps
+Run the following installation steps.\
 If you already have XAMPP, composer and git on your computer then head straight to step **4.0**
 
 ### 1.0 [Xampp](https://www.apachefriends.org/index.html)
@@ -58,7 +58,8 @@ Run command: ```composer``` to see if composer is globally installed.
 **4.4 .env file**
 - Rename ```.env.example``` file as ```.env``` and fill it with your database information.
 - Run command: ```php artisan key:generate```.
-- Add ```ROOTFOLDER=public/``` at the end of .env file and save your changes.
+- Check that the ROOTFOLDER is set to ```ROOTFOLDER=public/```.
+- If you want to allow google login, check the domain as well.
 
 **4.5 Migrations**
 - Run command: ``` php artisan migrate ```
